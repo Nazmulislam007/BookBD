@@ -1,5 +1,4 @@
 import { Box, List, ListItem, Typography } from "@mui/material";
-import "./DropdownMenu.css";
 
 export default function DropdownMenu() {
   return (
