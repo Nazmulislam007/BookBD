@@ -9,6 +9,8 @@ export default function Top100Books() {
   return (
     <BodyContainer heading="Top 100 Books">
       <Swiper
+        effect="coverflow"
+        speed={1000}
         style={{ flex: "1 1 480px", padding: "2.3rem 0", userSelect: "none" }}
         modules={[Navigation]}
         navigation

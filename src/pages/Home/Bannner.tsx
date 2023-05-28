@@ -45,6 +45,8 @@ export default function Bannner() {
           style={{ flex: "1 1 480px" }}
           spaceBetween={5}
           slidesPerView={3}
+          effect="coverflow"
+          speed={1000}
         >
           <SwiperSlide>
             <img src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />

@@ -28,6 +28,7 @@ export default function DropdownMenu() {
       <List
         sx={{
           position: "absolute",
+          zIndex: 4,
           transform: "scale(0)",
           opacity: 0,
           minWidth: "300px",

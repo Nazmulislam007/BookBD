@@ -11,7 +11,7 @@ export default function ActionButton() {
       }}
       variant="contained"
     >
-      Shop now
+      Order now
     </Button>
   );
 }
