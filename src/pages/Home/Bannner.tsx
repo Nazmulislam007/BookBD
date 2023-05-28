@@ -24,7 +24,7 @@ export default function Bannner() {
           gap: "30px",
         }}
       >
-        <Box flex="1 1 450px">
+        <Box flex="1 1 420px">
           <Typography
             component="h2"
             fontSize="2.7rem"
@@ -42,8 +42,8 @@ export default function Bannner() {
           <ActionButton />
         </Box>
         <Swiper
-          style={{ flex: "1 1 450px" }}
-          spaceBetween={10}
+          style={{ flex: "1 1 480px" }}
+          spaceBetween={5}
           slidesPerView={3}
         >
           <SwiperSlide>

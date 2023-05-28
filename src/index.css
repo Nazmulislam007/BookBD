@@ -1,0 +1,23 @@
+@import url("https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&display=swap");
+
+* {
+  font-family: "PT Serif", serif !important;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  background-color: #63422d;
+  background-color: #63422d;
+  right: 10px;
+  height: 45px;
+  width: 45px;
+  color: #ffffff !important;
+  fill: rgb(255, 255, 255) !important;
+  stroke: rgb(255, 255, 255) !important;
+  border-radius: 50%;
+}
+
+:is(.swiper-button-next, .swiper-button-prev)::after {
+  font-size: 1.2rem;
+  font-weight: bolder;
+}
