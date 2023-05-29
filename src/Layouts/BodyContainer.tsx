@@ -6,10 +6,6 @@ type BodyContainerType = {
   heading: string;
 };
 
-const style = {
-  hoverStyle: { color: "inherit", "&:hover": { color: "gray" } },
-};
-
 export default function BodyContainer({
   children,
   heading,

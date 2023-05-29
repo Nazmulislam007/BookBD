@@ -1,7 +1,9 @@
 import BreadCrumbs from "@/components/BreadCrumbs";
 import { Box, Container } from "@mui/material";
 import BookCart from "./BookCart";
+import DescriptionTabs from "./DescriptionTabs";
 import RelatedBooks from "./RelatedBooks";
+import YouMayAlsoLike from "./YouMayAlsoLike";
 
 export default function Book() {
   return (
@@ -18,6 +20,8 @@ export default function Book() {
         <BookCart />
         <RelatedBooks />
       </Box>
+      <YouMayAlsoLike />
+      <DescriptionTabs />
     </Container>
   );
 }
