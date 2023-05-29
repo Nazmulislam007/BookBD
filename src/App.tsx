@@ -2,7 +2,8 @@ import ResponsiveAppBar from "./components/Navbar";
 import SubNav from "./components/Navbar/SubNavbar";
 // import Home from "@/pages/Home";
 import Footer from "./Layouts/Footer";
-import Subjects from "./pages/Subjects";
+import Book from "./pages/Book";
+// import Subjects from "./pages/Subjects";
 
 function App() {
   return (
@@ -10,7 +11,8 @@ function App() {
       <ResponsiveAppBar />
       <SubNav />
       {/* <Home /> */}
-      <Subjects />
+      {/* <Subjects /> */}
+      <Book />
       <Footer />
     </>
   );

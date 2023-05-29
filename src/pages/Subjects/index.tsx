@@ -1,5 +1,5 @@
+import BreadCrumbs from "@/components/BreadCrumbs";
 import { Box, Container, Stack, Typography } from "@mui/material";
-import BreadCrumbs from "./BreadCrumbs";
 import FilterSubjects from "./FilterSubjects";
 import SubjectResult from "./SubjectResult";
 
