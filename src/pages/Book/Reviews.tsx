@@ -136,11 +136,31 @@ export default function Reviews() {
               alignItems="center"
               gap="10px"
             >
-              <Typography component="span">Helpful?</Typography>
-              <Button variant="contained" sx={{ fontSize: "12px" }}>
+              <Typography component="span" fontSize="14px">
+                Helpful?
+              </Typography>
+              <Button
+                variant="contained"
+                sx={{
+                  bgcolor: "#63422d",
+                  fontSize: "12px",
+                  "&:hover": {
+                    bgcolor: "#63422d",
+                  },
+                }}
+              >
                 Yes · 5
               </Button>
-              <Button variant="contained" sx={{ fontSize: "12px" }}>
+              <Button
+                variant="contained"
+                sx={{
+                  bgcolor: "#63422d",
+                  fontSize: "12px",
+                  "&:hover": {
+                    bgcolor: "#63422d",
+                  },
+                }}
+              >
                 No · 1
               </Button>
             </Stack>
@@ -189,11 +209,31 @@ export default function Reviews() {
               alignItems="center"
               gap="10px"
             >
-              <Typography component="span">Helpful?</Typography>
-              <Button variant="contained" sx={{ fontSize: "12px" }}>
+              <Typography component="span" fontSize="14px">
+                Helpful?
+              </Typography>
+              <Button
+                variant="contained"
+                sx={{
+                  bgcolor: "#63422d",
+                  fontSize: "12px",
+                  "&:hover": {
+                    bgcolor: "#63422d",
+                  },
+                }}
+              >
                 Yes · 5
               </Button>
-              <Button variant="contained" sx={{ fontSize: "12px" }}>
+              <Button
+                variant="contained"
+                sx={{
+                  bgcolor: "#63422d",
+                  fontSize: "12px",
+                  "&:hover": {
+                    bgcolor: "#63422d",
+                  },
+                }}
+              >
                 No · 1
               </Button>
             </Stack>
