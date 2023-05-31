@@ -1,5 +1,6 @@
 import BodyContainer from "@/Layouts/BodyContainer";
 import { Box, Grid, Paper, Stack, Typography, styled } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -20,10 +21,12 @@ export default function BooksWeLove() {
       >
         <Box component="div" flex="1 1 400px">
           <Box component="div">
-            <img
-              src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0063251922&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
-              style={{ display: "block", margin: "auto" }}
-            />
+            <Link to="/book">
+              <img
+                src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0063251922&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
+                style={{ display: "block", margin: "auto" }}
+              />
+            </Link>
           </Box>
 
           <Box component="div">

@@ -1,27 +1,23 @@
-import ResponsiveAppBar from "./components/Navbar";
-import SubNav from "./components/Navbar/SubNavbar";
-// import Home from "@/pages/Home";
-import Footer from "./Layouts/Footer";
-// import Book from "./pages/Book";
-// import Subjects from "./pages/Subjects";
 import "swiper/css";
 import "swiper/css/navigation";
-import CreateAccount from "./Layouts/CreateAccount";
-import OpenModal from "./Layouts/OpenModal";
-// import ShoppingCart from "./pages/ShoppingCart";
+import ResponsiveAppBar from "./components/Navbar";
+import SubNav from "./components/Navbar/SubNavbar";
+import Footer from "./Layouts/Footer";
+// import CreateAccount from "./Layouts/CreateAccount";
+// import OpenModal from "./Layouts/OpenModal";
+
+import { RouterProvider } from "react-router-dom";
+import { router } from "./routes/roots";
 
 function App() {
   return (
     <>
       <ResponsiveAppBar />
       <SubNav />
-      {/* <Home /> */}
-      {/* <Subjects /> */}
-      {/* <Book /> */}
-      {/* <ShoppingCart /> */}
-      <OpenModal>
+      <RouterProvider router={router} />
+      {/* <OpenModal>
         <CreateAccount />
-      </OpenModal>
+      </OpenModal> */}
       <Footer />
     </>
   );

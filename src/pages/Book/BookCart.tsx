@@ -1,9 +1,11 @@
-import ActionButton from "@/components/ActionButton";
 import HoverRating from "@/components/Ratting";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { Box, Stack, Typography } from "@mui/material";
+import { Box, Button, Stack, Typography } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 export default function BookCart() {
+  const navigate = useNavigate();
+
   return (
     <Box
       component="div"
@@ -88,7 +90,18 @@ export default function BookCart() {
           </Typography>
         </Box>
         <Box component="div" mt={3}>
-          <ActionButton />
+          <Button
+            sx={{
+              bgcolor: "#63422d",
+              "&:hover": {
+                bgcolor: "#63422d",
+              },
+            }}
+            variant="contained"
+            onClick={() => navigate("/shopping-cart")}
+          >
+            Add To Cart
+          </Button>
         </Box>
       </Stack>
     </Box>

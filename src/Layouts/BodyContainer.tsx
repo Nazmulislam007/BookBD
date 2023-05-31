@@ -1,5 +1,6 @@
 import { Box, Container, Typography } from "@mui/material";
 import { ReactNode } from "react";
+import { Link } from "react-router-dom";
 
 type BodyContainerType = {
   children: ReactNode;
@@ -30,19 +31,20 @@ export default function BodyContainer({
         >
           {heading}
         </Typography>
-        <Typography
-          component="a"
-          href="#"
-          sx={{
-            mr: "10px",
-            color: "inherit",
-            "&:hover": {
-              color: "GrayText",
-            },
-          }}
-        >
-          See More
-        </Typography>
+        <Link to="/subjects">
+          <Typography
+            component="p"
+            sx={{
+              mr: "10px",
+              color: "inherit",
+              "&:hover": {
+                color: "GrayText",
+              },
+            }}
+          >
+            See More
+          </Typography>
+        </Link>
       </Box>
       {children}
     </Container>
