@@ -6,7 +6,9 @@ import Footer from "./Layouts/Footer";
 // import Subjects from "./pages/Subjects";
 import "swiper/css";
 import "swiper/css/navigation";
-import ShoppingCart from "./pages/ShoppingCart";
+import CreateAccount from "./Layouts/CreateAccount";
+import OpenModal from "./Layouts/OpenModal";
+// import ShoppingCart from "./pages/ShoppingCart";
 
 function App() {
   return (
@@ -16,7 +18,10 @@ function App() {
       {/* <Home /> */}
       {/* <Subjects /> */}
       {/* <Book /> */}
-      <ShoppingCart />
+      {/* <ShoppingCart /> */}
+      <OpenModal>
+        <CreateAccount />
+      </OpenModal>
       <Footer />
     </>
   );

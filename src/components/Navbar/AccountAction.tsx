@@ -7,6 +7,7 @@ export default function AccountAction() {
     <List sx={{ display: "flex", alignItems: "center" }}>
       <ListItem sx={{ px: 0, pr: 1 }}>
         <Typography
+          component="button"
           sx={{
             textTransform: "uppercase",
             fontSize: "12px",
