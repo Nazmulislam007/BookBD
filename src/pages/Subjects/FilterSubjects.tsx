@@ -1,5 +1,5 @@
-import CustomizedAccordions from "@/components/Accordion";
 import { Box } from "@mui/material";
+import CustomizedAccordions from "./Accordion";
 
 export default function FilterSubjects() {
   return (

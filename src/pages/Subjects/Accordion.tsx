@@ -7,6 +7,9 @@ import MuiAccordionSummary, {
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
+import SortByAuthors from "./SortByAuthors";
+import ShortByCatagory from "./SortByCatagory";
+import SortByRatting from "./SortByRating";
 
 const Accordion = styled((props: AccordionProps) => (
   <MuiAccordion disableGutters elevation={0} square {...props} />
@@ -65,16 +68,11 @@ export default function CustomizedAccordions() {
             fontWeight="600"
             letterSpacing="0.3"
           >
-            CUSTOMER FAVORITES
+            SROT BY CATAGRORY
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
+          <ShortByCatagory />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -88,16 +86,11 @@ export default function CustomizedAccordions() {
             fontWeight="600"
             letterSpacing="0.3"
           >
-            WRITERS
+            AUTHORS
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
+          <SortByAuthors />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -111,16 +104,11 @@ export default function CustomizedAccordions() {
             fontWeight="600"
             letterSpacing="0.3"
           >
-            SUBJECTS
+            RATINGS
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <Typography>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse
-            malesuada lacus ex, sit amet blandit leo lobortis eget. Lorem ipsum
-            dolor sit amet, consectetur adipiscing elit. Suspendisse malesuada
-            lacus ex, sit amet blandit leo lobortis eget.
-          </Typography>
+          <SortByRatting />
         </AccordionDetails>
       </Accordion>
     </>
