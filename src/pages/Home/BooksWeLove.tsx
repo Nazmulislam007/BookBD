@@ -1,4 +1,5 @@
 import BodyContainer from "@/Layouts/BodyContainer";
+import Image from "@/components/Image";
 import { Box, Grid, Paper, Stack, Typography, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -22,7 +23,7 @@ export default function BooksWeLove() {
         <Box component="div" flex="1 1 400px">
           <Box component="div">
             <Link to="/book">
-              <img
+              <Image
                 src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0063251922&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
                 style={{ display: "block", margin: "auto" }}
               />
@@ -60,7 +61,7 @@ export default function BooksWeLove() {
         <Grid container spacing={2}>
           <Grid item xs={6} md={3}>
             <Item>
-              <img src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
+              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
                 <Typography
                   component="p"
@@ -96,7 +97,7 @@ export default function BooksWeLove() {
           </Grid>
           <Grid item xs={6} md={3}>
             <Item>
-              <img src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
+              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
                 <Typography
                   component="p"
@@ -132,7 +133,7 @@ export default function BooksWeLove() {
           </Grid>
           <Grid item xs={6} md={3}>
             <Item>
-              <img src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400217644&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
+              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400217644&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
                 <Typography
                   component="p"
@@ -168,7 +169,7 @@ export default function BooksWeLove() {
           </Grid>
           <Grid item xs={6} md={3}>
             <Item>
-              <img src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
+              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
                 <Typography
                   component="p"
@@ -204,7 +205,7 @@ export default function BooksWeLove() {
           </Grid>
           <Grid item xs={6} md={3}>
             <Item>
-              <img src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
+              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
                 <Typography
                   component="p"
@@ -240,7 +241,7 @@ export default function BooksWeLove() {
           </Grid>
           <Grid item xs={6} md={3}>
             <Item>
-              <img src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400217644&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
+              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400217644&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
                 <Typography
                   component="p"
@@ -276,7 +277,7 @@ export default function BooksWeLove() {
           </Grid>
           <Grid item xs={6} md={3}>
             <Item>
-              <img src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
+              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
                 <Typography
                   component="p"
@@ -312,7 +313,7 @@ export default function BooksWeLove() {
           </Grid>
           <Grid item xs={6} md={3}>
             <Item>
-              <img src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
+              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
                 <Typography
                   component="p"

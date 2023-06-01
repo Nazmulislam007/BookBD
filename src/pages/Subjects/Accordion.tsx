@@ -7,6 +7,7 @@ import MuiAccordionSummary, {
 import Typography from "@mui/material/Typography";
 import { styled } from "@mui/material/styles";
 import * as React from "react";
+import PriceRangeSlider from "./PriceRange";
 import SortByAuthors from "./SortByAuthors";
 import ShortByCatagory from "./SortByCatagory";
 import SortByRatting from "./SortByRating";
@@ -91,6 +92,20 @@ export default function CustomizedAccordions() {
         </AccordionSummary>
         <AccordionDetails>
           <SortByAuthors />
+        </AccordionDetails>
+      </Accordion>
+      <Accordion>
+        <AccordionDetails>
+          <Typography
+            component="p"
+            fontSize="13px"
+            fontWeight="600"
+            letterSpacing="0.3"
+            mb={1}
+          >
+            PRICE RANGE
+          </Typography>
+          <PriceRangeSlider />
         </AccordionDetails>
       </Accordion>
       <Accordion
