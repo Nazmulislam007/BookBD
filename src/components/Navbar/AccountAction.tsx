@@ -5,7 +5,7 @@ import CustomizedBadges from "./CartBadge";
 export default function AccountAction() {
   return (
     <List sx={{ display: "flex", alignItems: "center" }}>
-      <ListItem sx={{ px: 0, pr: 1 }}>
+      <ListItem sx={{ px: 0, pr: 1, display: { xs: "none", md: "block" } }}>
         <Typography
           component="button"
           sx={{

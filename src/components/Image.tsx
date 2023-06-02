@@ -11,7 +11,8 @@ export default function Image({
     <Box
       component="button"
       sx={{
-        width: "fit-content",
+        width: { md: "fit-content", xs: "150px" },
+        height: { xs: "230px" },
         position: "relative",
         overflow: "hidden",
 
@@ -45,7 +46,11 @@ export default function Image({
         },
       }}
     >
-      <img src={src} {...rest} style={{ display: "block" }} />
+      <img
+        src={src}
+        {...rest}
+        style={{ display: "block", width: "100%", height: "100%" }}
+      />
     </Box>
   );
 }

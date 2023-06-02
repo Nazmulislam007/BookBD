@@ -1,15 +1,22 @@
-import BodyContainer from "@/Layouts/BodyContainer";
 import Image from "@/components/Image";
+import { Container } from "@mui/material";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-export default function Top100Books() {
+export default function ResposiveBookSlider() {
   return (
-    <BodyContainer heading="Top 100 Books">
+    <Container
+      sx={{
+        px: { xs: 0, md: 0 },
+        pb: { xs: 0, md: "2.3rem" },
+        pt: "2.3rem",
+        display: { xs: "block", md: "none" },
+      }}
+    >
       <Swiper
         effect="coverflow"
         speed={1000}
-        style={{ flex: "1 1 480px", padding: "2.3rem 0", userSelect: "none" }}
+        style={{ userSelect: "none" }}
         modules={[Navigation]}
         navigation
         breakpoints={{
@@ -25,17 +32,9 @@ export default function Top100Books() {
             slidesPerView: 3,
             spaceBetween: 10,
           },
-          700: {
+          770: {
             slidesPerView: 4,
-            spaceBetween: 10,
-          },
-          810: {
-            slidesPerView: 5,
-            spaceBetween: 10,
-          },
-          1000: {
-            slidesPerView: 6,
-            spaceBetween: 5,
+            spaceBetween: 20,
           },
         }}
       >
@@ -166,6 +165,6 @@ export default function Top100Books() {
           />
         </SwiperSlide>
       </Swiper>
-    </BodyContainer>
+    </Container>
   );
 }

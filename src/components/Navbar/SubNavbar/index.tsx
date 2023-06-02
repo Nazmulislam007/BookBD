@@ -10,6 +10,7 @@ export default function SubNav() {
         bgcolor: "transparent",
         color: "black",
         boxShadow: "0 6px 7px -3px #e8e8e8",
+        display: { md: "block", xs: "none" },
       }}
     >
       <Container

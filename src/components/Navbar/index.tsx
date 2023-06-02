@@ -1,8 +1,10 @@
 import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
+import Stack from "@mui/material/Stack";
 import Toolbar from "@mui/material/Toolbar";
 import AccountAction from "./AccountAction";
 import Logo from "./Logo";
+import ResposiveNav from "./ResposiveNav";
 import SearchBox from "./SearchBox";
 
 function ResponsiveAppBar() {
@@ -22,7 +24,10 @@ function ResponsiveAppBar() {
           disableGutters
           sx={{ display: "flex", justifyContent: "space-between" }}
         >
-          <Logo />
+          <Stack direction="row" alignItems="center">
+            <ResposiveNav />
+            <Logo />
+          </Stack>
 
           <SearchBox />
 

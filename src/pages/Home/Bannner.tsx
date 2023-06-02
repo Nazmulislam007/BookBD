@@ -13,7 +13,7 @@ export default function Bannner() {
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        p: "5rem 9%",
+        p: { md: "5rem 9%", xs: "2rem 3%" },
       }}
     >
       <Container
@@ -44,8 +44,21 @@ export default function Bannner() {
         </Box>
         <Swiper
           style={{ flex: "1 1 480px" }}
-          spaceBetween={5}
-          slidesPerView={3}
+          spaceBetween={1}
+          breakpoints={{
+            0: {
+              slidesPerView: 2,
+              spaceBetween: 120,
+            },
+            375: {
+              slidesPerView: 2,
+              spaceBetween: 10,
+            },
+            600: {
+              slidesPerView: 3,
+              spaceBetween: 20,
+            },
+          }}
           effect="coverflow"
           speed={1000}
         >

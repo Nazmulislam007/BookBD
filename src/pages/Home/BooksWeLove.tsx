@@ -2,6 +2,7 @@ import BodyContainer from "@/Layouts/BodyContainer";
 import Image from "@/components/Image";
 import { Box, Grid, Paper, Stack, Typography, styled } from "@mui/material";
 import { Link } from "react-router-dom";
+import ResposiveBookSlider from "./ResposiveBookSlider";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -17,16 +18,19 @@ export default function BooksWeLove() {
     <BodyContainer heading="Books We Love">
       <Box
         component="div"
-        sx={{ display: "flex", alignItems: "flex-start", gap: "1.3rem" }}
-        py={5}
+        sx={{
+          display: "flex",
+          alignItems: "flex-start",
+          gap: "1.3rem",
+          flexDirection: { xs: "column", md: "row" },
+        }}
+        pt={5}
+        pb={{ xs: 0, md: 5 }}
       >
         <Box component="div" flex="1 1 400px">
           <Box component="div">
             <Link to="/book">
-              <Image
-                src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0063251922&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
-                style={{ display: "block", margin: "auto" }}
-              />
+              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0063251922&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
             </Link>
           </Box>
 
@@ -58,8 +62,8 @@ export default function BooksWeLove() {
           </Box>
         </Box>
 
-        <Grid container spacing={2}>
-          <Grid item xs={6} md={3}>
+        <Grid container spacing={2} display={{ xs: "none", md: "flex" }}>
+          <Grid item md={4} lg={3}>
             <Item>
               <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
@@ -95,7 +99,7 @@ export default function BooksWeLove() {
               </Box>
             </Item>
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid item md={4} lg={3}>
             <Item>
               <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
@@ -131,7 +135,7 @@ export default function BooksWeLove() {
               </Box>
             </Item>
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid item md={4} lg={3}>
             <Item>
               <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400217644&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
@@ -167,7 +171,7 @@ export default function BooksWeLove() {
               </Box>
             </Item>
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid item md={4} lg={3}>
             <Item>
               <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
@@ -203,7 +207,7 @@ export default function BooksWeLove() {
               </Box>
             </Item>
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid item md={4} lg={3}>
             <Item>
               <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
@@ -239,7 +243,7 @@ export default function BooksWeLove() {
               </Box>
             </Item>
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid item md={4} lg={3}>
             <Item>
               <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400217644&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
@@ -275,7 +279,7 @@ export default function BooksWeLove() {
               </Box>
             </Item>
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid item md={4} lg={3}>
             <Item>
               <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
@@ -311,7 +315,7 @@ export default function BooksWeLove() {
               </Box>
             </Item>
           </Grid>
-          <Grid item xs={6} md={3}>
+          <Grid item md={4} lg={3}>
             <Item>
               <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
               <Box px={1}>
@@ -348,6 +352,7 @@ export default function BooksWeLove() {
             </Item>
           </Grid>
         </Grid>
+        <ResposiveBookSlider />
       </Box>
     </BodyContainer>
   );
