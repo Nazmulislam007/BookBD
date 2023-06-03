@@ -98,7 +98,7 @@ export default function Reviews() {
           component="div"
           direction="row"
           display="flex"
-          gap="30px"
+          gap={{ xs: "10px", lg: "30px" }}
           flexWrap="wrap"
         >
           <Box component="div" flex="1 1 200px">
@@ -171,7 +171,7 @@ export default function Reviews() {
           component="div"
           direction="row"
           display="flex"
-          gap="30px"
+          gap={{ xs: "10px", lg: "30px" }}
           flexWrap="wrap"
         >
           <Box component="div" flex="1 1 200px">

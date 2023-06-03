@@ -34,3 +34,10 @@ a {
   text-decoration: none;
   color: inherit;
 }
+
+@media screen and (max-width: 600px) {
+  .responsive__img {
+    width: 140px;
+    height: 210px;
+  }
+}

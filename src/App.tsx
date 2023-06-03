@@ -1,10 +1,10 @@
 import "swiper/css";
 import "swiper/css/navigation";
+// import CreateAccount from "./Layouts/CreateAccount";
+import Footer from "./Layouts/Footer";
+// import OpenModal from "./Layouts/OpenModal";
 import ResponsiveAppBar from "./components/Navbar";
 import SubNav from "./components/Navbar/SubNavbar";
-import Footer from "./Layouts/Footer";
-// import CreateAccount from "./Layouts/CreateAccount";
-// import OpenModal from "./Layouts/OpenModal";
 
 import { RouterProvider } from "react-router-dom";
 import { router } from "./routes/roots";

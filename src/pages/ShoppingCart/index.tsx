@@ -6,11 +6,11 @@ import YouMayAlsoLike from "./YouMayAlsoLike";
 export default function ShoppingCart() {
   return (
     <Container maxWidth="lg" sx={{ py: 5 }}>
-      <Stack direction="row" gap="30px" display="flex">
+      <Stack direction="row" gap="30px" flexWrap="wrap">
         <Stack
           direction="column"
           gap="20px"
-          flex="1 1 60%"
+          flex="1 1 75%"
           border="1px solid #dfdfdf"
           pb={3}
           px={4}

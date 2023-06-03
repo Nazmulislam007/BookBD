@@ -7,7 +7,11 @@ export default function Subjects() {
   return (
     <Container maxWidth="lg" sx={{ pt: 2, pb: 5 }}>
       <Stack component="header" pb={2}>
-        <Typography component="h4" fontSize="2rem" textAlign="center">
+        <Typography
+          component="h4"
+          fontSize={{ xs: "1.6rem", sm: "2rem" }}
+          textAlign="center"
+        >
           Top 100: Bestselling Books
         </Typography>
         <Typography component="p" fontSize=".8rem" textAlign="center">

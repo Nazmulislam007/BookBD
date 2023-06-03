@@ -23,8 +23,32 @@ export default function YouMayAlsoLike() {
         style={{ flex: "1 1 480px", padding: "2.3rem 0", userSelect: "none" }}
         modules={[Navigation]}
         navigation
-        spaceBetween={5}
-        slidesPerView={6}
+        breakpoints={{
+          0: {
+            slidesPerView: 2,
+            spaceBetween: 5,
+          },
+          480: {
+            slidesPerView: 2,
+            spaceBetween: -100,
+          },
+          550: {
+            slidesPerView: 3,
+            spaceBetween: 10,
+          },
+          700: {
+            slidesPerView: 4,
+            spaceBetween: 10,
+          },
+          810: {
+            slidesPerView: 5,
+            spaceBetween: 10,
+          },
+          1000: {
+            slidesPerView: 6,
+            spaceBetween: 5,
+          },
+        }}
       >
         <SwiperSlide>
           <Image

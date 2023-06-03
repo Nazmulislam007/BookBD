@@ -26,7 +26,7 @@ const style = {
 
 export default function CreateAccount() {
   return (
-    <Stack direction="row" gap={5}>
+    <Stack direction={{ md: "row", xs: "column" }} gap={5}>
       <Box
         sx={{
           display: "flex",
