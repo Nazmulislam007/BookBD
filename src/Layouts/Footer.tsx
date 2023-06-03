@@ -12,6 +12,7 @@ export default function Footer() {
           display: "flex",
           alignItems: "flex-start",
           justifyContent: "space-between",
+          flexWrap: "wrap",
           gap: "15px",
           py: 8,
         }}
