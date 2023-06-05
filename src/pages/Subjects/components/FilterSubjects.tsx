@@ -1,10 +1,10 @@
 import { Box } from "@mui/material";
-import CustomizedAccordions from "./Accordion";
+import FilterBooks from "./Filter";
 
 export default function FilterSubjects() {
   return (
     <Box component="div" flex="1 1 270px">
-      <CustomizedAccordions />
+      <FilterBooks />
     </Box>
   );
 }

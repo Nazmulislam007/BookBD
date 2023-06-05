@@ -1,7 +1,7 @@
 import BreadCrumbs from "@/components/BreadCrumbs";
 import { Box, Container, Stack, Typography } from "@mui/material";
-import FilterSubjects from "./FilterSubjects";
-import SubjectResult from "./SubjectResult";
+import FilterSubjects from "./components/FilterSubjects";
+import SubjectResult from "./components/SubjectResult";
 
 export default function Subjects() {
   return (

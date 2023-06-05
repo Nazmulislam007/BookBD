@@ -1,10 +1,10 @@
 import BreadCrumbs from "@/components/BreadCrumbs";
 import { Box, Container } from "@mui/material";
-import BookCart from "./BookCart";
-import DescriptionTabs from "./DescriptionTabs";
-import RelatedBooks from "./RelatedBooks";
-import Reviews from "./Reviews";
-import YouMayAlsoLike from "./YouMayAlsoLike";
+import BookCart from "./components/BookCart";
+import DescriptionTabs from "./components/DescriptionTabs";
+import RelatedBooks from "./components/RelatedBooks";
+import Reviews from "./components/Reviews";
+import YouMayAlsoLike from "./components/YouMayAlsoLike";
 
 export default function Book() {
   return (

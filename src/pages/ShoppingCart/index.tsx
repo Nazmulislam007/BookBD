@@ -1,7 +1,7 @@
 import { Container, Stack, Typography } from "@mui/material";
-import CartItem from "./CartItem";
-import OrderSummery from "./OrderSummery";
-import YouMayAlsoLike from "./YouMayAlsoLike";
+import CartItem from "./components/CartItem";
+import OrderSummery from "./components/OrderSummery";
+import YouMayAlsoLike from "./components/YouMayAlsoLike";
 
 export default function ShoppingCart() {
   return (

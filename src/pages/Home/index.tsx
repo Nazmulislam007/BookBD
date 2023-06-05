@@ -1,6 +1,6 @@
-import Bannner from "./Bannner";
-import BooksWeLove from "./BooksWeLove";
-import Top100Books from "./Top100Books";
+import Bannner from "./components/Bannner";
+import BooksWeLove from "./components/BooksWeLove";
+import Top100Books from "./components/Top100Books";
 
 export default function Home() {
   return (
