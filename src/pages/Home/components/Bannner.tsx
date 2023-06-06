@@ -1,11 +1,27 @@
+import { Books } from "@/Types/Books";
 import { banner } from "@/assets";
 import ActionButton from "@/components/ActionButton";
 import Image from "@/components/Image";
+import { useBannarBooks } from "@/hooks/data/useBooks";
 import { Box, Container, Stack, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function Bannner() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { isLoading, isError, data } = useBannarBooks();
+
+  const newData: Partial<Books>[] = data;
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    return <span>Error: </span>;
+  }
+
   return (
     <Stack
       sx={{
@@ -62,27 +78,13 @@ export default function Bannner() {
           effect="coverflow"
           speed={1000}
         >
-          <SwiperSlide>
-            <Image
-              src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
-              alt="book"
-            />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400217644&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400217644&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
-          </SwiperSlide>
-          <SwiperSlide>
-            <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
-          </SwiperSlide>
+          {newData.map((book) => (
+            <SwiperSlide>
+              <Link to={`/books/${book.id}`}>
+                <Image src={book.imageLinks?.thumbnail || ""} alt="book" />
+              </Link>
+            </SwiperSlide>
+          ))}
         </Swiper>
       </Container>
     </Stack>
