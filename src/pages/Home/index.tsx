@@ -1,7 +1,7 @@
 import useBooks from "@/hooks/data/useBooks";
 import Bannner from "./components/Bannner";
 import BooksWeLove from "./components/BooksWeLove";
-import Top100Books from "./components/Top100Books";
+import Top10Books from "./components/Top10Books";
 
 export default function Home() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -21,7 +21,7 @@ export default function Home() {
     <>
       <Bannner />
       <BooksWeLove />
-      <Top100Books />
+      <Top10Books />
     </>
   );
 }

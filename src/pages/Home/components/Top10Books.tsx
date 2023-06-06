@@ -3,7 +3,7 @@ import Image from "@/components/Image";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-export default function Top100Books() {
+export default function Top10Books() {
   return (
     <BodyContainer heading="Top 100 Books">
       <Swiper
