@@ -18,7 +18,8 @@
         "price": 16.93,
         "discountPrice": 15.93,
         "availableCopy": 20,
-        "totalSales": 10
+        "totalSales": 10,
+        "upto75off": true
       }
     },
     {
@@ -103,7 +104,8 @@
         "price": 11.99,
         "discountPrice": 7.99,
         "availableCopy": 30,
-        "totalSales": 43
+        "totalSales": 43,
+        "upto75off": true
       }
     },
     {
@@ -228,7 +230,8 @@
         "price": 10.93,
         "discountPrice": 7.93,
         "availableCopy": 10,
-        "totalSales": 77
+        "totalSales": 77,
+        "upto75off": true
       }
     },
     {
@@ -270,7 +273,8 @@
         "price": 20.93,
         "discountPrice": 6.93,
         "availableCopy": 11,
-        "totalSales": 80
+        "totalSales": 80,
+        "upto75off": true
       }
     },
     {
