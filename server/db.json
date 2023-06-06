@@ -65,28 +65,6 @@
       }
     },
     {
-      "id": "SNAcMMp3H5UC",
-      "title": "Think and Grow Rich: The Landmark Bestseller Now Revised and Updated for the 21st Century (Think and Grow Rich Series)",
-      "authors": ["Napoleon Hill"],
-      "contributors": ["Arthur R. Pell"],
-      "publishedDate": "2022-11-21",
-      "description": "Think and Grow Rich has been called the 'Granddaddy of All Motivational Literature.' It was the first book to boldly ask, 'What makes a winner?' The man who asked and listened for the answer, Napoleon Hill, is now counted in the top ranks of the world's winners himself. The most famous of all teachers of success spent 'a fortune and the better part of a lifetime of effort' to produce the 'Law of Success' philosophy that forms the basis of his books and that is so powerfully summarized in this one.",
-      "pageCount": 320,
-      "categories": ["Self-Help"],
-      "subCatagory": ["Motivationl", "Personal Transformation"],
-      "imageLinks": {
-        "thumbnail": "//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0BMSZSG5Z&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
-      },
-      "language": "en",
-      "saleInfo": {
-        "country": "USA",
-        "price": 12.99,
-        "discountPrice": 10.99,
-        "availableCopy": 30,
-        "totalSales": 34
-      }
-    },
-    {
       "id": "SNAdMMp3H5UC",
       "title": "As a Man Thinketh: A book that will help you to help yourself",
       "authors": ["James Allen"],
@@ -258,14 +236,14 @@
     {
       "id": "SNAmMMp3H5UC",
       "title": "A City is Not a Tree: 50th Anniversary Edition",
-      "authors": ["Christopher Alexander"],
+      "authors": ["Christopher Alexander", "Brianna Wiest"],
       "publishedDate": "January 22, 2020",
       "description": "In 1965, the architect and design theorist Christopher Alexander published a landmark theoretical critique of modern urban design, and by extension, modern design in general. His critique was different from others of the day in that it was not based on a social or political argument, but rather, on a structural analysis, rooted in then-emerging insights from the fields of mathematics and cognition. Here, published again on its fiftieth anniversary, is Alexander's classic text, together with new interpretive commentaries and discussions by leading theorists and practitioners. This volume is destined to become an invaluable resource for a new generation of students and practitioners.",
       "pageCount": 236,
       "categories": ["Arts & Photography Books"],
       "subCatagory": ["Architecture"],
       "imageLinks": {
-        "thumbnail": "//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1616898062&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
+        "thumbnail": "//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=9463864814&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
       },
       "language": "en",
       "saleInfo": {
@@ -296,6 +274,28 @@
         "discountPrice": 10.93,
         "availableCopy": 15,
         "totalSales": 23
+      }
+    },
+    {
+      "id": "SNAcMMp3H5UC",
+      "title": "Think and Grow Rich: The Landmark Bestseller Now Revised and Updated for the 21st Century (Think and Grow Rich Series)",
+      "authors": ["Napoleon Hill"],
+      "contributors": ["Arthur R. Pell"],
+      "publishedDate": "2022-11-21",
+      "description": "Think and Grow Rich has been called the 'Granddaddy of All Motivational Literature.' It was the first book to boldly ask, 'What makes a winner?' The man who asked and listened for the answer, Napoleon Hill, is now counted in the top ranks of the world's winners himself. The most famous of all teachers of success spent 'a fortune and the better part of a lifetime of effort' to produce the 'Law of Success' philosophy that forms the basis of his books and that is so powerfully summarized in this one.",
+      "pageCount": 320,
+      "categories": ["Self-Help"],
+      "subCatagory": ["Motivationl", "Personal Transformation"],
+      "imageLinks": {
+        "thumbnail": "//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=B0BMSZSG5Z&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
+      },
+      "language": "en",
+      "saleInfo": {
+        "country": "USA",
+        "price": 12.99,
+        "discountPrice": 10.99,
+        "availableCopy": 30,
+        "totalSales": 34
       }
     }
   ]
