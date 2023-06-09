@@ -13,15 +13,16 @@ export function useBooks() {
 export function useSubjectBooks({
   type,
   page,
+  limitCount,
 }: {
   type: string;
   page: number;
+  limitCount: number;
 }) {
-  console.log(page);
-  let limit: string;
+  let limit: number;
   switch (type) {
     case "top-10-books":
-      limit = "8";
+      limit = limitCount;
       break;
   }
 
@@ -29,7 +30,10 @@ export function useSubjectBooks({
     const { data } = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}/books?_page=${page}&_limit=${limit}`
     );
-    return data;
+    const { data: newData } = await axios.get(
+      `${import.meta.env.VITE_SERVER_URL}/books`
+    );
+    return { data, total: newData.length };
   });
 }
 

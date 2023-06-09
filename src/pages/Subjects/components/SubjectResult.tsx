@@ -21,10 +21,25 @@ type SubjectResultType = {
 };
 
 export default function SubjectResult({ heading }: SubjectResultType) {
+  const limitCount = 8;
   const [page, setPage] = useState(1);
-  const { isLoading, isError, data } = useSubjectBooks({ type: heading, page });
+  const [showNum, setShowNum] = useState({
+    start: 1,
+    end: 8,
+  });
+  const { isLoading, isError, data } = useSubjectBooks({
+    type: heading,
+    page,
+    limitCount,
+  });
 
-  const newBooks: Partial<Books>[] = data;
+  const newBooks: Partial<Books>[] = data?.data;
+
+  // count the pagination
+  const count = Math.ceil(data?.total / 8);
+
+  // remaining from total by limitcount
+  const remainCount = data?.total % limitCount;
 
   if (isLoading) return <span>Loading...</span>;
 
@@ -32,6 +47,14 @@ export default function SubjectResult({ heading }: SubjectResultType) {
 
   const changePagination = (event: ChangeEvent<unknown>, value: number) => {
     setPage(value);
+    setShowNum({
+      ...showNum,
+      start: value * limitCount - limitCount + 1,
+      end:
+        value * limitCount > data?.total
+          ? value * limitCount - (limitCount - remainCount)
+          : value * limitCount,
+    });
   };
 
   return (
@@ -43,7 +66,7 @@ export default function SubjectResult({ heading }: SubjectResultType) {
         gap={2}
       >
         <Typography component="p" fontSize="15px">
-          21 - 40 of 100 results
+          {showNum.start} - {showNum.end} of {data?.total} results
         </Typography>
 
         <SelectItem />
@@ -100,7 +123,7 @@ export default function SubjectResult({ heading }: SubjectResultType) {
           </Grid>
         ))}
       </Grid>
-      <PaginationBtn count={8} page={page} onChange={changePagination} />
+      <PaginationBtn count={count} page={page} onChange={changePagination} />
     </Box>
   );
 }
