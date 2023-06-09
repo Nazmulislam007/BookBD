@@ -1,9 +1,15 @@
 import BreadCrumbs from "@/components/BreadCrumbs";
+import { HeadingFormat } from "@/hooks/lib";
 import { Box, Container, Stack, Typography } from "@mui/material";
+import { useLocation } from "react-router-dom";
 import FilterSubjects from "./components/FilterSubjects";
 import SubjectResult from "./components/SubjectResult";
 
 export default function Subjects() {
+  const location = useLocation();
+  const heading = location.pathname.slice(3);
+  const formatedHeading = HeadingFormat(heading);
+
   return (
     <Container maxWidth="lg" sx={{ pt: 2, pb: 5 }}>
       <Stack component="header" pb={2}>
@@ -12,13 +18,13 @@ export default function Subjects() {
           fontSize={{ xs: "1.6rem", sm: "2rem" }}
           textAlign="center"
         >
-          Top 100: Bestselling Books
+          {formatedHeading}
         </Typography>
         <Typography component="p" fontSize=".8rem" textAlign="center">
           Discover the best books to read that are trending right now.
         </Typography>
       </Stack>
-      <BreadCrumbs />
+      <BreadCrumbs heading={formatedHeading} />
       <Box
         component="div"
         sx={{
@@ -29,7 +35,7 @@ export default function Subjects() {
       >
         <FilterSubjects />
 
-        <SubjectResult />
+        <SubjectResult heading={heading} />
       </Box>
     </Container>
   );

@@ -79,8 +79,8 @@ export default function Bannner() {
           speed={1000}
         >
           {newData.map((book) => (
-            <SwiperSlide>
-              <Link to={`/books/${book.id}`}>
+            <SwiperSlide key={book.id}>
+              <Link to={`/b/${book.id}`}>
                 <Image src={book.imageLinks?.thumbnail || ""} alt="book" />
               </Link>
             </SwiperSlide>

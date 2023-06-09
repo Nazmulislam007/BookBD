@@ -1,3 +1,4 @@
+import { Books } from "@/Types/Books";
 import Box from "@mui/material/Box";
 import Tab from "@mui/material/Tab";
 import Tabs from "@mui/material/Tabs";
@@ -42,7 +43,7 @@ function a11yProps(index: number) {
   };
 }
 
-export default function DescriptionTabs() {
+export default function DescriptionTabs({ book }: { book: Partial<Books> }) {
   const [value, setValue] = React.useState(0);
 
   const handleChange = (event: React.SyntheticEvent, newValue: number) => {
@@ -64,16 +65,10 @@ export default function DescriptionTabs() {
         </Tabs>
       </Box>
       <TabPanel value={value} index={0}>
-        Bonus material: Interspersed throughout are three comic books that are
-        featured in the story—all created by Tom Hanks himself—including the
-        comic book that becomes the official tie-in to this novel’s "major
-        motion picture masterpiece. Bonus material: Interspersed throughout are
-        three comic books that are featured in the story—all created by Tom
-        Hanks himself—including the comic book that becomes the official tie-in
-        to this novel’s "major motion picture masterpiece.
+        {book.description}
       </TabPanel>
       <TabPanel value={value} index={1}>
-        <Specification />
+        <Specification book={book} />
       </TabPanel>
     </Box>
   );

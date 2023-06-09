@@ -1,5 +1,7 @@
 import BodyContainer from "@/Layouts/BodyContainer";
+import { Books } from "@/Types/Books";
 import Image from "@/components/Image";
+import { useBooks } from "@/hooks/data/useBooks";
 import { Box, Grid, Paper, Stack, Typography, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 import ResposiveBookSlider from "./ResposiveBookSlider";
@@ -14,8 +16,20 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function BooksWeLove() {
+  const { data, isLoading, isError } = useBooks();
+
+  const newData: Partial<Books>[] = data;
+
+  if (isLoading) {
+    return <span>Loading...</span>;
+  }
+
+  if (isError) {
+    return <span>Error: </span>;
+  }
+
   return (
-    <BodyContainer heading="Books We Love">
+    <BodyContainer heading="Books We Love" hidden>
       <Box
         component="div"
         sx={{
@@ -29,8 +43,8 @@ export default function BooksWeLove() {
       >
         <Box component="div" flex="1 1 400px">
           <Box component="div">
-            <Link to="/book">
-              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0063251922&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
+            <Link to={`/book/${newData[0]?.id}`}>
+              <Image src={newData[0].imageLinks?.thumbnail || ""} />
             </Link>
           </Box>
 
@@ -43,7 +57,7 @@ export default function BooksWeLove() {
               pt={2}
               pb={1}
             >
-              Building a story brand story brand
+              {newData[0].title}
             </Typography>
             <Typography
               component="p"
@@ -51,306 +65,69 @@ export default function BooksWeLove() {
               pb={2}
               sx={{ textDecoration: "underline" }}
             >
-              Donald miller
+              {newData[0]?.authors?.slice(0, 1)}
             </Typography>
-            <Typography component="p" color="GrayText">
-              A spellbinding debut novel. Two estranged half-sisters tasked with
-              guarding a secret library of magical books must work together to
-              unravel a deadly secret at the heart of their collection—a tale of
-              familial loyalty and betrayal, and the pursuit of magic and power.
+            <Typography
+              component="p"
+              color="GrayText"
+              className="multiline-ellipsis"
+            >
+              {newData[0].description}
             </Typography>
           </Box>
         </Box>
 
         <Grid container spacing={2} display={{ xs: "none", md: "flex" }}>
-          <Grid item md={4} lg={3}>
-            <Item>
-              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
-              <Box px={1}>
-                <Typography
-                  component="p"
-                  lineHeight="1.5"
-                  fontSize="1rem"
-                  fontWeight="600"
-                  pb="5px"
-                >
-                  Building a story brand story brand
-                </Typography>
-                <Typography
-                  component="p"
-                  lineHeight="1.7"
-                  sx={{ textDecoration: "underline" }}
-                  pb="5px"
-                >
-                  Donald miller
-                </Typography>
-                <Stack direction="row" justifyContent="center" gap={2} mt={0.5}>
-                  <Typography
-                    component="p"
-                    sx={{ textDecoration: "line-through" }}
-                    color="GrayText"
-                  >
-                    $10
-                  </Typography>
-                  <Typography component="p" color="#63422d" fontWeight="600">
-                    $8
-                  </Typography>
-                </Stack>
-              </Box>
-            </Item>
-          </Grid>
-          <Grid item md={4} lg={3}>
-            <Item>
-              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
-              <Box px={1}>
-                <Typography
-                  component="p"
-                  lineHeight="1.5"
-                  fontSize="1rem"
-                  fontWeight="600"
-                  pb="5px"
-                >
-                  Building a story brand story brand
-                </Typography>
-                <Typography
-                  component="p"
-                  lineHeight="1.7"
-                  sx={{ textDecoration: "underline" }}
-                  pb="5px"
-                >
-                  Donald miller
-                </Typography>
-                <Stack direction="row" justifyContent="center" gap={2} mt={0.5}>
-                  <Typography
-                    component="p"
-                    sx={{ textDecoration: "line-through" }}
-                    color="GrayText"
-                  >
-                    $10
-                  </Typography>
-                  <Typography component="p" color="#63422d" fontWeight="600">
-                    $8
-                  </Typography>
-                </Stack>
-              </Box>
-            </Item>
-          </Grid>
-          <Grid item md={4} lg={3}>
-            <Item>
-              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400217644&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
-              <Box px={1}>
-                <Typography
-                  component="p"
-                  lineHeight="1.5"
-                  fontSize="1rem"
-                  fontWeight="600"
-                  pb="5px"
-                >
-                  Building a story brand story brand
-                </Typography>
-                <Typography
-                  component="p"
-                  lineHeight="1.7"
-                  sx={{ textDecoration: "underline" }}
-                  pb="5px"
-                >
-                  Donald miller
-                </Typography>
-                <Stack direction="row" justifyContent="center" gap={2} mt={0.5}>
-                  <Typography
-                    component="p"
-                    sx={{ textDecoration: "line-through" }}
-                    color="GrayText"
-                  >
-                    $10
-                  </Typography>
-                  <Typography component="p" color="#63422d" fontWeight="600">
-                    $8
-                  </Typography>
-                </Stack>
-              </Box>
-            </Item>
-          </Grid>
-          <Grid item md={4} lg={3}>
-            <Item>
-              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
-              <Box px={1}>
-                <Typography
-                  component="p"
-                  lineHeight="1.5"
-                  fontSize="1rem"
-                  fontWeight="600"
-                  pb="5px"
-                >
-                  Building a story brand story brand
-                </Typography>
-                <Typography
-                  component="p"
-                  lineHeight="1.7"
-                  sx={{ textDecoration: "underline" }}
-                  pb="5px"
-                >
-                  Donald miller
-                </Typography>
-                <Stack direction="row" justifyContent="center" gap={2} mt={0.5}>
-                  <Typography
-                    component="p"
-                    sx={{ textDecoration: "line-through" }}
-                    color="GrayText"
-                  >
-                    $10
-                  </Typography>
-                  <Typography component="p" color="#63422d" fontWeight="600">
-                    $8
-                  </Typography>
-                </Stack>
-              </Box>
-            </Item>
-          </Grid>
-          <Grid item md={4} lg={3}>
-            <Item>
-              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
-              <Box px={1}>
-                <Typography
-                  component="p"
-                  lineHeight="1.5"
-                  fontSize="1rem"
-                  fontWeight="600"
-                  pb="5px"
-                >
-                  Building a story brand story brand
-                </Typography>
-                <Typography
-                  component="p"
-                  lineHeight="1.7"
-                  sx={{ textDecoration: "underline" }}
-                  pb="5px"
-                >
-                  Donald miller
-                </Typography>
-                <Stack direction="row" justifyContent="center" gap={2} mt={0.5}>
-                  <Typography
-                    component="p"
-                    sx={{ textDecoration: "line-through" }}
-                    color="GrayText"
-                  >
-                    $10
-                  </Typography>
-                  <Typography component="p" color="#63422d" fontWeight="600">
-                    $8
-                  </Typography>
-                </Stack>
-              </Box>
-            </Item>
-          </Grid>
-          <Grid item md={4} lg={3}>
-            <Item>
-              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400217644&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
-              <Box px={1}>
-                <Typography
-                  component="p"
-                  lineHeight="1.5"
-                  fontSize="1rem"
-                  fontWeight="600"
-                  pb="5px"
-                >
-                  Building a story brand story brand
-                </Typography>
-                <Typography
-                  component="p"
-                  lineHeight="1.7"
-                  sx={{ textDecoration: "underline" }}
-                  pb="5px"
-                >
-                  Donald miller
-                </Typography>
-                <Stack direction="row" justifyContent="center" gap={2} mt={0.5}>
-                  <Typography
-                    component="p"
-                    sx={{ textDecoration: "line-through" }}
-                    color="GrayText"
-                  >
-                    $10
-                  </Typography>
-                  <Typography component="p" color="#63422d" fontWeight="600">
-                    $8
-                  </Typography>
-                </Stack>
-              </Box>
-            </Item>
-          </Grid>
-          <Grid item md={4} lg={3}>
-            <Item>
-              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
-              <Box px={1}>
-                <Typography
-                  component="p"
-                  lineHeight="1.5"
-                  fontSize="1rem"
-                  fontWeight="600"
-                  pb="5px"
-                >
-                  Building a story brand story brand
-                </Typography>
-                <Typography
-                  component="p"
-                  lineHeight="1.7"
-                  sx={{ textDecoration: "underline" }}
-                  pb="5px"
-                >
-                  Donald miller
-                </Typography>
-                <Stack direction="row" justifyContent="center" gap={2} mt={0.5}>
-                  <Typography
-                    component="p"
-                    sx={{ textDecoration: "line-through" }}
-                    color="GrayText"
-                  >
-                    $10
-                  </Typography>
-                  <Typography component="p" color="#63422d" fontWeight="600">
-                    $8
-                  </Typography>
-                </Stack>
-              </Box>
-            </Item>
-          </Grid>
-          <Grid item md={4} lg={3}>
-            <Item>
-              <Image src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US" />
-              <Box px={1}>
-                <Typography
-                  component="p"
-                  lineHeight="1.5"
-                  fontSize="1rem"
-                  fontWeight="600"
-                  pb="5px"
-                >
-                  Building a story brand story brand
-                </Typography>
-                <Typography
-                  component="p"
-                  lineHeight="1.7"
-                  sx={{ textDecoration: "underline" }}
-                  pb="5px"
-                >
-                  Donald miller
-                </Typography>
-                <Stack direction="row" justifyContent="center" gap={2} mt={0.5}>
-                  <Typography
-                    component="p"
-                    sx={{ textDecoration: "line-through" }}
-                    color="GrayText"
-                  >
-                    $10
-                  </Typography>
-                  <Typography component="p" color="#63422d" fontWeight="600">
-                    $8
-                  </Typography>
-                </Stack>
-              </Box>
-            </Item>
-          </Grid>
+          {newData?.map(({ authors, id, title, imageLinks, saleInfo }) => (
+            <Grid item md={4} lg={3} key={id}>
+              <Link to={`/b/${id}`}>
+                <Item>
+                  <Image src={imageLinks?.thumbnail || ""} />
+                  <Box px={1}>
+                    <Typography
+                      component="p"
+                      lineHeight="1.5"
+                      fontSize="1rem"
+                      fontWeight="600"
+                      pb="5px"
+                      className="ellipsis"
+                    >
+                      {title}
+                    </Typography>
+                    <Typography
+                      component="p"
+                      lineHeight="1.7"
+                      sx={{ textDecoration: "underline" }}
+                      pb="5px"
+                    >
+                      {authors?.slice(0, 1)}
+                    </Typography>
+                    <Stack
+                      direction="row"
+                      justifyContent="center"
+                      gap={2}
+                      mt={0.5}
+                    >
+                      <Typography
+                        component="p"
+                        sx={{ textDecoration: "line-through" }}
+                        color="GrayText"
+                      >
+                        ${saleInfo?.price}
+                      </Typography>
+                      <Typography
+                        component="p"
+                        color="#63422d"
+                        fontWeight="600"
+                      >
+                        ${saleInfo?.discountPrice}
+                      </Typography>
+                    </Stack>
+                  </Box>
+                </Item>
+              </Link>
+            </Grid>
+          ))}
         </Grid>
         <ResposiveBookSlider />
       </Box>

@@ -7,15 +7,9 @@ export default function Home() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isLoading, isError, data } = useBooks();
 
-  console.log(data);
+  if (isLoading) return <span>Loading...</span>;
 
-  if (isLoading) {
-    return <span>Loading...</span>;
-  }
-
-  if (isError) {
-    return <span>Error: </span>;
-  }
+  if (isError) return <span>Error: </span>;
 
   return (
     <>

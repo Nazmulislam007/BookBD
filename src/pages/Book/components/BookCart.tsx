@@ -1,10 +1,22 @@
+import { Books } from "@/Types/Books";
+import ActionButton from "@/components/ActionButton";
 import HoverRating from "@/components/Ratting";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import { Box, Button, Stack, Typography } from "@mui/material";
-import { useNavigate } from "react-router-dom";
+import { Box, Stack, Typography } from "@mui/material";
 
-export default function BookCart() {
-  const navigate = useNavigate();
+export default function BookCart({
+  authors,
+  title,
+  imageLinks,
+  description,
+  saleInfo,
+}: Partial<Books>) {
+  const { price, discountPrice } = saleInfo || {};
+
+  const validPrice = price || 0;
+
+  const save = +(validPrice - (discountPrice || 0)).toFixed(2);
+  const percentage = +(save / validPrice).toFixed(2) * 100;
 
   return (
     <Box
@@ -25,33 +37,31 @@ export default function BookCart() {
             margin: "auto",
           }}
         >
-          <img
-            src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
-            style={{ display: "block" }}
-          />
+          <img src={imageLinks?.thumbnail} style={{ display: "block" }} />
         </Box>
       </Box>
 
       <Stack component="header" flex="1 1 60%" pb={2}>
         <Typography component="h4" fontSize="2rem">
-          The 7 habits of highly effective people
+          {title}
         </Typography>
         <Typography component="p" fontSize=".8rem">
           by{" "}
-          <Typography
-            component="a"
-            fontSize=".8rem"
-            sx={{ textDecoration: "underline" }}
-          >
-            Steven R. Convey
-          </Typography>
+          {authors?.map((author, i) => (
+            <Typography
+              component="a"
+              fontSize=".8rem"
+              mr="5px"
+              sx={{ textDecoration: "underline" }}
+              key={i}
+            >
+              {author}
+            </Typography>
+          ))}
         </Typography>
         <HoverRating />
         <Typography component="p" mt={1}>
-          Bonus material: Interspersed throughout are three comic books that are
-          featured in the story—all created by Tom Hanks himself—including the
-          comic book that becomes the official tie-in to this novel’s "major
-          motion picture masterpiece."
+          {description}
         </Typography>
         <Stack
           direction="row"
@@ -66,7 +76,7 @@ export default function BookCart() {
             color="GrayText"
             fontSize="1.7rem"
           >
-            $10
+            ${saleInfo?.price}
           </Typography>
           <Typography
             component="p"
@@ -74,10 +84,10 @@ export default function BookCart() {
             fontWeight="600"
             fontSize="1.7rem"
           >
-            $8
+            ${saleInfo?.discountPrice}
           </Typography>
           <Typography component="p" color="gray" fontSize="1rem">
-            You Save $2 (25%)
+            You Save ${save} ({percentage}%)
           </Typography>
         </Stack>
         <Box
@@ -86,22 +96,11 @@ export default function BookCart() {
         >
           <CheckCircleIcon sx={{ color: "green" }} />
           <Typography sx={{ color: "gray", fontSize: "1rem" }}>
-            In Stock (28 copies available)
+            In Stock ({saleInfo?.availableCopy} copies available)
           </Typography>
         </Box>
         <Box component="div" mt={3}>
-          <Button
-            sx={{
-              bgcolor: "#63422d",
-              "&:hover": {
-                bgcolor: "#63422d",
-              },
-            }}
-            variant="contained"
-            onClick={() => navigate("/shopping-cart")}
-          >
-            Add To Cart
-          </Button>
+          <ActionButton />
         </Box>
       </Stack>
     </Box>

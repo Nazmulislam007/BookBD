@@ -1,3 +1,4 @@
+import { UrlFormat } from "@/hooks/lib";
 import { Box, Container, Typography } from "@mui/material";
 import { ReactNode } from "react";
 import { Link } from "react-router-dom";
@@ -5,11 +6,13 @@ import { Link } from "react-router-dom";
 type BodyContainerType = {
   children: ReactNode;
   heading: string;
+  hidden?: boolean;
 };
 
 export default function BodyContainer({
   children,
   heading,
+  hidden,
 }: BodyContainerType) {
   return (
     <Container maxWidth="lg" sx={{ py: 5 }}>
@@ -31,20 +34,22 @@ export default function BodyContainer({
         >
           {heading}
         </Typography>
-        <Link to="/subjects">
-          <Typography
-            component="p"
-            sx={{
-              mr: "10px",
-              color: "inherit",
-              "&:hover": {
-                color: "GrayText",
-              },
-            }}
-          >
-            See More
-          </Typography>
-        </Link>
+        {!hidden && (
+          <Link to={`/s/${UrlFormat(heading)}`}>
+            <Typography
+              component="p"
+              sx={{
+                mr: "10px",
+                color: "inherit",
+                "&:hover": {
+                  color: "GrayText",
+                },
+              }}
+            >
+              See More
+            </Typography>
+          </Link>
+        )}
       </Box>
       {children}
     </Container>

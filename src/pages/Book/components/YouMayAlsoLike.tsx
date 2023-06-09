@@ -1,9 +1,20 @@
+import { Books } from "@/Types/Books";
 import Image from "@/components/Image";
+import { useLikedBooks } from "@/hooks/data/useBooks";
 import { Box, Typography } from "@mui/material";
+import { Link } from "react-router-dom";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-export default function YouMayAlsoLike() {
+export default function YouMayAlsoLike({ id }: { id: string }) {
+  const { data, isLoading, isError } = useLikedBooks({ id });
+
+  const books: Partial<Books>[] = data;
+
+  if (isLoading) return <span>Loading...</span>;
+
+  if (isError) return <span>Error: </span>;
+
   return (
     <Box py={4}>
       <Typography
@@ -50,48 +61,16 @@ export default function YouMayAlsoLike() {
           },
         }}
       >
-        <SwiperSlide>
-          <Image
-            style={{ display: "block", width: "100%", height: "270px" }}
-            src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            style={{ display: "block", width: "100%", height: "270px" }}
-            src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400203813&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            style={{ display: "block", width: "100%", height: "270px" }}
-            src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1400217644&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            style={{ display: "block", width: "100%", height: "270px" }}
-            src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0718033329&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            style={{ display: "block", width: "100%", height: "270px" }}
-            src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1667879200&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            style={{ display: "block", width: "100%", height: "270px" }}
-            src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=0802162177&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
-          />
-        </SwiperSlide>
-        <SwiperSlide>
-          <Image
-            style={{ display: "block", width: "100%", height: "270px" }}
-            src="//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1649374046&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US"
-          />
-        </SwiperSlide>
+        {books.map((book) => (
+          <SwiperSlide key={book.id}>
+            <Link to={`/b/${book.id}`}>
+              <Image
+                style={{ display: "block", width: "100%", height: "270px" }}
+                src={book.imageLinks?.thumbnail || ""}
+              />
+            </Link>
+          </SwiperSlide>
+        ))}
       </Swiper>
     </Box>
   );
