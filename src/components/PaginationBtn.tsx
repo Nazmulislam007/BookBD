@@ -1,5 +1,16 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Pagination } from "@mui/material";
 
-export default function PaginationBtn() {
-  return <Pagination count={10} />;
+type PaginationType = {
+  count: number;
+  page: number;
+  [rest: string]: any;
+};
+
+export default function PaginationBtn({
+  count,
+  page,
+  ...rest
+}: PaginationType) {
+  return <Pagination count={count} page={page} {...rest} />;
 }
