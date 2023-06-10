@@ -1,6 +1,11 @@
 import { Button } from "@mui/material";
 
-export default function ActionButton() {
+type ActionButtonType = {
+  title: string;
+  [rest: string]: string | object;
+};
+
+export default function ActionButton({ title, ...rest }: ActionButtonType) {
   return (
     <Button
       sx={{
@@ -10,8 +15,9 @@ export default function ActionButton() {
         },
       }}
       variant="contained"
+      {...rest}
     >
-      Order now
+      {title}
     </Button>
   );
 }

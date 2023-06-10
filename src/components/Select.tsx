@@ -1,5 +1,7 @@
+import { SortedBy } from "@/Types/Books";
+import { ActionTypeName } from "@/context/BooksProvider/ActionType";
+import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import { MenuItem, Select, SelectChangeEvent, styled } from "@mui/material";
-import React from "react";
 
 const CustomSelect = styled(Select)(() => ({
   border: "1px solid #c3c3c3",
@@ -19,28 +21,33 @@ const CustomMenuItem = styled(MenuItem)(() => ({
 }));
 
 export default function SelectItem() {
-  const [sort, setSort] = React.useState("More relevant");
+  const { filterBooks, dispatchFilter } = useBooks();
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
-    setSort(event.target.value as string);
+    dispatchFilter({
+      type: ActionTypeName.SORTED_BY,
+      payload: event.target.value as string,
+    });
   };
 
   return (
     <CustomSelect
       disableUnderline
       variant="standard"
-      value={sort}
+      value={filterBooks.sortBy}
       onChange={handleChange}
     >
-      <CustomMenuItem value="More relevant">More relevant</CustomMenuItem>
-      <CustomMenuItem value="Sort by popularity">
-        Sort by popularity
+      <CustomMenuItem value={SortedBy.MOST_RELEVANT}>
+        {SortedBy.MOST_RELEVANT}
       </CustomMenuItem>
-      <CustomMenuItem value="Sort by price: low to high">
-        Sort by price: low to high
+      <CustomMenuItem value={SortedBy.POPULARTIY}>
+        {SortedBy.POPULARTIY}
       </CustomMenuItem>
-      <CustomMenuItem value="Sort by price: high to low">
-        Sort by price: high to low
+      <CustomMenuItem value={SortedBy.LOW_TO_HIGH}>
+        {SortedBy.LOW_TO_HIGH}
+      </CustomMenuItem>
+      <CustomMenuItem value={SortedBy.HIGH_TO_LOW}>
+        {SortedBy.HIGH_TO_LOW}
       </CustomMenuItem>
     </CustomSelect>
   );

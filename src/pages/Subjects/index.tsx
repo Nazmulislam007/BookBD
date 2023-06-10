@@ -1,5 +1,5 @@
 import BreadCrumbs from "@/components/BreadCrumbs";
-import { HeadingFormat } from "@/hooks/lib";
+import { HeadingFormat } from "@/lib";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { useLocation } from "react-router-dom";
 import FilterSubjects from "./components/FilterSubjects";

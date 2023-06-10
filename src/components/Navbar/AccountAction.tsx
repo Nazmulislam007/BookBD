@@ -1,8 +1,11 @@
+import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import { List, ListItem } from "@mui/material";
 import Typography from "@mui/material/Typography";
 import CustomizedBadges from "./CartBadge";
 
 export default function AccountAction() {
+  const { setOpenRegister } = useBooks();
+
   return (
     <List sx={{ display: "flex", alignItems: "center" }}>
       <ListItem sx={{ px: 0, pr: 1, display: { xs: "none", md: "block" } }}>
@@ -16,6 +19,7 @@ export default function AccountAction() {
             color: "gray",
             whiteSpace: "nowrap",
           }}
+          onClick={() => setOpenRegister(true)}
         >
           login / register
         </Typography>

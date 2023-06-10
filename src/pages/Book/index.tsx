@@ -1,5 +1,5 @@
 import { Books } from "@/Types/Books";
-import { useBookById } from "@/hooks/data/useBooks";
+import { useBookById } from "@/hooks/useBooks";
 import { Box, Container } from "@mui/material";
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";

@@ -2,7 +2,7 @@ import { Books } from "@/Types/Books";
 import { banner } from "@/assets";
 import ActionButton from "@/components/ActionButton";
 import Image from "@/components/Image";
-import { useBannarBooks } from "@/hooks/data/useBooks";
+import { useBannarBooks } from "@/hooks/useBooks";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import "swiper/css";
@@ -56,7 +56,7 @@ export default function Bannner() {
             Quidem Obcaecati Vero Atque Quos Aperiam, Corrupti Blanditiis Ex!
             Sit?
           </Typography>
-          <ActionButton />
+          <ActionButton title="Order Now" />
         </Box>
         <Swiper
           style={{ flex: "1 1 480px" }}

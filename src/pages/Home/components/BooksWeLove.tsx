@@ -1,7 +1,7 @@
 import BodyContainer from "@/Layouts/BodyContainer";
 import { Books } from "@/Types/Books";
 import Image from "@/components/Image";
-import { useBooks } from "@/hooks/data/useBooks";
+import { useBooks } from "@/hooks/useBooks";
 import { Box, Grid, Paper, Stack, Typography, styled } from "@mui/material";
 import { Link } from "react-router-dom";
 import ResposiveBookSlider from "./ResposiveBookSlider";

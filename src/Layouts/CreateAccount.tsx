@@ -65,7 +65,7 @@ export default function CreateAccount() {
           alignItems="center"
           pt={2}
         >
-          <ActionButton />
+          <ActionButton title="Sign In" />
           <Typography fontSize="sm" color="#1565c0">
             <Link href="/login/forget" color="#63422d">
               Forgot Password?
@@ -120,7 +120,7 @@ export default function CreateAccount() {
           alignItems="center"
           pt={2}
         >
-          <ActionButton />
+          <ActionButton title="Sign Up" />
         </Stack>
       </Box>
     </Stack>

@@ -1,4 +1,4 @@
-import useBooks from "@/hooks/data/useBooks";
+import useBooks from "@/hooks/useBooks";
 import Bannner from "./components/Bannner";
 import BooksWeLove from "./components/BooksWeLove";
 import Top10Books from "./components/Top10Books";

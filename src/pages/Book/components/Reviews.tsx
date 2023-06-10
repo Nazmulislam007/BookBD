@@ -35,7 +35,7 @@ export default function Reviews() {
           >
             Reviews
           </Typography>
-          <ActionButton />
+          <ActionButton title="Write a review" />
         </Stack>
         <Stack direction="row" display="flex" gap="30px" flexWrap="wrap">
           <Box component="div" flex="1 1 220px">

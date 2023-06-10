@@ -1,5 +1,5 @@
+import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Modal from "@mui/material/Modal";
 import * as React from "react";
 
@@ -22,16 +22,13 @@ type OpenModalType = {
 };
 
 export default function OpenModal({ children }: OpenModalType) {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
+  const { openRegister, setOpenRegister } = useBooks();
 
   return (
     <div>
-      <Button onClick={handleOpen}>Open modal</Button>
       <Modal
-        open={open}
-        onClose={handleClose}
+        open={openRegister}
+        onClose={() => setOpenRegister(!openRegister)}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >

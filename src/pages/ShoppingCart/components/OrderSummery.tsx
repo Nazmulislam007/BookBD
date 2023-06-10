@@ -5,7 +5,7 @@ export default function OrderSummery() {
   return (
     <Box
       component="div"
-      flex="1 1 250px"
+      flex="1 1 280px"
       border="1px solid #dfdfdf"
       px={3}
       pb={3}
@@ -45,7 +45,7 @@ export default function OrderSummery() {
           $46.34
         </Typography>
       </Stack>
-      <ActionButton />
+      <ActionButton title="Order Now" />
     </Box>
   );
 }

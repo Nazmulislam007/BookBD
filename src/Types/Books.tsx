@@ -21,6 +21,13 @@ export type Books = {
   };
 };
 
+export enum SortedBy {
+  MOST_RELEVANT = "Most relevant",
+  POPULARTIY = "Sort by popularity",
+  LOW_TO_HIGH = "Sort by price: low to high",
+  HIGH_TO_LOW = "Sort by price: high to low",
+}
+
 // export type Prettify<T> = {
 //   [K in keyof T]: T[K];
 // } & object;

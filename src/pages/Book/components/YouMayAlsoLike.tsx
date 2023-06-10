@@ -1,6 +1,6 @@
 import { Books } from "@/Types/Books";
 import Image from "@/components/Image";
-import { useLikedBooks } from "@/hooks/data/useBooks";
+import { useLikedBooks } from "@/hooks/useBooks";
 import { Box, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import { Navigation } from "swiper";

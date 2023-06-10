@@ -1,7 +1,7 @@
 import BodyContainer from "@/Layouts/BodyContainer";
 import { Books } from "@/Types/Books";
 import Image from "@/components/Image";
-import useTop10Books from "@/hooks/data/useBooks";
+import useTop10Books from "@/hooks/useBooks";
 import { Link } from "react-router-dom";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";

@@ -1,8 +1,9 @@
-import { Books } from "@/Types/Books";
+import { Books, SortedBy } from "@/Types/Books";
 import Image from "@/components/Image";
 import PaginationBtn from "@/components/PaginationBtn";
 import SelectItem from "@/components/Select";
-import { useSubjectBooks } from "@/hooks/data/useBooks";
+import { useBooks } from "@/context/BooksProvider/BooksProvider";
+import { useSubjectBooks } from "@/hooks/useBooks";
 import { Box, Grid, Paper, Stack, Typography, styled } from "@mui/material";
 import { ChangeEvent, useState } from "react";
 import { Link } from "react-router-dom";
@@ -21,6 +22,7 @@ type SubjectResultType = {
 };
 
 export default function SubjectResult({ heading }: SubjectResultType) {
+  const { filterBooks } = useBooks();
   const limitCount = 8;
   const [page, setPage] = useState(1);
   const [showNum, setShowNum] = useState({
@@ -34,6 +36,39 @@ export default function SubjectResult({ heading }: SubjectResultType) {
   });
 
   const newBooks: Partial<Books>[] = data?.data;
+
+  function sortBooks() {
+    switch (filterBooks.sortBy) {
+      case SortedBy.MOST_RELEVANT: {
+        return newBooks.sort(
+          (a, b) =>
+            new Date(a.publishedDate || "").valueOf() -
+            new Date(b.publishedDate || "").valueOf()
+        );
+      }
+      case SortedBy.POPULARTIY: {
+        return newBooks.sort(
+          (a, b) =>
+            (b.saleInfo?.totalSales || 0) - (a.saleInfo?.totalSales || 0)
+        );
+      }
+      case SortedBy.LOW_TO_HIGH: {
+        return newBooks.sort(
+          (a, b) =>
+            (a.saleInfo?.discountPrice || 0) - (b.saleInfo?.discountPrice || 0)
+        );
+      }
+      case SortedBy.HIGH_TO_LOW: {
+        return newBooks.sort(
+          (a, b) =>
+            (b.saleInfo?.discountPrice || 0) - (a.saleInfo?.discountPrice || 0)
+        );
+      }
+      default: {
+        return newBooks;
+      }
+    }
+  }
 
   // count the pagination
   const count = Math.ceil(data?.total / 8);
@@ -72,7 +107,7 @@ export default function SubjectResult({ heading }: SubjectResultType) {
         <SelectItem />
       </Stack>
       <Grid container spacing={2} py={4}>
-        {newBooks.map((book) => (
+        {sortBooks().map((book) => (
           <Grid item xs={6} sm={4} lg={3} key={book.id}>
             <Link to={`/b/${book.id}`}>
               <Item>

@@ -1,4 +1,4 @@
-import { HeadingFormat } from "@/hooks/lib";
+import { HeadingFormat } from "@/lib";
 import { Box, Typography } from "@mui/material";
 
 type BreadPropsType = {

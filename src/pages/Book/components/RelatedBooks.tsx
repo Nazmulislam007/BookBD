@@ -1,5 +1,5 @@
 import { Books } from "@/Types/Books";
-import { useRelatedBooks } from "@/hooks/data/useBooks";
+import { useRelatedBooks } from "@/hooks/useBooks";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 
 export default function RelatedBooks({ id }: { id: string }) {

@@ -10,7 +10,7 @@ export default function ShoppingCart() {
         <Stack
           direction="column"
           gap="20px"
-          flex="1 1 75%"
+          flex="1 1 70%"
           border="1px solid #dfdfdf"
           pb={3}
           px={4}
