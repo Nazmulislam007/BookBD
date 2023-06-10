@@ -3,6 +3,6 @@ import { render, screen } from "@testing-library/react";
 
 test("renders headline", () => {
   render(<App />);
-  const headline = screen.getByText(/helo/i);
-  expect(headline).toBeInTheDocument();
+  const listItems = screen.getAllByRole("listitem");
+  expect(listItems).toHaveLength(3);
 });
