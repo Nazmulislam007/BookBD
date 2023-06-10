@@ -5,7 +5,7 @@ export type Books = {
   publishedDate: string;
   description: string;
   pageCount: number;
-  categories: string[];
+  catagories: string[];
   subCatagory: string[];
   imageLinks: {
     thumbnail: string;

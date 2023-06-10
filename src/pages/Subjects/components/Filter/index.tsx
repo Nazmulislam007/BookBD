@@ -1,58 +1,50 @@
-import ArrowForwardIosSharpIcon from "@mui/icons-material/ArrowForwardIosSharp";
-import MuiAccordion, { AccordionProps } from "@mui/material/Accordion";
-import MuiAccordionDetails from "@mui/material/AccordionDetails";
-import MuiAccordionSummary, {
-  AccordionSummaryProps,
-} from "@mui/material/AccordionSummary";
+import { Books } from "@/Types/Books";
+import {
+  Accordion,
+  AccordionDetails,
+  AccordionSummary,
+} from "@/assets/theme/Accordion";
+import { useAllBooks } from "@/hooks/useBooks";
 import Typography from "@mui/material/Typography";
-import { styled } from "@mui/material/styles";
 import * as React from "react";
 import PriceRangeSlider from "./PriceRange";
 import SortByAuthors from "./SortByAuthors";
 import ShortByCatagory from "./SortByCatagory";
 import SortByRatting from "./SortByRating";
 
-const Accordion = styled((props: AccordionProps) => (
-  <MuiAccordion disableGutters elevation={0} square {...props} />
-))(({ theme }) => ({
-  border: `1px solid ${theme.palette.divider}`,
-  "&:not(:last-child)": {
-    borderBottom: 0,
-  },
-  "&:before": {
-    display: "none",
-  },
-}));
-
-const AccordionSummary = styled((props: AccordionSummaryProps) => (
-  <MuiAccordionSummary
-    expandIcon={<ArrowForwardIosSharpIcon sx={{ fontSize: "0.9rem" }} />}
-    {...props}
-  />
-))(({ theme }) => ({
-  backgroundColor:
-    theme.palette.mode === "dark"
-      ? "rgba(255, 255, 255, .05)"
-      : "rgba(0, 0, 0, .03)",
-  flexDirection: "row-reverse",
-  "& .MuiAccordionSummary-expandIconWrapper.Mui-expanded": {
-    transform: "rotate(90deg)",
-  },
-  "& .MuiAccordionSummary-content": {
-    marginLeft: theme.spacing(1),
-  },
-}));
-
-const AccordionDetails = styled(MuiAccordionDetails)(({ theme }) => ({
-  padding: theme.spacing(2),
-  borderTop: "1px solid rgba(0, 0, 0, .125)",
-}));
-
 export default function FilterBooks() {
   const [expanded, setExpanded] = React.useState<string | false>("panel1");
 
+  const { data, isLoading, isError } = useAllBooks();
+
+  const newData: Partial<Books>[] = data;
+
+  // concat all nested arrray catagory in a simple array
+  const catagory = [
+    ...new Set(
+      newData?.reduce((acc, curr) => acc.concat(curr.catagories as []), [])
+    ),
+  ];
+  // concat all nested arrray subCatagory in a simple array
+  const subCatagory = [
+    ...new Set(
+      newData?.reduce((acc, curr) => acc.concat(curr.subCatagory as []), [])
+    ),
+  ];
+  // concat all nested arrray authors in a simple array
+  const authors: string[] = [
+    ...new Set(
+      newData?.reduce((acc, curr) => acc.concat(curr.authors as []), [])
+    ),
+  ].sort();
+
+  const totalCatagory: string[] = catagory.concat(subCatagory).sort();
+
+  if (isLoading) return <span>Loading...</span>;
+  if (isError) return <span>Error...</span>;
+
   const handleChange =
-    (panel: string) => (event: React.SyntheticEvent, newExpanded: boolean) => {
+    (panel: string) => (_event: React.SyntheticEvent, newExpanded: boolean) => {
       setExpanded(newExpanded ? panel : false);
     };
 
@@ -73,7 +65,7 @@ export default function FilterBooks() {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <ShortByCatagory />
+          <ShortByCatagory totalCatagory={totalCatagory} />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -91,7 +83,7 @@ export default function FilterBooks() {
           </Typography>
         </AccordionSummary>
         <AccordionDetails>
-          <SortByAuthors />
+          <SortByAuthors authors={authors} />
         </AccordionDetails>
       </Accordion>
       <Accordion>

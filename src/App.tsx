@@ -8,11 +8,6 @@ import { router } from "./routes/roots";
 function App() {
   return (
     <BooksProvider>
-      <ul>
-        <li>a</li>
-        <li>a</li>
-        <li>a</li>
-      </ul>
       <RouterProvider router={router} />
     </BooksProvider>
   );
