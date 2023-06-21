@@ -1,14 +1,30 @@
 import BreadCrumbs from "@/components/BreadCrumbs";
+import { useSubjectBooks } from "@/hooks/useBooks";
 import { HeadingFormat } from "@/lib";
 import { Box, Container, Stack, Typography } from "@mui/material";
+import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import FilterSubjects from "./components/FilterSubjects";
 import SubjectResult from "./components/SubjectResult";
 
 export default function Subjects() {
+  const limitCount = 8;
   const location = useLocation();
   const heading = location.pathname.slice(3);
   const formatedHeading = HeadingFormat(heading);
+  const [page, setPage] = useState(1);
+
+  const { isLoading, isError, data } = useSubjectBooks({
+    type: heading,
+    page,
+    limitCount,
+  });
+
+  const newBooks = data?.data;
+
+  if (isLoading) return <span>Loading...</span>;
+
+  if (isError) return <span>Error: </span>;
 
   return (
     <Container maxWidth="lg" sx={{ pt: 2, pb: 5 }}>
@@ -35,7 +51,13 @@ export default function Subjects() {
       >
         <FilterSubjects />
 
-        <SubjectResult heading={heading} />
+        <SubjectResult
+          newBooks={newBooks}
+          setPage={setPage}
+          page={page}
+          limitCount={limitCount}
+          total={data?.total}
+        />
       </Box>
     </Container>
   );

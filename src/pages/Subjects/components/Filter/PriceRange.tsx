@@ -1,16 +1,16 @@
+import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
-import * as React from "react";
 
 function valuetext(value: number) {
   return `${value}°C`;
 }
 
 export default function PriceRangeSlider() {
-  const [value, setValue] = React.useState<number[]>([20, 40]);
+  const { sortedPrice, setSortedPrice } = useBooks();
 
-  const handleChange = (event: Event, newValue: number | number[]) => {
-    setValue(newValue as number[]);
+  const handleChange = (_event: Event, newValue: number | number[]) => {
+    setSortedPrice(newValue as number[]);
   };
 
   const marks = [
@@ -43,8 +43,8 @@ export default function PriceRangeSlider() {
   return (
     <Box sx={{ width: 280, margin: "auto" }}>
       <Slider
-        getAriaLabel={() => "Temperature range"}
-        value={value}
+        getAriaLabel={() => "Price range"}
+        value={sortedPrice}
         onChange={handleChange}
         valueLabelDisplay="auto"
         marks={marks}

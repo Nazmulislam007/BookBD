@@ -21,10 +21,10 @@ const CustomMenuItem = styled(MenuItem)(() => ({
 }));
 
 export default function SelectItem() {
-  const { filterBooks, dispatchFilter } = useBooks();
+  const { sortedBooks, dispatchSort } = useBooks();
 
   const handleChange = (event: SelectChangeEvent<unknown>) => {
-    dispatchFilter({
+    dispatchSort({
       type: ActionTypeName.SORTED_BY,
       payload: event.target.value as string,
     });
@@ -34,7 +34,7 @@ export default function SelectItem() {
     <CustomSelect
       disableUnderline
       variant="standard"
-      value={filterBooks.sortBy}
+      value={sortedBooks.sortBy}
       onChange={handleChange}
     >
       <CustomMenuItem value={SortedBy.MOST_RELEVANT}>

@@ -1,3 +1,5 @@
+/* eslint-disable react-refresh/only-export-components */
+
 export function UrlFormat(str: string) {
   return str.toLowerCase().replace(/\s/g, "-");
 }

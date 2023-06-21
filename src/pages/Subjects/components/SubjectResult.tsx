@@ -1,11 +1,10 @@
-import { Books, SortedBy } from "@/Types/Books";
+import { Books } from "@/Types/Books";
 import Image from "@/components/Image";
 import PaginationBtn from "@/components/PaginationBtn";
 import SelectItem from "@/components/Select";
-import { useBooks } from "@/context/BooksProvider/BooksProvider";
-import { useSubjectBooks } from "@/hooks/useBooks";
+import useSorted from "@/hooks/useSorted";
 import { Box, Grid, Paper, Stack, Typography, styled } from "@mui/material";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -18,75 +17,40 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 type SubjectResultType = {
-  heading: string;
+  newBooks: Partial<Books>[];
+  setPage: Dispatch<SetStateAction<number>>;
+  page: number;
+  limitCount: number;
+  total: number;
 };
 
-export default function SubjectResult({ heading }: SubjectResultType) {
-  const { filterBooks } = useBooks();
-  const limitCount = 8;
-  const [page, setPage] = useState(1);
+export default function SubjectResult({
+  newBooks,
+  setPage,
+  page,
+  limitCount,
+  total,
+}: SubjectResultType) {
   const [showNum, setShowNum] = useState({
     start: 1,
     end: 8,
   });
-  const { isLoading, isError, data } = useSubjectBooks({
-    type: heading,
-    page,
-    limitCount,
-  });
 
-  const newBooks: Partial<Books>[] = data?.data;
-
-  function sortBooks() {
-    switch (filterBooks.sortBy) {
-      case SortedBy.MOST_RELEVANT: {
-        return newBooks.sort(
-          (a, b) =>
-            new Date(a.publishedDate || "").valueOf() -
-            new Date(b.publishedDate || "").valueOf()
-        );
-      }
-      case SortedBy.POPULARTIY: {
-        return newBooks.sort(
-          (a, b) =>
-            (b.saleInfo?.totalSales || 0) - (a.saleInfo?.totalSales || 0)
-        );
-      }
-      case SortedBy.LOW_TO_HIGH: {
-        return newBooks.sort(
-          (a, b) =>
-            (a.saleInfo?.discountPrice || 0) - (b.saleInfo?.discountPrice || 0)
-        );
-      }
-      case SortedBy.HIGH_TO_LOW: {
-        return newBooks.sort(
-          (a, b) =>
-            (b.saleInfo?.discountPrice || 0) - (a.saleInfo?.discountPrice || 0)
-        );
-      }
-      default: {
-        return newBooks;
-      }
-    }
-  }
+  const updatedBooks: Partial<Books>[] = useSorted({ newBooks });
 
   // count the pagination
-  const count = Math.ceil(data?.total / 8);
+  const count = Math.ceil(total / limitCount);
 
   // remaining from total by limitcount
-  const remainCount = data?.total % limitCount;
+  const remainCount = total % limitCount;
 
-  if (isLoading) return <span>Loading...</span>;
-
-  if (isError) return <span>Error: </span>;
-
-  const changePagination = (event: ChangeEvent<unknown>, value: number) => {
+  const changePagination = (_event: ChangeEvent<unknown>, value: number) => {
     setPage(value);
     setShowNum({
       ...showNum,
       start: value * limitCount - limitCount + 1,
       end:
-        value * limitCount > data?.total
+        value * limitCount > total
           ? value * limitCount - (limitCount - remainCount)
           : value * limitCount,
     });
@@ -101,13 +65,13 @@ export default function SubjectResult({ heading }: SubjectResultType) {
         gap={2}
       >
         <Typography component="p" fontSize="15px">
-          {showNum.start} - {showNum.end} of {data?.total} results
+          {showNum.start} - {showNum.end} of {total} results
         </Typography>
 
         <SelectItem />
       </Stack>
       <Grid container spacing={2} py={4}>
-        {sortBooks().map((book) => (
+        {updatedBooks.map((book) => (
           <Grid item xs={6} sm={4} lg={3} key={book.id}>
             <Link to={`/b/${book.id}`}>
               <Item>
