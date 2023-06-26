@@ -1,28 +1,17 @@
 /* eslint-disable react-refresh/only-export-components */
 import {
-  Dispatch,
   ReactNode,
-  SetStateAction,
   createContext,
   useContext,
   useMemo,
   useReducer,
   useState,
 } from "react";
-import { ActionType, SortedStateType } from "./ActionType";
+import { ContextType } from "./ActionType";
 import { initialSortedValue, sortedReducer } from "./reducer";
 
 type BooksProviderType = {
   children: ReactNode;
-};
-
-type ContextType = {
-  openRegister: boolean;
-  setOpenRegister: Dispatch<SetStateAction<boolean>>;
-  sortedBooks: SortedStateType;
-  dispatchSort: Dispatch<ActionType>;
-  sortedPrice: number[];
-  setSortedPrice: Dispatch<SetStateAction<number[]>>;
 };
 
 const BooksContext = createContext<ContextType>({
@@ -32,6 +21,8 @@ const BooksContext = createContext<ContextType>({
   dispatchSort: () => void {},
   sortedPrice: [0, 100],
   setSortedPrice: () => void {},
+  filterCata: "",
+  setFilterCata: () => void {},
 });
 
 const useBooks = () => {
@@ -41,6 +32,7 @@ const useBooks = () => {
 export default function BooksProvider({ children }: BooksProviderType) {
   const [sortedPrice, setSortedPrice] = useState<number[]>([0, 100]);
   const [openRegister, setOpenRegister] = useState(false);
+  const [filterCata, setFilterCata] = useState("");
   const [sortedBooks, dispatchSort] = useReducer(
     sortedReducer,
     initialSortedValue
@@ -54,8 +46,10 @@ export default function BooksProvider({ children }: BooksProviderType) {
       dispatchSort,
       sortedPrice,
       setSortedPrice,
+      filterCata,
+      setFilterCata,
     }),
-    [sortedBooks, openRegister, sortedPrice]
+    [sortedBooks, openRegister, sortedPrice, filterCata]
   );
 
   return (

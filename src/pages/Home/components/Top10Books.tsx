@@ -1,8 +1,7 @@
 import BodyContainer from "@/Layouts/BodyContainer";
 import { Books } from "@/Types/Books";
-import Image from "@/components/Image";
+import SingleBook from "@/components/SingleBook";
 import useTop10Books from "@/hooks/useBooks";
-import { Link } from "react-router-dom";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -56,12 +55,7 @@ export default function Top10Books() {
       >
         {newData?.map((book) => (
           <SwiperSlide key={book.id}>
-            <Link to={`/b/${book.id}`}>
-              <Image
-                style={{ display: "block", width: "100%", height: "270px" }}
-                src={book.imageLinks?.thumbnail || ""}
-              />
-            </Link>
+            <SingleBook book={book} />
           </SwiperSlide>
         ))}
       </Swiper>

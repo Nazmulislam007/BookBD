@@ -1,8 +1,7 @@
 import { Books } from "@/Types/Books";
-import Image from "@/components/Image";
+import SingleBook from "@/components/SingleBook";
 import { useLikedBooks } from "@/hooks/useBooks";
 import { Box, Typography } from "@mui/material";
-import { Link } from "react-router-dom";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
@@ -63,12 +62,7 @@ export default function YouMayAlsoLike({ id }: { id: string }) {
       >
         {books.map((book) => (
           <SwiperSlide key={book.id}>
-            <Link to={`/b/${book.id}`}>
-              <Image
-                style={{ display: "block", width: "100%", height: "270px" }}
-                src={book.imageLinks?.thumbnail || ""}
-              />
-            </Link>
+            <SingleBook book={book} />
           </SwiperSlide>
         ))}
       </Swiper>

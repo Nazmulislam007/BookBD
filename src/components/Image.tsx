@@ -1,47 +1,65 @@
-import { Box } from "@mui/material";
+import useAddtoCart from "@/hooks/useAddtoCart";
+import { Box, Button } from "@mui/material";
+import { MouseEvent } from "react";
+import { useQueryClient } from "react-query";
 
 export default function Image({
   src,
+  bookId,
+  author,
+  title,
+  price,
   ...rest
 }: {
   src: string;
+  bookId: string;
+  author: string;
+  title: string;
+  price: number;
   [rest: string]: unknown;
 }) {
+  const queryClient = useQueryClient();
+  const mutate = useAddtoCart();
+
+  const bookData: any = {
+    id: bookId,
+    author,
+    title,
+    price,
+    img: src,
+    quantity: 1,
+    totalPrice: price,
+  };
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    mutate(bookData, {
+      onSuccess: (data) => {
+        queryClient.setQueryData(["cart-books"], (prev: any) => [
+          ...prev,
+          data.data,
+        ]);
+      },
+    });
+  };
+
   return (
     <Box
-      component="button"
       sx={{
         width: { md: "fit-content", xs: "150px" },
         height: { xs: "230px" },
         position: "relative",
         overflow: "hidden",
+        border: "1px solid #dfdfdf",
 
-        "&::before": {
-          content: `"Add To Cart"`,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          position: "absolute",
-          height: "34px",
-          bottom: "-50px",
-          left: "5px",
-          width: "calc(100% - 10px)",
-          color: "#444444",
-          background: "white",
+        "&:hover .MuiButtonBase-root": {
+          bottom: "8px",
           border: "1px solid silver",
-          fontSize: "14px",
-          fontWeight: "600",
-          outlineStyle: "solid",
-          outlineColor: "white",
-          outlineWidth: "6px",
-        },
-
-        "&:hover::before": {
-          bottom: "5px",
+          bgcolor: "white",
           transition: "0.3s ease-in-out",
         },
 
-        "&:not(:hover)::before": {
+        "&:not(:hover) .MuiButtonBase-root": {
           transition: "0.3s ease-in-out",
         },
       }}
@@ -49,8 +67,40 @@ export default function Image({
       <img
         src={src}
         {...rest}
-        style={{ display: "block", width: "100%", height: "100%" }}
+        style={{
+          display: "block",
+          width: "-webkit-fill-available",
+          height: "-webkit-fill-available",
+          padding: "10px",
+        }}
       />
+      <Button
+        variant="outlined"
+        sx={{
+          position: "absolute",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+
+          height: "34px",
+          width: "calc(100% - 16px)",
+          bottom: "-50px",
+          left: "8px",
+
+          color: "#444444",
+          background: "white",
+          border: "1px solid silver",
+          borderRadius: "0",
+          fontSize: "14px",
+          fontWeight: "600",
+          outlineStyle: "solid",
+          outlineColor: "white",
+          outlineWidth: "8px",
+        }}
+        onClick={handleClick}
+      >
+        Add To Cart
+      </Button>
     </Box>
   );
 }

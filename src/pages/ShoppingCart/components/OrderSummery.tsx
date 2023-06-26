@@ -1,7 +1,22 @@
+import { CartBookType } from "@/Types/Books";
 import ActionButton from "@/components/ActionButton";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 
-export default function OrderSummery() {
+export default function OrderSummery({
+  cartBooks,
+}: {
+  cartBooks: CartBookType[];
+}) {
+  const totalPrice: number = cartBooks?.reduce(
+    (prev, curr) => prev + curr.totalPrice,
+    0
+  );
+
+  const totalQty: number = cartBooks?.reduce(
+    (prev, curr) => prev + curr.quantity,
+    0
+  );
+
   return (
     <Box
       component="div"
@@ -25,8 +40,8 @@ export default function OrderSummery() {
         pt={2}
         pb="5px"
       >
-        <Typography component="p">SubTotal (2 Items)</Typography>
-        <Typography component="p">$46.34</Typography>
+        <Typography component="p">SubTotal ({totalQty} Items)</Typography>
+        <Typography component="p">${totalPrice}</Typography>
       </Stack>
       <Stack direction="row" gap="10px" justifyContent="space-between" pb="5px">
         <Typography component="p">Estimated Shipping</Typography>
@@ -42,7 +57,7 @@ export default function OrderSummery() {
           Order Total:
         </Typography>
         <Typography component="p" fontWeight="600">
-          $46.34
+          ${totalPrice}
         </Typography>
       </Stack>
       <ActionButton title="Order Now" />

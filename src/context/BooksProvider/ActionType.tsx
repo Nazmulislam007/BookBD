@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Dispatch, SetStateAction } from "react";
 
 export enum ActionTypeName {
   SORTED_BY = "books/sorted-by",
@@ -8,6 +9,17 @@ export enum ActionTypeName {
 export type SortedStateType = {
   sortBy: string;
   filterByAuthor: string[];
+};
+
+export type ContextType = {
+  openRegister: boolean;
+  setOpenRegister: Dispatch<SetStateAction<boolean>>;
+  sortedBooks: SortedStateType;
+  dispatchSort: Dispatch<ActionType>;
+  sortedPrice: number[];
+  setSortedPrice: Dispatch<SetStateAction<number[]>>;
+  filterCata: string;
+  setFilterCata: Dispatch<SetStateAction<string>>;
 };
 
 export type ActionType = {

@@ -1,9 +1,10 @@
 import BodyContainer from "@/Layouts/BodyContainer";
 import { Books } from "@/Types/Books";
 import Image from "@/components/Image";
+import SingleBook from "@/components/SingleBook";
 import { useBooks } from "@/hooks/useBooks";
 import { Box, Grid, Paper, Stack, Typography, styled } from "@mui/material";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import ResposiveBookSlider from "./ResposiveBookSlider";
 
 const Item = styled(Paper)(({ theme }) => ({
@@ -16,6 +17,7 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 export default function BooksWeLove() {
+  const navigate = useNavigate();
   const { data, isLoading, isError } = useBooks();
 
   const newData: Partial<Books>[] = data;
@@ -43,9 +45,15 @@ export default function BooksWeLove() {
       >
         <Box component="div" flex="1 1 400px">
           <Box component="div">
-            <Link to={`/book/${newData[0]?.id}`}>
-              <Image src={newData[0].imageLinks?.thumbnail || ""} />
-            </Link>
+            <div onClick={() => navigate(`/book/${newData[0]?.id}`)}>
+              <Image
+                bookId={newData[0]?.id || ""}
+                author={(newData[0]?.authors && newData[0]?.authors[0]) || ""}
+                price={newData[0]?.saleInfo?.discountPrice || 0}
+                title={newData[0]?.title || ""}
+                src={newData[0].imageLinks?.thumbnail || ""}
+              />
+            </div>
           </Box>
 
           <Box component="div">
@@ -78,11 +86,12 @@ export default function BooksWeLove() {
         </Box>
 
         <Grid container spacing={2} display={{ xs: "none", md: "flex" }}>
-          {newData?.map(({ authors, id, title, imageLinks, saleInfo }) => (
-            <Grid item md={4} lg={3} key={id}>
-              <Link to={`/b/${id}`}>
+          {newData?.map((book) => {
+            const { authors, id, title, saleInfo } = book;
+            return (
+              <Grid item md={4} lg={3} key={id}>
                 <Item>
-                  <Image src={imageLinks?.thumbnail || ""} />
+                  <SingleBook book={book} />
                   <Box px={1}>
                     <Typography
                       component="p"
@@ -125,11 +134,11 @@ export default function BooksWeLove() {
                     </Stack>
                   </Box>
                 </Item>
-              </Link>
-            </Grid>
-          ))}
+              </Grid>
+            );
+          })}
         </Grid>
-        <ResposiveBookSlider />
+        <ResposiveBookSlider books={newData} />
       </Box>
     </BodyContainer>
   );

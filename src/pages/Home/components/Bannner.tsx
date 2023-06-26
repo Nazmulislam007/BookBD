@@ -1,7 +1,7 @@
 import { Books } from "@/Types/Books";
 import { banner } from "@/assets";
 import ActionButton from "@/components/ActionButton";
-import Image from "@/components/Image";
+import SingleBook from "@/components/SingleBook";
 import { useBannarBooks } from "@/hooks/useBooks";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
@@ -56,7 +56,9 @@ export default function Bannner() {
             Quidem Obcaecati Vero Atque Quos Aperiam, Corrupti Blanditiis Ex!
             Sit?
           </Typography>
-          <ActionButton title="Order Now" />
+          <Link to="/s/upto-75-off">
+            <ActionButton title="Order Now" />
+          </Link>
         </Box>
         <Swiper
           style={{ flex: "1 1 480px" }}
@@ -80,9 +82,7 @@ export default function Bannner() {
         >
           {newData.map((book) => (
             <SwiperSlide key={book.id}>
-              <Link to={`/b/${book.id}`}>
-                <Image src={book.imageLinks?.thumbnail || ""} alt="book" />
-              </Link>
+              <SingleBook book={book} />
             </SwiperSlide>
           ))}
         </Swiper>

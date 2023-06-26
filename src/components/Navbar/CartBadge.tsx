@@ -1,3 +1,4 @@
+import { useGetCartBooks } from "@/hooks/useAddtoCart";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import Badge, { BadgeProps } from "@mui/material/Badge";
 import IconButton from "@mui/material/IconButton";
@@ -15,10 +16,12 @@ const StyledBadge = styled(Badge)<BadgeProps>(({ theme }) => ({
 }));
 
 export default function CustomizedBadges() {
+  const { data } = useGetCartBooks();
+
   return (
     <Link to="/shopping-cart">
       <IconButton aria-label="cart">
-        <StyledBadge badgeContent={4} color="secondary">
+        <StyledBadge badgeContent={data?.length} color="secondary">
           <ShoppingCartIcon />
         </StyledBadge>
       </IconButton>

@@ -1,11 +1,10 @@
 import { Books } from "@/Types/Books";
-import Image from "@/components/Image";
 import PaginationBtn from "@/components/PaginationBtn";
 import SelectItem from "@/components/Select";
+import SingleBook from "@/components/SingleBook";
 import useSorted from "@/hooks/useSorted";
 import { Box, Grid, Paper, Stack, Typography, styled } from "@mui/material";
 import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
-import { Link } from "react-router-dom";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -73,52 +72,42 @@ export default function SubjectResult({
       <Grid container spacing={2} py={4}>
         {updatedBooks.map((book) => (
           <Grid item xs={6} sm={4} lg={3} key={book.id}>
-            <Link to={`/b/${book.id}`}>
-              <Item>
-                <Image
-                  src={book.imageLinks?.thumbnail || ""}
-                  className="responsive__img"
-                />
-                <Box px={1}>
+            <Item>
+              <SingleBook book={book} />
+              <Box px={1}>
+                <Typography
+                  component="p"
+                  lineHeight="1.5"
+                  fontSize={{ xs: ".9rem", sm: "1rem" }}
+                  fontWeight="600"
+                  pb="5px"
+                  className="ellipsis"
+                >
+                  {book.title}
+                </Typography>
+                <Typography
+                  component="p"
+                  lineHeight="1.7"
+                  sx={{ textDecoration: "underline" }}
+                  fontSize={{ xs: ".95rem", sm: "1rem" }}
+                  pb="5px"
+                >
+                  {book.authors?.slice(0, 1)}
+                </Typography>
+                <Stack direction="row" justifyContent="center" gap={2} mt={0.5}>
                   <Typography
                     component="p"
-                    lineHeight="1.5"
-                    fontSize={{ xs: ".9rem", sm: "1rem" }}
-                    fontWeight="600"
-                    pb="5px"
-                    className="ellipsis"
+                    sx={{ textDecoration: "line-through" }}
+                    color="GrayText"
                   >
-                    {book.title}
+                    ${book.saleInfo?.price}
                   </Typography>
-                  <Typography
-                    component="p"
-                    lineHeight="1.7"
-                    sx={{ textDecoration: "underline" }}
-                    fontSize={{ xs: ".95rem", sm: "1rem" }}
-                    pb="5px"
-                  >
-                    {book.authors?.slice(0, 1)}
+                  <Typography component="p" color="#63422d" fontWeight="600">
+                    ${book.saleInfo?.discountPrice}
                   </Typography>
-                  <Stack
-                    direction="row"
-                    justifyContent="center"
-                    gap={2}
-                    mt={0.5}
-                  >
-                    <Typography
-                      component="p"
-                      sx={{ textDecoration: "line-through" }}
-                      color="GrayText"
-                    >
-                      ${book.saleInfo?.price}
-                    </Typography>
-                    <Typography component="p" color="#63422d" fontWeight="600">
-                      ${book.saleInfo?.discountPrice}
-                    </Typography>
-                  </Stack>
-                </Box>
-              </Item>
-            </Link>
+                </Stack>
+              </Box>
+            </Item>
           </Grid>
         ))}
       </Grid>
