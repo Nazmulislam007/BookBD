@@ -61,7 +61,7 @@ export default function FilterBooks() {
             fontWeight="600"
             letterSpacing="0.3"
           >
-            SROT BY CATAGRORY
+            FILTER BY CATAGRORY
           </Typography>
         </AccordionSummary>
         <AccordionDetails>

@@ -1,3 +1,4 @@
+import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
@@ -8,17 +9,16 @@ export default function ShortByCatagory({
 }: {
   totalCatagory: string[];
 }) {
-  const [value, setValue] = React.useState("");
-
+  const { filterCata, setFilterCata } = useBooks();
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setValue((event.target as HTMLInputElement).value);
+    setFilterCata((event.target as HTMLInputElement).value);
   };
 
   return (
     <RadioGroup
       aria-labelledby="demo-controlled-radio-buttons-group"
       name="controlled-radio-buttons-group"
-      value={value}
+      value={filterCata}
       onChange={handleChange}
     >
       {totalCatagory.map((cata, i) => (
