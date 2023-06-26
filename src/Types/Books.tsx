@@ -21,6 +21,16 @@ export type Books = {
   };
 };
 
+export type CartBookType = {
+  id: string;
+  title: string;
+  author: string;
+  price: number;
+  img: string;
+  quantity: number;
+  totalPrice: number;
+};
+
 export enum SortedBy {
   MOST_RELEVANT = "Most relevant",
   POPULARTIY = "Sort by popularity",
