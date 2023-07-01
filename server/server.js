@@ -15,6 +15,8 @@ const {
 // initialize app
 const app = express();
 
+app.locals.existedId = {};
+
 // database setup
 async function main() {
   await mongoose.connect("mongodb://127.0.0.1:27017/book-app");
