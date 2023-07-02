@@ -7,6 +7,7 @@ const PORT = process.env.PORT || 3330;
 
 // internal imports
 const bookRouter = require("./router/bookRouter");
+const shoppingCartRouter = require("./router/shoppingCartRouter");
 const {
   notFoundHandler,
   errorHandler,
@@ -33,6 +34,7 @@ app.use(cookieParser("cookie-secret"));
 
 // router setup
 app.use("/books", bookRouter);
+app.use("/shopping-cart", shoppingCartRouter);
 
 // error handling setup
 app.use(notFoundHandler); // 404 error

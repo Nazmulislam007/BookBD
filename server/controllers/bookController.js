@@ -1,4 +1,3 @@
-const app = require("express")();
 const Book = require("../models/Books");
 
 const getAllBooks = async (req, res, next) => {
@@ -111,10 +110,52 @@ const upto75perOff = async (req, res, next) => {
   }
 };
 
+const getTop50Books = async (req, res, next) => {
+  try {
+    const { _page, _limit } = req.query;
+
+    const getBooks = [{ $sort: { "saleInfo.totalSales": -1 } }];
+
+    if (_page && _limit) {
+      // we get max 50 top books
+      const maxPage = +_page > 5 ? 5 : +_page;
+
+      getBooks.push({ $skip: (+maxPage - 1) * +_limit }, { $limit: +_limit });
+    }
+
+    const topBooks = await Book.aggregate(getBooks);
+
+    res.status(200).json({ totalCount: 50, books: topBooks });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getBooksWeLove = async (req, res, next) => {
+  try {
+    const bookWeLove = await Book.aggregate([
+      {
+        $sort: {
+          "reviews.rating": -1,
+        },
+      },
+      {
+        $limit: 9,
+      },
+    ]);
+
+    res.status(200).json(bookWeLove);
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getAllBooks,
   getSingleBook,
   searchBooks,
   relatedBooks,
   upto75perOff,
+  getTop50Books,
+  getBooksWeLove,
 };
