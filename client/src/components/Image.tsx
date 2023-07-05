@@ -11,6 +11,7 @@ export default function Image({
   author,
   title,
   price,
+  rM,
   ...rest
 }: {
   src: string;
@@ -18,6 +19,7 @@ export default function Image({
   author: string;
   title: string;
   price: number;
+  rM?: boolean;
   [rest: string]: unknown;
 }) {
   const navigate = useNavigate();
@@ -25,10 +27,10 @@ export default function Image({
   const mutate = useAddtoCart();
   const { data } = useGetCartBooks();
 
-  const isExitedBook = (data as Books[]).find((book) => book.id === bookId);
+  const isExitedBook = (data as Books[]).find((book) => book._id === bookId);
 
   const bookData: any = {
-    id: bookId,
+    _id: bookId,
     author,
     title,
     price,
@@ -41,10 +43,10 @@ export default function Image({
     e.stopPropagation();
     if (isExitedBook) return navigate("/shopping-cart");
     mutate(bookData, {
-      onSuccess: (data) => {
+      onSuccess: () => {
         queryClient.setQueryData(["cart-books"], (prev: any) => [
           ...prev,
-          data.data,
+          bookData,
         ]);
       },
     });
@@ -58,6 +60,7 @@ export default function Image({
         position: "relative",
         overflow: "hidden",
         border: "1px solid #dfdfdf",
+        margin: rM ? "inherit" : "0 auto",
 
         "&:hover .MuiButtonBase-root": {
           bottom: "8px",

@@ -1,19 +1,14 @@
 import { Books } from "@/Types/Books";
 import SingleBook from "@/components/SingleBook";
-import { useLikedBooks } from "@/hooks/useBooks";
 import { Box, Typography } from "@mui/material";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-export default function YouMayAlsoLike({ id }: { id: string }) {
-  const { data, isLoading, isError } = useLikedBooks({ id });
-
-  const books: Partial<Books>[] = data;
-
-  if (isLoading) return <span>Loading...</span>;
-
-  if (isError) return <span>Error: </span>;
-
+export default function YouMayAlsoLike({
+  youMayAlsoLike,
+}: {
+  youMayAlsoLike: Partial<Books>[];
+}) {
   return (
     <Box py={4}>
       <Typography
@@ -60,8 +55,8 @@ export default function YouMayAlsoLike({ id }: { id: string }) {
           },
         }}
       >
-        {books.map((book) => (
-          <SwiperSlide key={book.id}>
+        {youMayAlsoLike.map((book) => (
+          <SwiperSlide key={book._id}>
             <SingleBook book={book} />
           </SwiperSlide>
         ))}

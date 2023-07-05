@@ -16,7 +16,7 @@ export default function ShoppingCart() {
   if (isLoading) content = <div>Loading...</div>;
   if (cartBooks?.length <= 0) content = <div>Your Cart is Empty!</div>;
   if (cartBooks?.length > 0 && !isError)
-    content = cartBooks.map((book) => <CartItem key={book.id} book={book} />);
+    content = cartBooks.map((book) => <CartItem key={book._id} book={book} />);
 
   return (
     <Container maxWidth="lg" sx={{ py: 5 }}>

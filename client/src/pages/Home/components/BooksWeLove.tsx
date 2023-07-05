@@ -2,7 +2,7 @@ import BodyContainer from "@/Layouts/BodyContainer";
 import { Books } from "@/Types/Books";
 import Image from "@/components/Image";
 import SingleBook from "@/components/SingleBook";
-import { useBooks } from "@/hooks/useBooks";
+import { useBooksWeLove } from "@/hooks/useBooks";
 import { Box, Grid, Paper, Stack, Typography, styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ResposiveBookSlider from "./ResposiveBookSlider";
@@ -18,9 +18,7 @@ const Item = styled(Paper)(({ theme }) => ({
 
 export default function BooksWeLove() {
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useBooks();
-
-  const newData: Partial<Books>[] = data;
+  const { data, isLoading, isError } = useBooksWeLove();
 
   if (isLoading) {
     return <span>Loading...</span>;
@@ -29,6 +27,8 @@ export default function BooksWeLove() {
   if (isError) {
     return <span>Error: </span>;
   }
+
+  const newData: Partial<Books>[] = data;
 
   return (
     <BodyContainer heading="Books We Love" hidden>
@@ -45,9 +45,9 @@ export default function BooksWeLove() {
       >
         <Box component="div" flex="1 1 400px">
           <Box component="div">
-            <div onClick={() => navigate(`/book/${newData[0]?.id}`)}>
+            <div onClick={() => navigate(`/book/${newData[0]?._id}`)}>
               <Image
-                bookId={newData[0]?.id || ""}
+                bookId={newData[0]?._id || ""}
                 author={(newData[0]?.authors && newData[0]?.authors[0]) || ""}
                 price={newData[0]?.saleInfo?.discountPrice || 0}
                 title={newData[0]?.title || ""}
@@ -86,13 +86,13 @@ export default function BooksWeLove() {
         </Box>
 
         <Grid container spacing={2} display={{ xs: "none", md: "flex" }}>
-          {newData?.map((book) => {
-            const { authors, id, title, saleInfo } = book;
+          {newData?.slice(1).map((book) => {
+            const { authors, _id, title, saleInfo } = book;
             return (
-              <Grid item md={4} lg={3} key={id}>
+              <Grid item md={4} lg={3} key={_id}>
                 <Item>
                   <SingleBook book={book} />
-                  <Box px={1}>
+                  <Box px={1} mt={1}>
                     <Typography
                       component="p"
                       lineHeight="1.5"
@@ -105,8 +105,8 @@ export default function BooksWeLove() {
                     </Typography>
                     <Typography
                       component="p"
-                      lineHeight="1.7"
-                      sx={{ textDecoration: "underline" }}
+                      lineHeight="1.4"
+                      sx={{ textDecoration: "underline" , fontSize: '13px'}}
                       pb="5px"
                     >
                       {authors?.slice(0, 1)}

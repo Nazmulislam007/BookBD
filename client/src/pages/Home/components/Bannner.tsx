@@ -12,12 +12,10 @@ export default function Bannner() {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isLoading, isError, data } = useBannarBooks();
 
-  const newData: Partial<Books>[] = data;
-
   if (isLoading) {
     return <span>Loading...</span>;
   }
-
+  
   if (isError) {
     return <span>Error: </span>;
   }
@@ -44,14 +42,14 @@ export default function Bannner() {
         <Box flex="1 1 420px">
           <Typography
             component="h2"
-            fontSize="2.7rem"
+            fontSize="3rem"
             fontWeight="900"
             color="#444444"
             mb={1}
           >
             Upto 75% Off
           </Typography>
-          <Typography component="p" mb={3} fontSize="0.9rem">
+          <Typography component="p" mb={3} fontSize="0.88rem" fontWeight={400}>
             Lorem Ipsum Dolor Sit Amet Consectetur Adipisicing Elit. Maxime Nam
             Quidem Obcaecati Vero Atque Quos Aperiam, Corrupti Blanditiis Ex!
             Sit?
@@ -80,9 +78,9 @@ export default function Bannner() {
           effect="coverflow"
           speed={1000}
         >
-          {newData.map((book) => (
-            <SwiperSlide key={book.id}>
-              <SingleBook book={book} />
+          {(data as Partial<Books>[]).map((book) => (
+            <SwiperSlide key={book._id}>
+              <SingleBook book={book} rM/>
             </SwiperSlide>
           ))}
         </Swiper>

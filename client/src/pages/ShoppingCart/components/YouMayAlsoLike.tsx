@@ -1,12 +1,12 @@
 import { Books } from "@/Types/Books";
 import SingleBook from "@/components/SingleBook";
-import useTop10Books from "@/hooks/useBooks";
+import useTop50Books from "@/hooks/useBooks";
 import { Box, Typography } from "@mui/material";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function YouMayAlsoLike() {
-  const { isError, isLoading, data } = useTop10Books();
+  const { data, isError, isLoading } = useTop50Books();
 
   if (isLoading) return <span>Loading...</span>;
 
@@ -58,8 +58,8 @@ export default function YouMayAlsoLike() {
           },
         }}
       >
-        {(data as Books[]).map((book) => (
-          <SwiperSlide key={book.id}>
+        {(data.books as Books[])?.map((book) => (
+          <SwiperSlide key={book._id}>
             <SingleBook book={book} />
           </SwiperSlide>
         ))}

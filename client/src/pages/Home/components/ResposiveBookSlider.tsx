@@ -44,7 +44,7 @@ export default function ResposiveBookSlider({
         }}
       >
         {books.map((book) => (
-          <SwiperSlide key={book.id}>
+          <SwiperSlide key={book._id}>
             <SingleBook book={book} />
           </SwiperSlide>
         ))}

@@ -12,26 +12,19 @@ export function useGetCartBooks() {
 
 export function useEditCartBook() {
   const { mutate } = useMutation(
-    ({
-      id,
-      quantity,
-      totalPrice,
-    }: {
-      id: string;
-      quantity: number;
-      totalPrice: number;
-    }) =>
-      axios.patch(`${import.meta.env.VITE_SERVER_URL}/shopping-cart/${id}`, {
-        quantity: quantity,
-        totalPrice: totalPrice,
+    ({ _id, type, price }: { _id: string; type: string; price: number }) =>
+      axios.patch(`${import.meta.env.VITE_SERVER_URL}/shopping-cart`, {
+        _id,
+        type,
+        price,
       })
   );
   return mutate;
 }
 
 export function useDeleteCartBook() {
-  const { mutate } = useMutation(({ id }: { id: string }) =>
-    axios.delete(`${import.meta.env.VITE_SERVER_URL}/shopping-cart/${id}`)
+  const { mutate } = useMutation(({ _id }: { _id: string }) =>
+    axios.delete(`${import.meta.env.VITE_SERVER_URL}/shopping-cart?q=${_id}`)
   );
   return mutate;
 }

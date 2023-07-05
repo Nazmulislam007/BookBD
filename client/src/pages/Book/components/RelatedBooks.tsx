@@ -1,23 +1,18 @@
 import { Books } from "@/Types/Books";
-import { useRelatedBooks } from "@/hooks/useBooks";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 
-export default function RelatedBooks({ id }: { id: string }) {
-  const { data, isLoading, isError } = useRelatedBooks({ id });
-
-  const books: Partial<Books>[] = data;
-
-  if (isLoading) return <span>Loading...</span>;
-
-  if (isError) return <span>Error: </span>;
-
+export default function RelatedBooks({
+  relatedBooks,
+}: {
+  relatedBooks: Partial<Books>[];
+}) {
   return (
     <Box flex="1 1 300px">
       <Typography component="p" fontWeight="600">
         Related Products
       </Typography>
-      {books?.map((book) => (
-        <Stack direction="row" gap="10px" py={2} key={book.id}>
+      {relatedBooks?.map((book) => (
+        <Stack direction="row" gap="10px" py={2} key={book._id}>
           <Box component="div" sx={{ width: "60px" }}>
             <img
               src={book.imageLinks?.thumbnail}
@@ -38,10 +33,10 @@ export default function RelatedBooks({ id }: { id: string }) {
             >
               {book.title}
             </Typography>
-            <Typography component="p" fontSize=".9rem">
+            <Typography component="p" fontSize=".8rem">
               {book.authors?.slice(0, 1)}
             </Typography>
-            <Stack direction="row" gap={2} mt={0.5}>
+            <Stack direction="row" gap={2} mt={0.2}>
               <Typography
                 component="p"
                 sx={{ textDecoration: "line-through" }}

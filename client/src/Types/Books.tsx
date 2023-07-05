@@ -1,5 +1,5 @@
 export type Books = {
-  id: string;
+  _id: string;
   title: string;
   authors: string[];
   publishedDate: string;
@@ -22,12 +22,14 @@ export type Books = {
 };
 
 export type CartBookType = {
-  id: string;
+  _id: string;
   title: string;
   author: string;
   price: number;
   img: string;
   quantity: number;
+  createdAt: Date;
+  updatedAt: Date;
   totalPrice: number;
 };
 

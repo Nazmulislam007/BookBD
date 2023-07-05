@@ -12,15 +12,15 @@ export default function CartItem({ book }: { book: CartBookType }) {
   const handleIncreQty = debounce(() => {
     mutate(
       {
-        id: book.id,
-        quantity: book.quantity + 1,
-        totalPrice: fixed(book.price * (book.quantity + 1)),
+        _id: book._id,
+        type: "incre",
+        price: book.price,
       } as any,
       {
         onSuccess: (_data, variables) => {
           queryClient.setQueryData(["cart-books"], (prev: any) =>
             prev.map((elem: any) => {
-              if (elem.id === variables.id) {
+              if (elem._id === variables._id) {
                 return {
                   ...elem,
                   quantity: elem.quantity + 1,
@@ -38,21 +38,21 @@ export default function CartItem({ book }: { book: CartBookType }) {
   const handleDecreQty = debounce(() => {
     mutate(
       {
-        id: book.id,
-        quantity: book.quantity - 1,
-        totalPrice: fixed(book.price * (book.quantity - 1)),
+        _id: book._id,
+        type: "decre",
+        price: book.price,
       } as any,
       {
         onSuccess: (data, variables) => {
           // if the quantity is zero than it will be deleted
-          if (data.data.quantity <= 0) {
-            deleteCart({ id: data.data.id } as any);
+          if (data.data.quantity <= 1) {
+            deleteCart({ _id: data.data._id } as any);
           }
 
           queryClient.setQueryData(["cart-books"], (prev: any) =>
             prev
               .map((elem: any) => {
-                if (elem.id === variables.id) {
+                if (elem._id === variables._id) {
                   return {
                     ...elem,
                     quantity: elem.quantity - 1,
@@ -69,10 +69,10 @@ export default function CartItem({ book }: { book: CartBookType }) {
   }, 300);
 
   const handleDel = () => {
-    deleteCart({ id: book.id } as any, {
+    deleteCart({ _id: book._id } as any, {
       onSuccess: (_data, variables) => {
         queryClient.setQueryData(["cart-books"], (prev: any) =>
-          prev.filter((elem: any) => elem.id !== variables.id)
+          prev.filter((elem: any) => elem._id !== variables._id)
         );
       },
     });

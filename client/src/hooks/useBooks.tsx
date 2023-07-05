@@ -1,3 +1,4 @@
+import { Books } from "@/Types/Books";
 import axios from "axios";
 import { useQuery } from "react-query";
 
@@ -10,10 +11,10 @@ export function useAllBooks() {
   });
 }
 
-export function useBooks() {
-  return useQuery("books", async () => {
+export function useBooksWeLove() {
+  return useQuery("books-we-love", async () => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/books?_start=5&_end=13`
+      `${import.meta.env.VITE_SERVER_URL}/books/books-we-love`
     );
     return data;
   });
@@ -46,47 +47,46 @@ export function useSubjectBooks({
   });
 }
 
-export default function useTop10Books() {
-  return useQuery("top10books", async () => {
+export default function useTop50Books() {
+  return useQuery("top-50-books", async () => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/books?_limit=10`
+      `${import.meta.env.VITE_SERVER_URL}/books/top-50-books`
     );
     return data;
   });
 }
 
 export function useBannarBooks() {
-  return useQuery("bannarBooks", async () => {
+  const encodedUrl = encodeURIComponent("upto-75%-off");
+
+  return useQuery(encodedUrl, async () => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/books?_limit=4`
+      `${import.meta.env.VITE_SERVER_URL}/books/${encodedUrl}`
     );
     return data;
   });
 }
 
 export function useBookById({ id }: { id: string }) {
-  return useQuery("bookById", async () => {
+  return useQuery([id], async () => {
     const { data } = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}/books/${id}`
     );
-    return data;
-  });
-}
 
-export function useRelatedBooks({ id }: { id: string }) {
-  return useQuery("relatedBooks", async () => {
-    const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/books?id_ne=${id}&_limit=3`
-    );
-    return data;
-  });
-}
+    // making valid URL...
+    const validCatagoriesURL = (data as Partial<Books>).catagories
+      ?.map((cata) => `&catagories[]=${cata}`)
+      .join("");
+    const validSubCatagoriesURL = (data as Partial<Books>).subCatagory
+      ?.map((cata) => `&sub_catagories[]=${cata}`)
+      .join("");
 
-export function useLikedBooks({ id }: { id: string }) {
-  return useQuery("likedBooks", async () => {
-    const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/books?id_ne=${id}&_limit=10`
+    const { data: relatedData } = await axios.get(
+      `${
+        import.meta.env.VITE_SERVER_URL
+      }/books/related-books?_ne=${id}${validCatagoriesURL}${validSubCatagoriesURL}&_limit=3`
     );
-    return data;
+
+    return { data, relatedData };
   });
 }
