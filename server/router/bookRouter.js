@@ -1,6 +1,6 @@
 const {
   getSingleBook,
-  getTop50Books,
+  subjectiveBooks,
   getAllBooks,
   searchBooks,
   relatedBooks,
@@ -14,7 +14,7 @@ router.get("/", getAllBooks);
 router.get("/search", searchBooks);
 router.get("/related-books", relatedBooks);
 router.get(`/${encodeURIComponent("upto-75%-off")}`, upto75perOff);
-router.get("/top-50-books", getTop50Books);
+router.get("/subjective-books", subjectiveBooks);
 router.get("/books-we-love", getBooksWeLove);
 
 router.get("/:_id", getSingleBook);

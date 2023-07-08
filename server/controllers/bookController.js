@@ -36,7 +36,7 @@ const searchBooks = async (req, res, next) => {
       },
     });
 
-    res.status(200).json(searchedBooks);
+    res.status(200).json({ totalCount: 50, books: searchedBooks });
   } catch (error) {
     next(error);
   }
@@ -110,7 +110,7 @@ const upto75perOff = async (req, res, next) => {
   }
 };
 
-const getTop50Books = async (req, res, next) => {
+const subjectiveBooks = async (req, res, next) => {
   try {
     const { _page, _limit } = req.query;
 
@@ -156,6 +156,6 @@ module.exports = {
   searchBooks,
   relatedBooks,
   upto75perOff,
-  getTop50Books,
+  subjectiveBooks,
   getBooksWeLove,
 };
