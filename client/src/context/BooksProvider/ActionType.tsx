@@ -20,6 +20,8 @@ export type ContextType = {
   setSortedPrice: Dispatch<SetStateAction<number[]>>;
   filterCata: string;
   setFilterCata: Dispatch<SetStateAction<string>>;
+  search: string;
+  setSearch: Dispatch<SetStateAction<string>>;
 };
 
 export type ActionType = {

@@ -1,3 +1,5 @@
+import { useBooks } from "@/context/BooksProvider/BooksProvider";
+import { debounce } from "@/lib";
 import SearchIcon from "@mui/icons-material/Search";
 import { InputBase, styled } from "@mui/material";
 
@@ -43,6 +45,15 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchBox() {
+  const { setSearch } = useBooks();
+
+  const handleSearch = debounce(
+    (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+      setSearch(e.target.value);
+    },
+    500
+  );
+
   return (
     <Search sx={{ display: { xs: "none", sm: "block" } }}>
       <SearchIconWrapper>
@@ -50,6 +61,7 @@ export default function SearchBox() {
       </SearchIconWrapper>
       <StyledInputBase
         placeholder="Search…"
+        onChange={(e) => handleSearch(e)}
         inputProps={{ "aria-label": "search" }}
       />
     </Search>

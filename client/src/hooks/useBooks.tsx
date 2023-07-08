@@ -24,33 +24,33 @@ export function useSubjectBooks({
   type,
   page,
   limitCount,
+  search,
 }: {
   type: string;
   page: number;
   limitCount: number;
+  search?: string;
 }) {
-  let limit: number;
-  switch (type) {
-    case "top-10-books":
-      limit = limitCount;
-      break;
+  let query: string;
+
+  if (search !== "") {
+    query = `/books/search?q=${search}&_page=${page}&_limit=${limitCount}`;
+  } else {
+    query = `/books/subjective-books?_page=${page}&_limit=${limitCount}`;
   }
 
-  return useQuery([type, page], async () => {
+  return useQuery([type, page, search], async () => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/books?_page=${page}&_limit=${limit}`
+      `${import.meta.env.VITE_SERVER_URL}${query}`
     );
-    const { data: newData } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/books`
-    );
-    return { data, total: newData.length };
+    return data;
   });
 }
 
 export default function useTop50Books() {
-  return useQuery("top-50-books", async () => {
+  return useQuery("subjective-books", async () => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/books/top-50-books`
+      `${import.meta.env.VITE_SERVER_URL}/books/subjective-books`
     );
     return data;
   });

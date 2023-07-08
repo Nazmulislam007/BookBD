@@ -1,4 +1,5 @@
 import BreadCrumbs from "@/components/BreadCrumbs";
+import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import { useSubjectBooks } from "@/hooks/useBooks";
 import { HeadingFormat } from "@/lib";
 import { Box, Container, Stack, Typography } from "@mui/material";
@@ -13,14 +14,16 @@ export default function Subjects() {
   const heading = location.pathname.slice(3);
   const formatedHeading = HeadingFormat(heading);
   const [page, setPage] = useState(1);
+  const { search } = useBooks();
 
   const { isLoading, isError, data } = useSubjectBooks({
     type: heading,
     page,
     limitCount,
+    search,
   });
 
-  const newBooks = data?.data;
+  const newBooks = data?.books;
 
   if (isLoading) return <span>Loading...</span>;
 
@@ -56,7 +59,7 @@ export default function Subjects() {
           setPage={setPage}
           page={page}
           limitCount={limitCount}
-          total={data?.total}
+          total={data?.totalCount}
         />
       </Box>
     </Container>

@@ -71,7 +71,7 @@ export default function SubjectResult({
       </Stack>
       <Grid container spacing={2} py={4}>
         {updatedBooks.map((book) => (
-          <Grid item xs={6} sm={4} lg={3} key={book.id}>
+          <Grid item xs={6} sm={4} lg={3} key={book._id}>
             <Item>
               <SingleBook book={book} />
               <Box px={1}>
