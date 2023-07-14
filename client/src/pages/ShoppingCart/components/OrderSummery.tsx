@@ -1,6 +1,7 @@
 import { CartBookType } from "@/Types/Books";
 import ActionButton from "@/components/ActionButton";
 import { Box, Divider, Stack, Typography } from "@mui/material";
+import axios from "axios";
 
 export default function OrderSummery({
   cartBooks,
@@ -16,6 +17,17 @@ export default function OrderSummery({
     (prev, curr) => prev + curr.quantity,
     0
   );
+
+  const handlePayment = async () => {
+    await axios
+      .post(`${import.meta.env.VITE_SERVER_URL}/create-payment-session`, {
+        currency: "USD",
+        price: totalPrice,
+      })
+      .then(({ data }) => {
+        window.location.href = data.url;
+      });
+  };
 
   return (
     <Box
@@ -60,7 +72,7 @@ export default function OrderSummery({
           ${totalPrice}
         </Typography>
       </Stack>
-      <ActionButton title="Order Now" />
+      <ActionButton title="Order Now" onClick={handlePayment} />
     </Box>
   );
 }
