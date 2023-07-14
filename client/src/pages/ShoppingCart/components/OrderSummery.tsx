@@ -1,13 +1,18 @@
 import { CartBookType } from "@/Types/Books";
 import ActionButton from "@/components/ActionButton";
+import Payment from "@/stripe/Payment";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import axios from "axios";
+import React from "react";
 
 export default function OrderSummery({
   cartBooks,
 }: {
   cartBooks: CartBookType[];
 }) {
+  const [clientSecret, setClientSecret] = React.useState("");
+  console.log(clientSecret)
+
   const totalPrice: number = cartBooks?.reduce(
     (prev, curr) => prev + curr.totalPrice,
     0
@@ -19,14 +24,14 @@ export default function OrderSummery({
   );
 
   const handlePayment = async () => {
-    await axios
-      .post(`${import.meta.env.VITE_SERVER_URL}/create-payment-session`, {
-        currency: "USD",
-        price: totalPrice,
+    axios
+      .post(`${import.meta.env.VITE_SERVER_URL}/create-payment-intent`, {
+        items: cartBooks.map(({ _id, quantity }) => ({
+          id: _id,
+          quantity,
+        })),
       })
-      .then(({ data }) => {
-        window.location.href = data.url;
-      });
+      .then(({ data }) => setClientSecret(data.clientSecret));
   };
 
   return (
@@ -73,6 +78,7 @@ export default function OrderSummery({
         </Typography>
       </Stack>
       <ActionButton title="Order Now" onClick={handlePayment} />
+      <Payment clientSecret={clientSecret} />
     </Box>
   );
 }
