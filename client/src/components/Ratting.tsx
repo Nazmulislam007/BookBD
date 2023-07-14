@@ -5,7 +5,7 @@ import * as React from "react";
 
 export default function HoverRating() {
   const [value, setValue] = React.useState<number | null>(2);
-  const [hover, setHover] = React.useState(-1);
+  const [, setHover] = React.useState(-1);
 
   return (
     <Box
@@ -18,10 +18,10 @@ export default function HoverRating() {
       <Rating
         value={value}
         precision={0.5}
-        onChange={(event, newValue) => {
+        onChange={(_event, newValue) => {
           setValue(newValue);
         }}
-        onChangeActive={(event, newHover) => {
+        onChangeActive={(_event, newHover) => {
           setHover(newHover);
         }}
         size="small"

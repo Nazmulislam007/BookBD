@@ -45,7 +45,7 @@ export default function BooksWeLove() {
       >
         <Box component="div" flex="1 1 400px">
           <Box component="div">
-            <div onClick={() => navigate(`/book/${newData[0]?._id}`)}>
+            <div onClick={() => navigate(`/b/${newData[0]?._id}`)}>
               <Image
                 bookId={newData[0]?._id || ""}
                 author={(newData[0]?.authors && newData[0]?.authors[0]) || ""}
@@ -106,7 +106,7 @@ export default function BooksWeLove() {
                     <Typography
                       component="p"
                       lineHeight="1.4"
-                      sx={{ textDecoration: "underline" , fontSize: '13px'}}
+                      sx={{ textDecoration: "underline", fontSize: "13px" }}
                       pb="5px"
                     >
                       {authors?.slice(0, 1)}

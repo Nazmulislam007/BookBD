@@ -15,7 +15,7 @@ export default function Bannner() {
   if (isLoading) {
     return <span>Loading...</span>;
   }
-  
+
   if (isError) {
     return <span>Error: </span>;
   }
@@ -54,7 +54,7 @@ export default function Bannner() {
             Quidem Obcaecati Vero Atque Quos Aperiam, Corrupti Blanditiis Ex!
             Sit?
           </Typography>
-          <Link to="/s/upto-75-off">
+          <Link to={`/s/${encodeURIComponent("upto-75%-off")}`}>
             <ActionButton title="Order Now" />
           </Link>
         </Box>
@@ -80,7 +80,7 @@ export default function Bannner() {
         >
           {(data as Partial<Books>[]).map((book) => (
             <SwiperSlide key={book._id}>
-              <SingleBook book={book} rM/>
+              <SingleBook book={book} rM />
             </SwiperSlide>
           ))}
         </Swiper>

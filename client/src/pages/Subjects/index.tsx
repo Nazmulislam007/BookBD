@@ -12,7 +12,7 @@ export default function Subjects() {
   const limitCount = 8;
   const location = useLocation();
   const heading = location.pathname.slice(3);
-  const formatedHeading = HeadingFormat(heading);
+  const formatedHeading = HeadingFormat(decodeURIComponent(heading));
   const [page, setPage] = useState(1);
   const { search } = useBooks();
 
