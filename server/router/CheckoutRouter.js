@@ -1,25 +1,34 @@
+const Book = require("../models/Books");
+
 const router = require("express")();
-const stripe = require("stripe")(process.env.SECRET_KEY)
+const stripe = require("stripe")(process.env.SECRET_KEY);
 
-router.post("/", async (req, res)=>{
-    const session = await stripe.checkout.sessions.create({
-        success_url : "http://localhost:5173/",
-        line_items: [
-            {
-                price_data: {
-                    currency: "USD",
-                    unit_amount: 1000,
-                    product_data: {
-                        name: "Our product"
-                    }
-                },
-                quantity: 2
-            }
-        ],
-        mode: "payment"
-    });
+router.post("/", async (req, res) => {
+  const { items } = req.body;
 
-    res.json({url: session.url})
-})
+  const books = await Book.find({
+    _id: { $in: items?.map((item) => item.id) },
+  });
 
-module.exports = router
+  const products = items.map((item) => {
+    const product = books.find((book) => item.id === book.id);
+    return { ...product._doc, quantity: item.quantity };
+  });
+
+  const total = products.reduce(
+    (prev, curr) => prev + curr.saleInfo.discountPrice * curr.quantity,
+    0
+  );
+
+  const paymentIntent = await stripe.paymentIntents.create({
+    amount: total * 1000,
+    currency: "USD",
+    automatic_payment_methods: {
+      enabled: true,
+    },
+  });
+
+  res.json({ clientSecret: paymentIntent.client_secret });
+});
+
+module.exports = router;

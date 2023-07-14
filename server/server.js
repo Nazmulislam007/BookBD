@@ -32,7 +32,7 @@ main()
 // request parser setup
 app.use(
   cors({
-    origin: ['https://checkout.stripe.com', 'http://localhost:5173'],
+    origin: ["https://checkout.stripe.com", "http://localhost:5173"],
     methods: ["GET", "PATCH", "POST", "DELETE"],
   })
 );
@@ -43,7 +43,7 @@ app.use(cookieParser("cookie-secret"));
 // router setup
 app.use("/books", bookRouter);
 app.use("/shopping-cart", shoppingCartRouter);
-app.use("/create-payment-session", checkoutRouter)
+app.use("/create-payment-intent", checkoutRouter);
 
 // error handling setup
 app.use(notFoundHandler); // 404 error
