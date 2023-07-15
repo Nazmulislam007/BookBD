@@ -1,6 +1,6 @@
 import { CartBookType } from "@/Types/Books";
 import ActionButton from "@/components/ActionButton";
-import Payment from "@/stripe/Payment";
+import PaymentBox from "@/stripe/PaymentBox";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import axios from "axios";
 import React from "react";
@@ -11,7 +11,6 @@ export default function OrderSummery({
   cartBooks: CartBookType[];
 }) {
   const [clientSecret, setClientSecret] = React.useState("");
-  console.log(clientSecret)
 
   const totalPrice: number = cartBooks?.reduce(
     (prev, curr) => prev + curr.totalPrice,
@@ -78,7 +77,10 @@ export default function OrderSummery({
         </Typography>
       </Stack>
       <ActionButton title="Order Now" onClick={handlePayment} />
-      <Payment clientSecret={clientSecret} />
+      <PaymentBox
+        clientSecret={clientSecret}
+        setClientSecret={setClientSecret}
+      />
     </Box>
   );
 }

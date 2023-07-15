@@ -94,7 +94,7 @@ export default function CartItem({ book }: { book: CartBookType }) {
           <Typography
             component="p"
             fontWeight="600"
-            fontSize="20px"
+            fontSize="18px"
             lineHeight="1.4"
           >
             {book.title}

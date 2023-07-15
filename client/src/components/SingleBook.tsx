@@ -2,7 +2,13 @@ import { Books } from "@/Types/Books";
 import { useNavigate } from "react-router-dom";
 import Image from "./Image";
 
-export default function SingleBook({ book, rM }: { book: Partial<Books>, rM?: boolean }) {
+export default function SingleBook({
+  book,
+  rM,
+}: {
+  book: Partial<Books>;
+  rM?: boolean;
+}) {
   const navigate = useNavigate();
 
   return (

@@ -1,6 +1,7 @@
 import BodyWrapper from "@/Layouts/BodyWrapper";
 import Book from "@/pages/Book";
 import Home from "@/pages/Home";
+import Order from "@/pages/Order";
 import ShoppingCart from "@/pages/ShoppingCart";
 import Subjects from "@/pages/Subjects";
 import { createBrowserRouter } from "react-router-dom";
@@ -24,6 +25,10 @@ export const router = createBrowserRouter([
       {
         path: "/shopping-cart",
         element: <ShoppingCart />,
+      },
+      {
+        path: "/order-completed",
+        element: <Order />,
       },
     ],
   },

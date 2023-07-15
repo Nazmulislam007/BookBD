@@ -47,9 +47,10 @@ export default function CheckoutFrom() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: import.meta.env.VITE_CLENT_URL,
+        return_url: `${import.meta.env.VITE_CLENT_URL}/order-completed`,
       },
     });
+    console.log(error);
 
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(`ERROR:: ${error.message}`);
