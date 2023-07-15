@@ -10,6 +10,8 @@ const PORT = process.env.PORT || 3330;
 const bookRouter = require("./router/bookRouter");
 const shoppingCartRouter = require("./router/shoppingCartRouter");
 const checkoutRouter = require("./router/CheckoutRouter");
+const registerRouter = require("./router/registerRouter");
+const loginRouter = require("./router/loginRouter");
 const {
   notFoundHandler,
   errorHandler,
@@ -44,6 +46,8 @@ app.use(cookieParser("cookie-secret"));
 app.use("/books", bookRouter);
 app.use("/shopping-cart", shoppingCartRouter);
 app.use("/create-payment-intent", checkoutRouter);
+app.use("/register", registerRouter);
+app.use("/login", loginRouter);
 
 // error handling setup
 app.use(notFoundHandler); // 404 error
