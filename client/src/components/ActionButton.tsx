@@ -2,7 +2,7 @@ import { Button } from "@mui/material";
 
 type ActionButtonType = {
   title: string;
-  [rest: string]: string | object;
+  [rest: string]: any;
 };
 
 export default function ActionButton({ title, ...rest }: ActionButtonType) {

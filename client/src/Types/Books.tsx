@@ -33,6 +33,12 @@ export type CartBookType = {
   totalPrice: number;
 };
 
+export type RegisterType = {
+  username: string;
+  email: string;
+  password: string;
+};
+
 export enum SortedBy {
   MOST_RELEVANT = "Most relevant",
   POPULARTIY = "Sort by popularity",
