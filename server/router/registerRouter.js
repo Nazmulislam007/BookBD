@@ -1,7 +1,16 @@
-const { register } = require("../controllers/registerController");
+const { authController } = require("../controllers/authController");
+const {
+  addUserValidator,
+  addUserValidationHandler,
+} = require("../middlewares/auth/userValidator");
 
 const router = require("express").Router();
 
-router.post("/", register);
+router.post(
+  "/",
+  addUserValidator,
+  addUserValidationHandler,
+  authController().register
+);
 
 module.exports = router;
