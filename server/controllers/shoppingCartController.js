@@ -7,6 +7,8 @@ const shoppingCart = () => {
       try {
         const cartItems = await ShoppingCart.find();
 
+        console.log(req.session);
+
         res.status(200).json(cartItems);
       } catch (error) {
         next(error);
@@ -14,24 +16,10 @@ const shoppingCart = () => {
     },
     post: async (req, res, next) => {
       try {
-        const { _id, author, title, price, quantity, img, totalPrice } =
-          req.body;
-
-        const addToCart = new ShoppingCart({
-          _id,
-          author,
-          title,
-          price,
-          img,
-          quantity,
-          totalPrice,
-        });
-
-        const result = await addToCart.save();
+        req.session.carts = req.body;
 
         res.status(201).json({
           message: "Successful!",
-          data: result,
         });
       } catch (error) {
         next(error);
@@ -48,7 +36,7 @@ const shoppingCart = () => {
           {
             $inc: {
               quantity: type === "incre" ? 1 : -1,
-              totalPrice: type === 'incre'? price : -price
+              totalPrice: type === "incre" ? price : -price,
             },
             $currentDate: {
               updatedAt: true,

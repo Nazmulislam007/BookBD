@@ -1,4 +1,5 @@
 const { check, validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
 const createError = require("http-errors");
 const People = require("../../models/People");
 
@@ -74,8 +75,23 @@ const addUserValidationHandler = async (req, res, next) => {
   }
 };
 
+const isSignedIn = async (req, res, next) => {
+  const token = req.cookies[process.env.COOKIE_NAME];
+
+  if (token) {
+    const varifiedToken = jwt.verify(
+      req.cookies[process.env.COOKIE_NAME],
+      process.env.JWT_SECRET
+    );
+    console.log(varifiedToken);
+  }
+
+  next();
+};
+
 module.exports = {
   addUserValidator,
   loginUserValidator,
   addUserValidationHandler,
+  isSignedIn,
 };

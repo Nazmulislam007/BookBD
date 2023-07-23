@@ -62,12 +62,10 @@ const authController = () => {
         res.cookie(process.env.COOKIE_NAME, token, {
           maxAge: process.env.EXPIRE_IN,
           httpOnly: true,
-          signed: true,
         });
 
         res.status(200).json({
-          user: userObj,
-          msg: "User LoggedIn successfully!"
+          msg: "User LoggedIn successfully!",
         });
       } catch (error) {
         next(error);

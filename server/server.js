@@ -4,6 +4,8 @@ const express = require("express");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const session = require("express-session");
+const MongoDbStore = require("connect-mongo");
 const PORT = process.env.PORT || 3330;
 
 // internal imports
@@ -20,11 +22,13 @@ const {
 // initialize app
 const app = express();
 
-app.locals.existedId = {};
-
 // database setup
 async function main() {
-  await mongoose.connect("mongodb://127.0.0.1:27017/book-app");
+  await mongoose.connect(
+    process.env.NODE_ENV === "development"
+      ? "mongodb://127.0.0.1:27017/book-app"
+      : process.env.MONGDB_URL
+  );
 }
 
 main()
@@ -32,15 +36,34 @@ main()
   .catch((err) => console.log(err));
 
 // request parser setup
-app.use(
-  cors({
-    origin: ["https://checkout.stripe.com", "http://localhost:5173"],
-    methods: ["GET", "PATCH", "POST", "DELETE"],
-  })
-);
+app.use(cookieParser("random-secret"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(cookieParser("cookie-secret"));
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    store: MongoDbStore.create({
+      client: mongoose.connection.getClient(),
+      dbName: "book-app",
+      collectionName: "sessions",
+    }),
+    saveUninitialized: false,
+    cookie: { maxAge: 1000 * 60 * 2 }, // 2min
+  })
+);
+app.use(
+  cors({
+    origin: [
+      "https://checkout.stripe.com",
+      process.env.NODE_ENV === "development"
+        ? "http://localhost:5173"
+        : process.env.CLIENT_URL,
+    ],
+    methods: ["GET", "PATCH", "POST", "DELETE"],
+    credentials: true,
+  })
+);
 
 // router setup
 app.use("/books", bookRouter);
