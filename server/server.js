@@ -54,11 +54,7 @@ app.use(
 );
 app.use(
   cors({
-    origin: [
-      "https://checkout.stripe.com",
-      "http://localhost:5173",
-      "https://book-app-123.web.app/",
-    ],
+    origin: ["https://checkout.stripe.com", "http://localhost:5173"],
     methods: ["GET", "PATCH", "POST", "DELETE"],
     credentials: true,
   })
