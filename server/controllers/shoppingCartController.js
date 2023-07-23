@@ -7,8 +7,6 @@ const shoppingCart = () => {
       try {
         const cartItems = await ShoppingCart.find();
 
-        console.log(req.session);
-
         res.status(200).json(cartItems);
       } catch (error) {
         next(error);

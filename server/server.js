@@ -56,9 +56,8 @@ app.use(
   cors({
     origin: [
       "https://checkout.stripe.com",
-      process.env.NODE_ENV === "development"
-        ? "http://localhost:5173"
-        : process.env.CLIENT_URL,
+      "http://localhost:5173",
+      "https://book-app-123.web.app/",
     ],
     methods: ["GET", "PATCH", "POST", "DELETE"],
     credentials: true,
