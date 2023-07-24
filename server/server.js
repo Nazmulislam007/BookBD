@@ -14,6 +14,7 @@ const shoppingCartRouter = require("./router/shoppingCartRouter");
 const checkoutRouter = require("./router/CheckoutRouter");
 const registerRouter = require("./router/registerRouter");
 const loginRouter = require("./router/loginRouter");
+const sessionCartRouter = require("./router/sessionCartRouter");
 const {
   notFoundHandler,
   errorHandler,
@@ -22,13 +23,14 @@ const {
 // initialize app
 const app = express();
 
+const url =
+  process.env.NODE_ENV.trim() === "development"
+    ? "mongodb://127.0.0.1:27017/book-app"
+    : process.env.MONGDB_URL;
+
 // database setup
 async function main() {
-  await mongoose.connect(
-    process.env.NODE_ENV === "development"
-      ? "mongodb://127.0.0.1:27017/book-app"
-      : process.env.MONGDB_URL
-  );
+  await mongoose.connect(url);
 }
 
 main()
@@ -59,7 +61,7 @@ app.use(
       "http://localhost:5173",
       "https://book-app-123.web.app",
     ],
-    methods: ["GET", "PATCH", "POST", "DELETE"],
+    methods: ["GET", "PATCH", "POST", "DELETE", "PUT"],
     credentials: true,
   })
 );
@@ -70,6 +72,7 @@ app.use("/shopping-cart", shoppingCartRouter);
 app.use("/create-payment-intent", checkoutRouter);
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
+app.use("/session-cart", sessionCartRouter);
 
 // error handling setup
 app.use(notFoundHandler); // 404 error

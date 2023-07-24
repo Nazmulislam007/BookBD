@@ -71,6 +71,10 @@ const authController = () => {
         next(error);
       }
     },
+    logout: async (req, res, next) => {
+      res.clearCookie(process.env.COOKIE_NAME);
+      res.json({ msg: "logged out" });
+    },
   };
 };
 

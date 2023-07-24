@@ -83,7 +83,6 @@ const isSignedIn = async (req, res, next) => {
       req.cookies[process.env.COOKIE_NAME],
       process.env.JWT_SECRET
     );
-    console.log(varifiedToken);
   }
 
   next();
