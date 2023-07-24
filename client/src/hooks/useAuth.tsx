@@ -2,22 +2,18 @@ import { RegisterType } from "@/Types/Books";
 import axios from "axios";
 import { useMutation } from "react-query";
 
-export default function useLogin({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) {
-  const { mutate } = useMutation(
+export default function useLogin() {
+  const data = useMutation(
     "login",
-    async () =>
+    async ({ email, password }: { email: string; password: string }) =>
       await axios.post(`${import.meta.env.VITE_SERVER_URL}/login`, {
         email,
         password,
+      }, {
+        withCredentials: true
       })
   );
-  return mutate;
+  return data;
 }
 
 export function useRegister() {
@@ -28,6 +24,8 @@ export function useRegister() {
         username,
         email,
         password,
+      }, {
+        withCredentials: true
       })
   );
   return data;

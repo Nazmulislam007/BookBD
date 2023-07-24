@@ -5,12 +5,12 @@ import {
   Box,
   FormControl,
   FormLabel,
-  Link,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
+import LoginUser from "./LoginUser";
 
 const style = {
   pt: "5px",
@@ -61,52 +61,7 @@ export default function CreateAccount() {
 
   return (
     <Stack direction={{ md: "row", xs: "column" }} gap={5}>
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          gap: 2,
-          flex: "1 1 50%",
-        }}
-      >
-        <Typography
-          component="p"
-          sx={{ textTransform: "uppercase", fontSize: "20px" }}
-        >
-          Login
-        </Typography>
-        <FormControl>
-          <FormLabel>Email</FormLabel>
-          <TextField
-            sx={style}
-            name="email"
-            type="email"
-            placeholder="johndoe@email.com"
-          />
-        </FormControl>
-        <FormControl>
-          <FormLabel>Password</FormLabel>
-          <TextField
-            sx={style}
-            name="password"
-            type="password"
-            placeholder="password"
-          />
-        </FormControl>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-          pt={2}
-        >
-          <ActionButton title="Sign In" />
-          <Typography fontSize="sm" color="#1565c0">
-            <Link href="/login/forget" color="#63422d">
-              Forgot Password?
-            </Link>
-          </Typography>
-        </Stack>
-      </Box>
+      <LoginUser />
       <Box
         sx={{
           display: "flex",

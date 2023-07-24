@@ -4,7 +4,9 @@ import { useMutation, useQuery } from "react-query";
 export function useGetCartBooks() {
   return useQuery(["cart-books"], async () => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/shopping-cart`
+      `${import.meta.env.VITE_SERVER_URL}/shopping-cart`, {
+        withCredentials: true
+      }
     );
     return data;
   });
@@ -31,7 +33,9 @@ export function useDeleteCartBook() {
 
 export default function useAddtoCart() {
   const { mutate } = useMutation((data) =>
-    axios.post(`${import.meta.env.VITE_SERVER_URL}/shopping-cart`, data)
+    axios.post(`${import.meta.env.VITE_SERVER_URL}/shopping-cart`, data, {
+      withCredentials: true
+    })
   );
 
   return mutate;

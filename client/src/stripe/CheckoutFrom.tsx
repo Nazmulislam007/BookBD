@@ -10,7 +10,7 @@ export default function CheckoutFrom() {
   const stripe = useStripe();
   const elements = useElements();
 
-  const [email, setEmail] = React.useState("");
+  const [_email, setEmail] = React.useState("");
   const [isLoading, setIsLoading] = React.useState(false);
   const [message, setMessage] = React.useState("");
 
