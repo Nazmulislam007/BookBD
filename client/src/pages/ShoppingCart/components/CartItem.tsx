@@ -1,23 +1,23 @@
 import { CartBookType } from "@/Types/Books";
-import { useDeleteCartBook, useEditCartBook } from "@/hooks/useAddtoCart";
+import useAddtoCart, { useDeleteCartBook } from "@/hooks/useAddtoCart";
 import { debounce, fixed } from "@/lib";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useQueryClient } from "react-query";
 
 export default function CartItem({ book }: { book: CartBookType }) {
   const queryClient = useQueryClient();
-  const mutate = useEditCartBook();
+  const mutate = useAddtoCart();
   const deleteCart = useDeleteCartBook();
 
   const handleIncreQty = debounce(() => {
     mutate(
       {
-        _id: book._id,
+        ...book,
         type: "incre",
-        price: book.price,
       } as any,
       {
-        onSuccess: (_data, variables) => {
+        onSuccess: (_data, variables: any) => {
+          console.log(variables);
           queryClient.setQueryData(["cart-books"], (prev: any) =>
             prev.map((elem: any) => {
               if (elem._id === variables._id) {
@@ -38,12 +38,11 @@ export default function CartItem({ book }: { book: CartBookType }) {
   const handleDecreQty = debounce(() => {
     mutate(
       {
-        _id: book._id,
+        ...book,
         type: "decre",
-        price: book.price,
       } as any,
       {
-        onSuccess: (data, variables) => {
+        onSuccess: (data, variables: any) => {
           // if the quantity is zero than it will be deleted
           if (data.data.quantity <= 1) {
             deleteCart({ _id: data.data._id } as any);
