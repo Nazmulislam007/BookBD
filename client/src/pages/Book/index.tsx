@@ -1,4 +1,5 @@
 import { Books } from "@/Types/Books";
+import Loading from "@/components/Loading";
 import { useBookById } from "@/hooks/useBooks";
 import { Box, Container } from "@mui/material";
 import { useLocation } from "react-router-dom";
@@ -14,7 +15,7 @@ export default function Book() {
 
   const { data, isError, isLoading } = useBookById({ id });
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <Loading />;
 
   if (isError) return <span>Error: </span>;
 

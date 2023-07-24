@@ -1,5 +1,6 @@
 import BodyContainer from "@/Layouts/BodyContainer";
 import { Books } from "@/Types/Books";
+import Loading from "@/components/Loading";
 import SingleBook from "@/components/SingleBook";
 import useTop50Books from "@/hooks/useBooks";
 import { Navigation } from "swiper";
@@ -9,7 +10,7 @@ export default function Top50Books() {
   const { isError, isLoading, data } = useTop50Books();
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <Loading />;
   }
 
   if (isError) {

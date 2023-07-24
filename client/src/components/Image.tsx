@@ -27,7 +27,7 @@ export default function Image({
   const mutate = useAddtoCart();
   const { data } = useGetCartBooks();
 
-  const isExitedBook = (data as Books[]).find((book) => book._id === bookId);
+  const isExitedBook = (data as Books[])?.find((book) => book._id === bookId);
 
   const bookData: any = {
     _id: bookId,
@@ -64,7 +64,7 @@ export default function Image({
 
         "&:hover .MuiButtonBase-root": {
           bottom: "8px",
-          border: "1px solid silver",
+          border: `2px solid ${isExitedBook ? "#e74c3c" : "#444444"}`,
           bgcolor: "white",
           transition: "0.3s ease-in-out",
         },
@@ -97,9 +97,9 @@ export default function Image({
           bottom: "-50px",
           left: "8px",
 
-          color: "#444444",
+          color: isExitedBook ? "#e74c3c" : "#444444",
           background: "white",
-          border: "1px solid silver",
+          border: `1px solid silver`,
           borderRadius: "0",
           fontSize: "14px",
           fontWeight: "600",

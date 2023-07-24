@@ -5,7 +5,6 @@ import * as React from "react";
 
 export default function HoverRating() {
   const [value, setValue] = React.useState<number | null>(2);
-  const [, setHover] = React.useState(-1);
 
   return (
     <Box
@@ -21,9 +20,7 @@ export default function HoverRating() {
         onChange={(_event, newValue) => {
           setValue(newValue);
         }}
-        onChangeActive={(_event, newHover) => {
-          setHover(newHover);
-        }}
+        readOnly
         size="small"
         emptyIcon={<StarIcon style={{ opacity: 0.55 }} fontSize="inherit" />}
       />

@@ -1,3 +1,4 @@
+import Loading from "@/components/Loading";
 import {
   LinkAuthenticationElement,
   PaymentElement,
@@ -50,7 +51,6 @@ export default function CheckoutFrom() {
         return_url: `${import.meta.env.VITE_CLENT_URL}/order-completed`,
       },
     });
-    console.log(error);
 
     if (error.type === "card_error" || error.type === "validation_error") {
       setMessage(`ERROR:: ${error.message}`);
@@ -70,9 +70,7 @@ export default function CheckoutFrom() {
       />
       <PaymentElement id="payment-element" options={{ layout: "tabs" }} />
       <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
-        </span>
+        <span id="button-text">{isLoading ? <Loading /> : "Pay now"}</span>
       </button>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}

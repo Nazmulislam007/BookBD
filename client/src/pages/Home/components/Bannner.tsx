@@ -1,6 +1,7 @@
 import { Books } from "@/Types/Books";
 import { banner } from "@/assets";
 import ActionButton from "@/components/ActionButton";
+import Loading from "@/components/Loading";
 import SingleBook from "@/components/SingleBook";
 import { useBannarBooks } from "@/hooks/useBooks";
 import { Box, Container, Stack, Typography } from "@mui/material";
@@ -13,7 +14,7 @@ export default function Bannner() {
   const { isLoading, isError, data } = useBannarBooks();
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <Loading />;
   }
 
   if (isError) {

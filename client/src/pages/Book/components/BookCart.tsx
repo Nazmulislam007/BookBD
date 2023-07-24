@@ -1,22 +1,56 @@
 import { Books } from "@/Types/Books";
 import ActionButton from "@/components/ActionButton";
 import HoverRating from "@/components/Ratting";
+import useAddtoCart, { useGetCartBooks } from "@/hooks/useAddtoCart";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Box, Stack, Typography } from "@mui/material";
+import { MouseEvent } from "react";
+import { useQueryClient } from "react-query";
+import { useNavigate } from "react-router-dom";
 
 export default function BookCart({
   authors,
   title,
+  _id,
   imageLinks,
   description,
   saleInfo,
 }: Partial<Books>) {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const mutate = useAddtoCart();
+  const { data } = useGetCartBooks();
   const { price, discountPrice } = saleInfo || {};
 
+  // Percentage saved
   const validPrice = price || 0;
-
   const save = +(validPrice - (discountPrice || 0)).toFixed(2);
   const percentage = +(save / validPrice).toFixed(2) * 100;
+
+  const isExitedBook = (data as Books[])?.find((book) => book._id === _id);
+
+  const bookData: any = {
+    _id,
+    author: authors && authors[0],
+    title,
+    price,
+    img: imageLinks?.thumbnail,
+    quantity: 1,
+    totalPrice: price,
+  };
+
+  const handleClick = (e: MouseEvent<HTMLButtonElement>) => {
+    e.stopPropagation();
+    if (isExitedBook) return navigate("/shopping-cart");
+    mutate(bookData, {
+      onSuccess: () => {
+        queryClient.setQueryData(["cart-books"], (prev: any) => [
+          ...prev,
+          bookData,
+        ]);
+      },
+    });
+  };
 
   return (
     <Box
@@ -42,7 +76,7 @@ export default function BookCart({
       </Box>
 
       <Stack component="header" flex="1 1 60%" pb={2}>
-        <Typography component="h4" fontSize="2rem">
+        <Typography component="h4" fontSize="1.8rem">
           {title}
         </Typography>
         <Typography component="p" fontSize=".8rem">
@@ -60,7 +94,7 @@ export default function BookCart({
           ))}
         </Typography>
         <HoverRating />
-        <Typography component="p" mt={1}>
+        <Typography component="p" fontSize="14px" mt={1}>
           {description}
         </Typography>
         <Stack
@@ -100,7 +134,10 @@ export default function BookCart({
           </Typography>
         </Box>
         <Box component="div" mt={3}>
-          <ActionButton title="Add To Cart" />
+          <ActionButton
+            title={isExitedBook ? "Go To Cart" : "Add To Cart"}
+            onClick={handleClick}
+          />
         </Box>
       </Stack>
     </Box>

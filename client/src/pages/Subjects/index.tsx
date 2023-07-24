@@ -1,4 +1,5 @@
 import BreadCrumbs from "@/components/BreadCrumbs";
+import Loading from "@/components/Loading";
 import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import { useSubjectBooks } from "@/hooks/useBooks";
 import { HeadingFormat } from "@/lib";
@@ -25,7 +26,7 @@ export default function Subjects() {
 
   const newBooks = data?.books;
 
-  if (isLoading) return <span>Loading...</span>;
+  if (isLoading) return <Loading />;
 
   if (isError) return <span>Error: </span>;
 

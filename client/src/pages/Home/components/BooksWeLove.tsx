@@ -1,6 +1,7 @@
 import BodyContainer from "@/Layouts/BodyContainer";
 import { Books } from "@/Types/Books";
 import Image from "@/components/Image";
+import Loading from "@/components/Loading";
 import SingleBook from "@/components/SingleBook";
 import { useBooksWeLove } from "@/hooks/useBooks";
 import { Box, Grid, Paper, Stack, Typography, styled } from "@mui/material";
@@ -21,7 +22,7 @@ export default function BooksWeLove() {
   const { data, isLoading, isError } = useBooksWeLove();
 
   if (isLoading) {
-    return <span>Loading...</span>;
+    return <Loading />;
   }
 
   if (isError) {

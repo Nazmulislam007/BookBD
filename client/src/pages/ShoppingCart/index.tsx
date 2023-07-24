@@ -1,4 +1,5 @@
 import { CartBookType } from "@/Types/Books";
+import Loading from "@/components/Loading";
 import { useGetCartBooks } from "@/hooks/useAddtoCart";
 import { Container, Stack, Typography } from "@mui/material";
 import CartItem from "./components/CartItem";
@@ -13,7 +14,7 @@ export default function ShoppingCart() {
   let content;
 
   if (isError) content = <div>Error...</div>;
-  if (isLoading) content = <div>Loading...</div>;
+  if (isLoading) content = <Loading />;
   if (cartBooks?.length <= 0) content = <div>Your Cart is Empty!</div>;
   if (cartBooks?.length > 0 && !isError)
     content = cartBooks.map((book) => <CartItem key={book._id} book={book} />);
