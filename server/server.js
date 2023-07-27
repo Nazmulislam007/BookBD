@@ -68,6 +68,7 @@ app.use(
 );
 
 // router setup
+app.get("/", (req, res)=> res.send("hello World"))
 app.use("/books", bookRouter);
 app.use("/shopping-cart", shoppingCartRouter);
 app.use("/create-payment-intent", checkoutRouter);
