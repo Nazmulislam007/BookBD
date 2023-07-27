@@ -15,7 +15,7 @@ const checkoutRouter = require("./router/CheckoutRouter");
 const registerRouter = require("./router/registerRouter");
 const loginRouter = require("./router/loginRouter");
 const authRouter = require("./router/authRotuer");
-const sessionCartRouter = require("./router/sessionCartRouter");
+// const sessionCartRouter = require("./router/sessionCartRouter");
 const {
   notFoundHandler,
   errorHandler,
@@ -74,7 +74,7 @@ app.use("/shopping-cart", shoppingCartRouter);
 app.use("/create-payment-intent", checkoutRouter);
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
-app.use("/session-cart", sessionCartRouter);
+// app.use("/session-cart", sessionCartRouter);
 app.use("/auth", authRouter);
 
 // error handling setup
