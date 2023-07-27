@@ -5,7 +5,10 @@ import { useQuery } from "react-query";
 export function useAllBooks() {
   return useQuery("all-book", async () => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/books`
+      `${import.meta.env.VITE_SERVER_URL}/books`,
+      {
+        withCredentials: true,
+      }
     );
     return data;
   });

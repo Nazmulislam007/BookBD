@@ -17,7 +17,6 @@ export default function CartItem({ book }: { book: CartBookType }) {
       } as any,
       {
         onSuccess: (_data, variables: any) => {
-          console.log(variables);
           queryClient.setQueryData(["cart-books"], (prev: any) =>
             prev.map((elem: any) => {
               if (elem._id === variables._id) {

@@ -46,6 +46,15 @@ export enum SortedBy {
   HIGH_TO_LOW = "Sort by price: high to low",
 }
 
+export type UserType = {
+  userId: string;
+  email: string;
+  username: string;
+  role: string;
+  iat: number;
+  exp: number;
+};
+
 // export type Prettify<T> = {
 //   [K in keyof T]: T[K];
 // } & object;

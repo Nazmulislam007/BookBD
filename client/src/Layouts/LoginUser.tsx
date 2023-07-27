@@ -1,4 +1,5 @@
 import ActionButton from "@/components/ActionButton";
+import { useAuth } from "@/context/AuthProvider/AuthProvider";
 import useLogin from "@/hooks/useAuth";
 import {
   Box,
@@ -9,6 +10,8 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import Cookies from "js-cookie";
+import jwt from "jwt-decode";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 
 const style = {
@@ -32,6 +35,7 @@ type LoginType = {
 };
 
 export default function LoginUser() {
+  const { setUser } = useAuth();
   const { mutate, error, isError, isLoading, isSuccess, data } = useLogin();
   const [login, setLogin] = useState<LoginType>({
     email: "",
@@ -46,7 +50,13 @@ export default function LoginUser() {
         email: "",
         password: "",
       });
+      const cookie = Cookies.get(import.meta.env.VITE_COOKIE_NAME);
+      if (cookie) {
+        const user: object = jwt(cookie);
+        setUser(user);
+      }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError, isSuccess]);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
