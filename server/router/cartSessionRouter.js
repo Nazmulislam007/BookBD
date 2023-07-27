@@ -1,4 +1,4 @@
-const sessionCart = require("../controllers/SessionCartController");
+const sessionCart = require("../controllers/cartSessionController");
 
 const router = require("express").Router();
 
