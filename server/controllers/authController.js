@@ -61,7 +61,7 @@ const authController = () => {
 
         res.cookie(process.env.COOKIE_NAME, token, {
           maxAge: process.env.EXPIRE_IN,
-          httpOnly: true,
+          httpOnly: false,
         });
 
         res.status(200).json({

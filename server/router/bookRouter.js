@@ -7,10 +7,11 @@ const {
   upto75perOff,
   getBooksWeLove,
 } = require("../controllers/bookController");
+const { isSignedIn } = require("../middlewares/auth/userValidator");
 
 const router = require("express").Router();
 
-router.get("/", getAllBooks);
+router.get("/", isSignedIn, getAllBooks);
 router.get("/search", searchBooks);
 router.get("/related-books", relatedBooks);
 router.get(`/${encodeURIComponent("upto-75%-off")}`, upto75perOff);
