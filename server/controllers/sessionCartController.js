@@ -15,27 +15,29 @@ const sessionCart = () => {
         if (!req.session.cart[req.body._id]) {
           req.session.cart = { ...req.session.cart, [req.body._id]: req.body };
         } else {
-          if(req.session.cart[req.body._id].quantity === 1 && req.body.type === "decre"){
-            delete req.session.cart[req.body._id]
-          }else{
-             req.session.cart = {
-            ...req.session.cart,
-            [req.body._id]: {
-              ...req.session.cart[req.body._id],
-              quantity:
-                req.body.type === "incre"
-                  ? req.session.cart[req.body._id].quantity + 1
-                  : req.session.cart[req.body._id].quantity - 1,
-              totalPrice:
-                req.body.type === "incre"
-                  ? req.session.cart[req.body._id].price *
-                    (req.session.cart[req.body._id].quantity + 1)
-                  : req.session.cart[req.body._id].price *
-                    (req.session.cart[req.body._id].quantity - 1),
-            },
-          };
+          if (
+            req.session.cart[req.body._id].quantity === 1 &&
+            req.body.type === "decre"
+          ) {
+            delete req.session.cart[req.body._id];
+          } else {
+            req.session.cart = {
+              ...req.session.cart,
+              [req.body._id]: {
+                ...req.session.cart[req.body._id],
+                quantity:
+                  req.body.type === "incre"
+                    ? req.session.cart[req.body._id].quantity + 1
+                    : req.session.cart[req.body._id].quantity - 1,
+                totalPrice:
+                  req.body.type === "incre"
+                    ? req.session.cart[req.body._id].price *
+                      (req.session.cart[req.body._id].quantity + 1)
+                    : req.session.cart[req.body._id].price *
+                      (req.session.cart[req.body._id].quantity - 1),
+              },
+            };
           }
-         
         }
 
         res.status(201).json(req.session.cart);
@@ -47,8 +49,8 @@ const sessionCart = () => {
       try {
         const { q: _id } = req.query;
         delete req.session.cart[_id];
-        
-        res.json({msg: "Product delete successfully"});
+
+        res.json({ msg: "Product delete successfully" });
       } catch (error) {
         next(error);
       }
