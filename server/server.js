@@ -51,7 +51,7 @@ const objCookie = {
 };
 
 function isProd() {
-  if (process.env.NODE_ENV.trim() === "production") {
+  if (process.env.NODE_ENV.trim() != "development") {
     objCookie.cookie.sameSite = "none";
     objCookie.cookie.secure = true;
   }
