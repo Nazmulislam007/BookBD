@@ -59,10 +59,17 @@ const authController = () => {
           expiresIn: process.env.EXPIRE_IN,
         });
 
-        res.cookie(process.env.COOKIE_NAME, token, {
+        const objCookie = {
           maxAge: process.env.EXPIRE_IN,
           httpOnly: false,
-        });
+        };
+
+        if (process.env.NODE_ENV.trim() != "development") {
+          objCookie.secure = true;
+          objCookie.sameSite = "none";
+        }
+
+        res.cookie(process.env.COOKIE_NAME, token, objCookie);
 
         res.status(200).json({
           msg: "User LoggedIn successfully!",

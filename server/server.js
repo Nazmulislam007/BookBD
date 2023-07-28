@@ -38,23 +38,31 @@ main()
   .then(() => console.log("database connected"))
   .catch((err) => console.log(err));
 
+const objCookie = {
+  secret: process.env.SESSION_SECRET,
+  resave: false,
+  store: MongoDbStore.create({
+    client: mongoose.connection.getClient(),
+    dbName: "book-app",
+    collectionName: "sessions",
+  }),
+  saveUninitialized: false,
+  cookie: { maxAge: 1000 * 60 * 2 }, // 2min
+};
+
+function isProd() {
+  if (process.env.NODE_ENV.trim() === "production") {
+    objCookie.cookie.sameSite = "none";
+    objCookie.cookie.secure = true;
+  }
+}
+isProd();
+
 // request parser setup
 app.use(cookieParser("random-secret"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    store: MongoDbStore.create({
-      client: mongoose.connection.getClient(),
-      dbName: "book-app",
-      collectionName: "sessions",
-    }),
-    saveUninitialized: false,
-    cookie: { maxAge: 1000 * 60 * 2 }, // 2min
-  })
-);
+app.use(session(objCookie));
 app.use(
   cors({
     origin: [
