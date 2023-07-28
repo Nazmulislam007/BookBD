@@ -10,8 +10,6 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
-import Cookies from "js-cookie";
-import jwt from "jwt-decode";
 import { ChangeEvent, SyntheticEvent, useEffect, useState } from "react";
 
 const style = {
@@ -50,11 +48,12 @@ export default function LoginUser() {
         email: "",
         password: "",
       });
-      const cookie = Cookies.get(import.meta.env.VITE_COOKIE_NAME);
-      if (cookie) {
-        const user: object = jwt(cookie);
-        setUser(user);
-      }
+      setUser({
+        user: (data as any)?.data?.user,
+        status: (data as any)?.data?.status
+          ? (data as any)?.data?.status
+          : false,
+      });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isError, isSuccess]);

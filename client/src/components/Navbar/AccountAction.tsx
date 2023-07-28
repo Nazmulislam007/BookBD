@@ -10,11 +10,9 @@ export default function AccountAction() {
   const { setOpenRegister } = useBooks();
   const { user } = useAuth() || {};
 
-  const isEmpty = Object.keys(user).length === 0;
-
   return (
     <List sx={{ display: "flex", alignItems: "center" }}>
-      {isEmpty && (
+      {!user.status && (
         <ListItem sx={{ px: 0, pr: 1, display: { xs: "none", md: "block" } }}>
           <Typography
             component="button"
@@ -35,9 +33,9 @@ export default function AccountAction() {
       <ListItem sx={{ px: 0, width: "fit-content" }}>
         <CustomizedBadges />
       </ListItem>
-      {!isEmpty && (
+      {user.status && (
         <ListItem sx={{ px: 0 }}>
-          <AccountAvatar user={user as UserType} />
+          <AccountAvatar user={user.user as UserType} />
         </ListItem>
       )}
     </List>

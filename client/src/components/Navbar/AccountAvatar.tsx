@@ -24,7 +24,10 @@ export default function AccountAvatar({ user }: { user: UserType }) {
     await axios.delete(`${import.meta.env.VITE_SERVER_URL}/login`, {
       withCredentials: true,
     });
-    setUser({});
+    setUser({
+      user: {},
+      status: false,
+    });
   };
 
   return (

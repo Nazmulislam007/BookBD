@@ -1,6 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
-import Cookies from "js-cookie";
-import jwt from "jwt-decode";
+import axios from "axios";
 import {
   Dispatch,
   ReactNode,
@@ -17,13 +16,28 @@ type AuthProviderType = {
 };
 
 type ContextType = {
-  setUser: Dispatch<SetStateAction<object>>;
-  user: object;
+  setUser: Dispatch<
+    SetStateAction<{
+      user: object;
+      status: boolean;
+    }>
+  >;
+  user: {
+    user: object;
+    status: boolean;
+  };
 };
 
 const AuthContext = createContext<ContextType>({
-  setUser: () => void {},
-  user: {},
+  setUser: () =>
+    void {
+      user: Object,
+      status: Boolean,
+    },
+  user: {
+    user: {},
+    status: false,
+  },
 });
 
 const useAuth = () => {
@@ -31,14 +45,17 @@ const useAuth = () => {
 };
 
 export default function AuthProvider({ children }: AuthProviderType) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState({ user: {}, status: false });
 
   useEffect(() => {
-    const cookie = Cookies.get(import.meta.env.VITE_COOKIE_NAME);
-    if (cookie) {
-      const user: object = jwt(cookie);
-      setUser(user);
+    async function isLoggedIn() {
+      const { data } = await axios.get(
+        `${import.meta.env.VITE_SERVER_URL}/auth`,
+        { withCredentials: true }
+      );
+      setUser(data);
     }
+    isLoggedIn();
   }, []);
 
   const value = useMemo(
