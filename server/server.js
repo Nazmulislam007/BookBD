@@ -53,10 +53,7 @@ app.use(
     }),
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000 * 60 * 60 * 24,
-      httpOnly: true,
-      sameSite: true,
-      secure: process.env.NODE_ENV.trim() === "production",
+      maxAge: 1000 * 60 * 60 * 24
     },
   })
 );
