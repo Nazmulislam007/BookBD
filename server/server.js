@@ -83,5 +83,11 @@ app.use(errorHandler); // default error
 
 // server setup
 app.listen(PORT, () =>
-  console.log(`server running on url: http://localhost:${PORT}/books`)
+  console.log(
+    `server running on url: ${
+      process.env.NODE_ENV.trim() === "production"
+        ? "https://book-api-5xof.onrender.com/books"
+        : `http://localhost:${PORT}/books`
+    }`
+  )
 );
