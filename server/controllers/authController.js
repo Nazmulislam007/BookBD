@@ -61,7 +61,6 @@ const authController = () => {
 
         const objCookie = {
           maxAge: process.env.EXPIRE_IN,
-          httpOnly: false,
         };
 
         if (process.env.NODE_ENV.trim() != "development") {
