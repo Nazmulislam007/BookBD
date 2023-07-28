@@ -1,5 +1,6 @@
 const People = require("../models/People");
 const bcrypt = require("bcrypt");
+const createHttpError = require("http-errors");
 const createError = require("http-errors");
 const jwt = require("jsonwebtoken");
 
@@ -61,11 +62,14 @@ const authController = () => {
 
         res.cookie(process.env.COOKIE_NAME, token, {
           maxAge: process.env.EXPIRE_IN,
+          httpOnly: true,
           sameSite: true,
           secure: process.env.NODE_ENV === "production",
         });
 
         res.status(200).json({
+          user: userObj,
+          status: true,
           msg: "User LoggedIn successfully!",
         });
       } catch (error) {
@@ -73,6 +77,7 @@ const authController = () => {
       }
     },
     logout: async (req, res, next) => {
+      delete req.session;
       res.clearCookie(process.env.COOKIE_NAME);
       res.json({ msg: "logged out" });
     },

@@ -54,6 +54,7 @@ app.use(
     saveUninitialized: false,
     cookie: {
       maxAge: 1000 * 60 * 2,
+      httpOnly: true,
       sameSite: true,
       secure: process.env.NODE_ENV.trim() === "production",
     }, // 2min

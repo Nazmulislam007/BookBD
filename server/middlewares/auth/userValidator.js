@@ -78,31 +78,27 @@ const addUserValidationHandler = async (req, res, next) => {
 
 const isSignedIn = async (req, res, next) => {
   try {
-  const token = req.cookies[process.env.COOKIE_NAME];
-   if (token) {
-    const varifiedToken = jwt.verify(
-      req.cookies[process.env.COOKIE_NAME],
-      process.env.JWT_SECRET
-    );
+    const token = req.cookies[process.env.COOKIE_NAME];
 
-    if (!varifiedToken) {
-      
-      throw createHttpError("User not valid");
+    if (token) {
+      const varifiedToken = jwt.verify(
+        req.cookies[process.env.COOKIE_NAME],
+        process.env.JWT_SECRET
+      );
+
+      if (!varifiedToken) {
+        throw createHttpError("User not valid");
+      }
+
+      req.user = varifiedToken;
+
+      next();
+    } else {
+      throw createHttpError("User not LoggedIn");
     }
-
-    req.user = varifiedToken
-    
-    next();
-
-  } else {
-    throw createHttpError("User not LoggedIn")
+  } catch (error) {
+    next(error);
   }
-
- 
-} catch (error) {
-  next(error)
-}
- 
 };
 
 module.exports = {
