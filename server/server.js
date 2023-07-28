@@ -27,7 +27,7 @@ const app = express();
 const url =
   process.env.NODE_ENV.trim() === "development"
     ? "mongodb://127.0.0.1:27017/book-app"
-    : process.env.MONGDB_URL;
+    : process.env.MONGDB_URL  ;
 
 // database setup
 async function main() {
@@ -53,11 +53,11 @@ app.use(
     }),
     saveUninitialized: false,
     cookie: {
-      maxAge: 1000 * 60 * 2,
+      maxAge: 1000 * 60 * 60 * 24,
       httpOnly: true,
-      sameSite: true,
+      sameSite: process.env.NODE_ENV.trim() === "production" ? "none": true,
       secure: process.env.NODE_ENV.trim() === "production",
-    }, // 2min
+    },
   })
 );
 
