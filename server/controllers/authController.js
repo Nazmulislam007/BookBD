@@ -61,7 +61,10 @@ const authController = () => {
         });
 
         res.cookie(process.env.COOKIE_NAME, token, {
-          maxAge: process.env.EXPIRE_IN
+          maxAge: process.env.EXPIRE_IN,
+          secure: process.env.NODE_ENV.trim() === 'production' ? true : 'auto',
+          httpOnly: true,
+          sameSite: process.env.NODE_ENV.trim() === 'production' ? 'none' : 'lax',
         });
 
         res.status(200).json({
