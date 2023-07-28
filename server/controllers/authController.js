@@ -62,8 +62,8 @@ const authController = () => {
 
         res.cookie(process.env.COOKIE_NAME, token, {
           maxAge: process.env.EXPIRE_IN,
-          httpOnly: true,
-          sameSite: process.env.NODE_ENV.trim() === "production" ? "none": true,
+          httpOnly: false,
+          sameSite: true,
           secure: process.env.NODE_ENV === "production",
         });
 
