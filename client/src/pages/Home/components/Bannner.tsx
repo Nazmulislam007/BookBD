@@ -1,26 +1,13 @@
 import { Books } from "@/Types/Books";
 import { banner } from "@/assets";
 import ActionButton from "@/components/ActionButton";
-import Loading from "@/components/Loading";
 import SingleBook from "@/components/SingleBook";
-import { useBannarBooks } from "@/hooks/useBooks";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 import "swiper/css";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-export default function Bannner() {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { isLoading, isError, data } = useBannarBooks();
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    return <span>Error: </span>;
-  }
-
+export default function Bannner({ books }: { books: Partial<Books>[] }) {
   return (
     <Stack
       sx={{
@@ -79,7 +66,7 @@ export default function Bannner() {
           effect="coverflow"
           speed={1000}
         >
-          {(data as Partial<Books>[]).map((book) => (
+          {books.map((book) => (
             <SwiperSlide key={book._id}>
               <SingleBook book={book} rM />
             </SwiperSlide>

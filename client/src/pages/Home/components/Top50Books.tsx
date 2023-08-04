@@ -1,24 +1,10 @@
 import BodyContainer from "@/Layouts/BodyContainer";
 import { Books } from "@/Types/Books";
-import Loading from "@/components/Loading";
 import SingleBook from "@/components/SingleBook";
-import useTop50Books from "@/hooks/useBooks";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
-export default function Top50Books() {
-  const { isError, isLoading, data } = useTop50Books();
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    return <span>Error: </span>;
-  }
-
-  const newData: Partial<Books>[] = data.books;
-
+export default function Top50Books({ books }: { books: Partial<Books>[] }) {
   return (
     <BodyContainer heading="Top 50 Books">
       <Swiper
@@ -54,7 +40,7 @@ export default function Top50Books() {
           },
         }}
       >
-        {newData?.map((book) => (
+        {books?.map((book) => (
           <SwiperSlide key={book._id}>
             <SingleBook book={book} />
           </SwiperSlide>

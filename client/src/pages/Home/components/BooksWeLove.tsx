@@ -1,9 +1,7 @@
 import BodyContainer from "@/Layouts/BodyContainer";
 import { Books } from "@/Types/Books";
 import Image from "@/components/Image";
-import Loading from "@/components/Loading";
 import SingleBook from "@/components/SingleBook";
-import { useBooksWeLove } from "@/hooks/useBooks";
 import { Box, Grid, Paper, Stack, Typography, styled } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ResposiveBookSlider from "./ResposiveBookSlider";
@@ -17,19 +15,8 @@ const Item = styled(Paper)(({ theme }) => ({
   width: "fit-content",
 }));
 
-export default function BooksWeLove() {
+export default function BooksWeLove({ books }: { books: Partial<Books>[] }) {
   const navigate = useNavigate();
-  const { data, isLoading, isError } = useBooksWeLove();
-
-  if (isLoading) {
-    return <Loading />;
-  }
-
-  if (isError) {
-    return <span>Error: </span>;
-  }
-
-  const newData: Partial<Books>[] = data;
 
   return (
     <BodyContainer heading="Books We Love" hidden>
@@ -46,13 +33,13 @@ export default function BooksWeLove() {
       >
         <Box component="div" flex="1 1 400px">
           <Box component="div">
-            <div onClick={() => navigate(`/b/${newData[0]?._id}`)}>
+            <div onClick={() => navigate(`/b/${books[0]?._id}`)}>
               <Image
-                bookId={newData[0]?._id || ""}
-                author={(newData[0]?.authors && newData[0]?.authors[0]) || ""}
-                price={newData[0]?.saleInfo?.discountPrice || 0}
-                title={newData[0]?.title || ""}
-                src={newData[0].imageLinks?.thumbnail || ""}
+                bookId={books[0]?._id || ""}
+                author={(books[0]?.authors && books[0]?.authors[0]) || ""}
+                price={books[0]?.saleInfo?.discountPrice || 0}
+                title={books[0]?.title || ""}
+                src={books[0].imageLinks?.thumbnail || ""}
               />
             </div>
           </Box>
@@ -66,7 +53,7 @@ export default function BooksWeLove() {
               pt={2}
               pb={1}
             >
-              {newData[0].title}
+              {books[0].title}
             </Typography>
             <Typography
               component="p"
@@ -74,20 +61,20 @@ export default function BooksWeLove() {
               pb={2}
               sx={{ textDecoration: "underline" }}
             >
-              {newData[0]?.authors?.slice(0, 1)}
+              {books[0]?.authors?.slice(0, 1)}
             </Typography>
             <Typography
               component="p"
               color="GrayText"
               className="multiline-ellipsis"
             >
-              {newData[0].description}
+              {books[0].description}
             </Typography>
           </Box>
         </Box>
 
         <Grid container spacing={2} display={{ xs: "none", md: "flex" }}>
-          {newData?.slice(1).map((book) => {
+          {books?.slice(1).map((book) => {
             const { authors, _id, title, saleInfo } = book;
             return (
               <Grid item md={4} lg={3} key={_id}>
@@ -139,7 +126,7 @@ export default function BooksWeLove() {
             );
           })}
         </Grid>
-        <ResposiveBookSlider books={newData} />
+        <ResposiveBookSlider books={books} />
       </Box>
     </BodyContainer>
   );

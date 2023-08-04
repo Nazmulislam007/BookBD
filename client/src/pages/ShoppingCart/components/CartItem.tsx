@@ -180,71 +180,72 @@ export default function CartItem({ book }: { book: CartBookType }) {
           </Stack>
         </Box>
       </Stack>
-
-      <Stack
-        direction="row"
-        alignItems="center"
-        justifyContent="center"
-        sx={{ display: { xs: "none", md: "flex" } }}
-      >
-        <Button
-          variant="outlined"
-          sx={{
-            border: "1px solid #63422d",
-            height: "36px",
-            minWidth: "36px",
-            borderRadius: "0",
-            color: "black",
-            "&:hover": {
-              background: "#63422d15",
-              border: "1px solid #000000",
+      <Stack direction="row" gap="15px" alignItems="center">
+        <Stack
+          direction="row"
+          alignItems="center"
+          justifyContent="center"
+          sx={{ display: { xs: "none", md: "flex" } }}
+        >
+          <Button
+            variant="outlined"
+            sx={{
+              border: "1px solid #63422d",
+              height: "36px",
+              minWidth: "36px",
+              borderRadius: "0",
               color: "black",
-            },
-          }}
-          onClick={handleDecreQty}
-        >
-          -
-        </Button>
-        <Box
-          sx={{
-            width: "55px",
-            height: "36px",
-            textAlign: "center",
-            lineHeight: "36px",
-            border: "1px solid",
-          }}
-        >
-          {book.quantity}
-        </Box>
+              "&:hover": {
+                background: "#63422d15",
+                border: "1px solid #000000",
+                color: "black",
+              },
+            }}
+            onClick={handleDecreQty}
+          >
+            -
+          </Button>
+          <Box
+            sx={{
+              width: "55px",
+              height: "36px",
+              textAlign: "center",
+              lineHeight: "36px",
+              border: "1px solid",
+            }}
+          >
+            {book.quantity}
+          </Box>
 
-        <Button
-          variant="outlined"
-          sx={{
-            border: "1px solid #63422d",
-            height: "36px",
-            minWidth: "36px",
-            borderRadius: "0",
-            color: "black",
-
-            "&:hover": {
-              background: "#63422d15",
-              border: "1px solid #000000",
+          <Button
+            variant="outlined"
+            sx={{
+              border: "1px solid #63422d",
+              height: "36px",
+              minWidth: "36px",
+              borderRadius: "0",
               color: "black",
-            },
-          }}
-          onClick={handleIncreQty}
+
+              "&:hover": {
+                background: "#63422d15",
+                border: "1px solid #000000",
+                color: "black",
+              },
+            }}
+            onClick={handleIncreQty}
+          >
+            +
+          </Button>
+        </Stack>
+        <Typography
+          component="p"
+          fontSize="20px"
+          textAlign="end"
+          sx={{ display: { xs: "none", md: "block" }, minWidth: "100px" }}
         >
-          +
-        </Button>
+          ${book.totalPrice}
+        </Typography>
       </Stack>
-      <Typography
-        component="p"
-        fontSize="20px"
-        textAlign="end"
-        sx={{ display: { xs: "none", md: "block" }, minWidth: "100px" }}
-      >
-        ${book.totalPrice}
-      </Typography>
     </Stack>
   );
 }

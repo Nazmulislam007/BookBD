@@ -14,15 +14,6 @@ export function useAllBooks() {
   });
 }
 
-export function useBooksWeLove() {
-  return useQuery("books-we-love", async () => {
-    const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/books/books-we-love`
-    );
-    return data;
-  });
-}
-
 export function useSubjectBooks({
   type,
   page,
@@ -59,12 +50,10 @@ export default function useTop50Books() {
   });
 }
 
-export function useBannarBooks() {
-  const encodedUrl = encodeURIComponent("upto-75%-off");
-
-  return useQuery(encodedUrl, async () => {
+export function useHomeBooks() {
+  return useQuery("books", async () => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/books/${encodedUrl}`
+      `${import.meta.env.VITE_SERVER_URL}/books/b`
     );
     return data;
   });

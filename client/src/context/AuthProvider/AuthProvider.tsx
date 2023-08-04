@@ -49,11 +49,18 @@ export default function AuthProvider({ children }: AuthProviderType) {
 
   useEffect(() => {
     async function isLoggedIn() {
-      const { data } = await axios.get(
-        `${import.meta.env.VITE_SERVER_URL}/auth`,
-        { withCredentials: true }
-      );
-      setUser(data);
+      try {
+        const { data } = await axios.get(
+          `${import.meta.env.VITE_SERVER_URL}/auth`,
+          { withCredentials: true }
+        );
+        setUser(data);
+      } catch (error: any) {
+        if (error.response) {
+          console.log(error.response.status);
+          console.log(error.response.statusText);
+        }
+      }
     }
     isLoggedIn();
   }, []);

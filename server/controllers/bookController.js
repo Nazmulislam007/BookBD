@@ -73,7 +73,7 @@ const relatedBooks = async (req, res, next) => {
   }
 };
 
-const upto75perOff = async (req, res, next) => {
+const getBooks = async (req, res, next) => {
   try {
     const upto75 = await Book.aggregate([
       {
@@ -104,7 +104,24 @@ const upto75perOff = async (req, res, next) => {
       },
     ]);
 
-    res.status(200).json(upto75);
+    const booksWeLove = await Book.aggregate([
+      {
+        $sort: {
+          "reviews.rating": -1,
+        },
+      },
+      {
+        $limit: 9,
+      },
+    ]);
+
+    const top50Books = await Book.aggregate([{ $sort: { "saleInfo.totalSales": -1 } }]);
+
+    res.status(200).json({
+      upto75, 
+      booksWeLove,
+      top50Books
+    });
   } catch (error) {
     next(error);
   }
@@ -131,31 +148,12 @@ const subjectiveBooks = async (req, res, next) => {
   }
 };
 
-const getBooksWeLove = async (req, res, next) => {
-  try {
-    const bookWeLove = await Book.aggregate([
-      {
-        $sort: {
-          "reviews.rating": -1,
-        },
-      },
-      {
-        $limit: 9,
-      },
-    ]);
-
-    res.status(200).json(bookWeLove);
-  } catch (error) {
-    next(error);
-  }
-};
 
 module.exports = {
   getAllBooks,
   getSingleBook,
   searchBooks,
   relatedBooks,
-  upto75perOff,
   subjectiveBooks,
-  getBooksWeLove,
+  getBooks
 };
