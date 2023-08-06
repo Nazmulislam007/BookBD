@@ -116,11 +116,15 @@ const getBooks = async (req, res, next) => {
     ]);
 
     const top50Books = await Book.aggregate([{ $sort: { "saleInfo.totalSales": -1 } }]);
+    const scienceFiction = await Book.find({
+      catagories: 'Science Fiction & Fantasy'
+    })
 
     res.status(200).json({
       upto75, 
       booksWeLove,
-      top50Books
+      top50Books,
+      scienceFiction
     });
   } catch (error) {
     next(error);
