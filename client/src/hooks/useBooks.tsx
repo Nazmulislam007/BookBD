@@ -41,6 +41,15 @@ export function useSubjectBooks({
   });
 }
 
+export function useSearchedBooks({ search }: { search?: string }) {
+  return useQuery([search], async () => {
+    const { data } = await axios.get(
+      `${import.meta.env.VITE_SERVER_URL}/books/search?q=${search}`
+    );
+    return data;
+  });
+}
+
 export default function useTop50Books() {
   return useQuery("subjective-books", async () => {
     const { data } = await axios.get(

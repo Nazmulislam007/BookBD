@@ -3,7 +3,7 @@ import { useAuth } from "@/context/AuthProvider/AuthProvider";
 import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import { List, ListItem } from "@mui/material";
 import Typography from "@mui/material/Typography";
-import AccountAvatar from "./AccountAvatar";
+import AccountAvatar from "./AccountAvatar/AccountAvatar";
 import CustomizedBadges from "./CartBadge";
 
 export default function AccountAction() {
