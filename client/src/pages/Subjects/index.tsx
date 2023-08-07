@@ -1,12 +1,11 @@
 import BreadCrumbs from "@/components/BreadCrumbs";
 import Loading from "@/components/Loading";
-import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import { useSubjectBooks } from "@/hooks/useBooks";
 import { HeadingFormat } from "@/lib";
 import { Box, Container, Stack, Typography } from "@mui/material";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import FilterSubjects from "./components/FilterSubjects";
+import FilterBooks from "./components/Filter";
 import SubjectResult from "./components/SubjectResult";
 
 export default function Subjects() {
@@ -15,32 +14,45 @@ export default function Subjects() {
   const heading = location.pathname.slice(3);
   const formatedHeading = HeadingFormat(decodeURIComponent(heading));
   const [page, setPage] = useState(1);
-  const { search } = useBooks();
 
-  const { isLoading, isError, data } = useSubjectBooks({
+  const { isLoading, isError, data, error } = useSubjectBooks({
     type: heading,
     page,
     limitCount,
-    search,
   });
 
-  const newBooks = data?.books;
+  let content = null;
 
-  if (isLoading) return <Loading />;
+  if (isLoading) content = <Loading />;
 
-  if (isError) return <span>Error: </span>;
+  if (isError) content = <span>Error: {(error as any).message}</span>;
+
+  if (!isLoading && !isError)
+    content = (
+      <SubjectResult
+        newBooks={data?.books}
+        setPage={setPage}
+        page={page}
+        limitCount={limitCount}
+        total={data?.totalCount}
+      />
+    );
 
   return (
     <Container maxWidth="lg" sx={{ pt: 2, pb: 5 }}>
-      <Stack component="header" pb={2}>
+      <Stack component="header" pb={{ sm: 2, xs: 0 }}>
         <Typography
           component="h4"
           fontSize={{ xs: "1.6rem", sm: "2rem" }}
-          textAlign="center"
+          textAlign={{ sm: "center", xs: "start" }}
         >
           {formatedHeading}
         </Typography>
-        <Typography component="p" fontSize=".8rem" textAlign="center">
+        <Typography
+          component="p"
+          fontSize=".8rem"
+          textAlign={{ sm: "center", xs: "start" }}
+        >
           Discover the best books to read that are trending right now.
         </Typography>
       </Stack>
@@ -53,15 +65,12 @@ export default function Subjects() {
           gap: "2rem",
         }}
       >
-        <FilterSubjects />
-
-        <SubjectResult
-          newBooks={newBooks}
-          setPage={setPage}
-          page={page}
-          limitCount={limitCount}
-          total={data?.totalCount}
-        />
+        <Box component="div" flex="1 1 270px">
+          <FilterBooks />
+        </Box>
+        <Box component="div" flex="1 1 60%">
+          {content}
+        </Box>
       </Box>
     </Container>
   );

@@ -56,11 +56,11 @@ export default function SubjectResult({
   };
 
   return (
-    <Box component="div" flex="1 1 60%">
+    <>
       <Stack
         direction={{ xs: "column", sm: "row" }}
         justifyContent="space-between"
-        alignItems="center"
+        alignItems={{ sx: "flex-start", sm: "center" }}
         gap={2}
       >
         <Typography component="p" fontSize="15px">
@@ -112,6 +112,6 @@ export default function SubjectResult({
         ))}
       </Grid>
       <PaginationBtn count={count} page={page} onChange={changePagination} />
-    </Box>
+    </>
   );
 }

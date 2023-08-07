@@ -6,6 +6,7 @@ import {
 } from "@/assets/theme/Accordion";
 import { useAllBooks } from "@/hooks/useBooks";
 import Typography from "@mui/material/Typography";
+import useMediaQuery from "@mui/material/useMediaQuery";
 import * as React from "react";
 import PriceRangeSlider from "./PriceRange";
 import SortByAuthors from "./SortByAuthors";
@@ -13,9 +14,16 @@ import ShortByCatagory from "./SortByCatagory";
 import SortByRatting from "./SortByRating";
 
 export default function FilterBooks() {
-  const [expanded, setExpanded] = React.useState<string | false>("panel1");
+  const matches = useMediaQuery("(min-width:600px)");
+  const [expanded, setExpanded] = React.useState({
+    panel1: matches,
+    panel2: matches,
+    panel3: matches,
+  });
 
-  const { data, isLoading, isError } = useAllBooks();
+  const { data, isError, error } = useAllBooks();
+
+  if (isError) return <span>Error: {(error as any).message}</span>;
 
   const newData: Partial<Books>[] = data;
 
@@ -40,20 +48,18 @@ export default function FilterBooks() {
 
   const totalCatagory: string[] = catagory.concat(subCatagory).sort();
 
-  if (isLoading) return <span>Loading...</span>;
-  if (isError) return <span>Error...</span>;
-
   const handleChange =
     (panel: string) => (_event: React.SyntheticEvent, newExpanded: boolean) => {
-      setExpanded(newExpanded ? panel : false);
+      console.log(panel, newExpanded);
+      setExpanded({
+        ...expanded,
+        [panel]: newExpanded,
+      });
     };
 
   return (
     <>
-      <Accordion
-        expanded={expanded === "panel1"}
-        onChange={handleChange("panel1")}
-      >
+      <Accordion expanded={expanded.panel1} onChange={handleChange("panel1")}>
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
           <Typography
             component="p"
@@ -68,10 +74,7 @@ export default function FilterBooks() {
           <ShortByCatagory totalCatagory={totalCatagory} />
         </AccordionDetails>
       </Accordion>
-      <Accordion
-        expanded={expanded === "panel2"}
-        onChange={handleChange("panel2")}
-      >
+      <Accordion expanded={expanded.panel2} onChange={handleChange("panel2")}>
         <AccordionSummary aria-controls="panel2d-content" id="panel2d-header">
           <Typography
             component="p"
@@ -100,10 +103,7 @@ export default function FilterBooks() {
           <PriceRangeSlider />
         </AccordionDetails>
       </Accordion>
-      <Accordion
-        expanded={expanded === "panel3"}
-        onChange={handleChange("panel3")}
-      >
+      <Accordion expanded={expanded.panel3} onChange={handleChange("panel3")}>
         <AccordionSummary aria-controls="panel3d-content" id="panel3d-header">
           <Typography
             component="p"

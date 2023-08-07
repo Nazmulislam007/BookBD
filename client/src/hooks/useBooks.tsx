@@ -18,22 +18,14 @@ export function useSubjectBooks({
   type,
   page,
   limitCount,
-  search,
 }: {
   type: string;
   page: number;
   limitCount: number;
-  search?: string;
 }) {
-  let query: string;
+  const query = `/books/subjective-books?_page=${page}&_limit=${limitCount}`;
 
-  if (search !== "") {
-    query = `/books/search?q=${search}&_page=${page}&_limit=${limitCount}`;
-  } else {
-    query = `/books/subjective-books?_page=${page}&_limit=${limitCount}`;
-  }
-
-  return useQuery([type, page, search], async () => {
+  return useQuery([type, page], async () => {
     const { data } = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}${query}`
     );
