@@ -1,31 +1,58 @@
-import { Box, List, ListItem, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
+import { Dispatch, SetStateAction } from "react";
+import { Link } from "react-router-dom";
 
-export default function DropdownMenu() {
+export default function DropdownMenu({
+  item,
+  lastIndex,
+  activeSubNav,
+  setActiveSubNav,
+}: {
+  item: {
+    path: string;
+    name: string;
+  };
+  lastIndex: boolean;
+  activeSubNav: string;
+  setActiveSubNav: Dispatch<SetStateAction<string>>;
+}) {
   return (
-    <Box
-      sx={{
-        position: "relative",
-        display: "inline-block",
-        py: 1,
-        "&:hover > .MuiList-root": {
-          transform: "scale(1)",
-          opacity: 1,
-        },
+    <Link
+      to={`${item.path}`}
+      style={{
+        borderRight: lastIndex ? "1px solid #dfdfdf" : "0px solid",
       }}
     >
-      <Typography
-        component="div"
+      <Box
         sx={{
-          cursor: "pointer",
-          textTransform: "uppercase",
-          fontSize: "12px",
-          fontWeight: 600,
+          position: "relative",
+          display: "inline-block",
+          paddingInline: "18px",
+          width: { sm: "fit-content", xs: "100%" },
+          borderLeft: "1px solid #dfdfdf",
+          borderBottom: { sm: "0px solid", xs: "1px solid #dfdfdf" },
+          bgcolor: activeSubNav === item.name ? "#63422d" : "white",
+          color: activeSubNav === item.name ? "white" : "#000000",
           py: 1,
+          "&:hover > .MuiList-root": {
+            transform: "scale(1)",
+            opacity: 1,
+          },
         }}
+        onClick={() => setActiveSubNav(item.name)}
       >
-        Top rated
-      </Typography>
-      <List
+        <Typography
+          component="div"
+          sx={{
+            textTransform: "uppercase",
+            fontSize: "12px",
+            fontWeight: 600,
+            py: 1,
+          }}
+        >
+          {item.name}
+        </Typography>
+        {/* <List
         sx={{
           position: "absolute",
           zIndex: 4,
@@ -50,7 +77,8 @@ export default function DropdownMenu() {
         <ListItem>Profile</ListItem>
         <ListItem>My account</ListItem>
         <ListItem>Logout</ListItem>
-      </List>
-    </Box>
+      </List> */}
+      </Box>
+    </Link>
   );
 }

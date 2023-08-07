@@ -1,6 +1,7 @@
+import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import MenuIcon from "@mui/icons-material/Menu";
 import SearchIcon from "@mui/icons-material/Search";
-import { InputBase, ListItem, Typography, styled } from "@mui/material";
+import { InputBase, Stack, Typography, styled } from "@mui/material";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
@@ -43,6 +44,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function ResposiveNav() {
+  const { setOpenRegister } = useBooks();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
@@ -103,28 +105,24 @@ export default function ResposiveNav() {
             inputProps={{ "aria-label": "search" }}
           />
         </Search>
-        <ListItem
+        <Stack
           sx={{
-            px: 2.8,
+            px: "18px",
             py: "14px",
-            backgroundColor: "#f7f7f7",
-            borderTop: "1px solid #dfdfdf",
           }}
+          onClick={() => setOpenRegister(true)}
         >
           <Typography
-            component="button"
             sx={{
               textTransform: "uppercase",
               fontSize: "12px",
               fontWeight: 700,
-              textDecoration: "none",
-              color: "gray",
               whiteSpace: "nowrap",
             }}
           >
             login / register
           </Typography>
-        </ListItem>
+        </Stack>
       </Menu>
     </Box>
   );

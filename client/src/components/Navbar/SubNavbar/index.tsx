@@ -1,8 +1,35 @@
 import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
+import { useState } from "react";
 import DropdownMenu from "./Dropdown";
 
+// eslint-disable-next-line react-refresh/only-export-components
+export const subNavItems = [
+  {
+    path: "/",
+    name: "all",
+  },
+  {
+    path: "/book",
+    name: "book",
+  },
+  {
+    path: "/s/subject",
+    name: "subject",
+  },
+  {
+    path: "/writer",
+    name: "writer",
+  },
+  {
+    path: "/bookfair-2023",
+    name: "bookfair 2023",
+  },
+];
+
 export default function SubNav() {
+  const [activeSubNav, setActiveSubNav] = useState("all");
+
   return (
     <AppBar
       position="static"
@@ -14,20 +41,22 @@ export default function SubNav() {
       }}
     >
       <Container
-        maxWidth="sm"
+        maxWidth="lg"
         sx={{
           display: "flex",
           alignItems: "center",
-          justifyContent: "space-between",
-          gap: "20px",
+          justifyContent: "flex-start",
         }}
       >
-        <DropdownMenu />
-        <DropdownMenu />
-        <DropdownMenu />
-        <DropdownMenu />
-        <DropdownMenu />
-        <DropdownMenu />
+        {subNavItems.map((item, index) => (
+          <DropdownMenu
+            key={index}
+            item={item}
+            lastIndex={index === subNavItems.length - 1}
+            activeSubNav={activeSubNav}
+            setActiveSubNav={setActiveSubNav}
+          />
+        ))}
       </Container>
     </AppBar>
   );

@@ -4,6 +4,8 @@ import { useSearchedBooks } from "@/hooks/useBooks";
 import { debounce } from "@/lib";
 import SearchIcon from "@mui/icons-material/Search";
 import { Box, InputBase, Stack, Typography, styled } from "@mui/material";
+import { useEffect, useRef } from "react";
+import { Link } from "react-router-dom";
 
 const Search = styled("div")(({ theme }) => ({
   position: "relative",
@@ -47,6 +49,7 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
 }));
 
 export default function SearchBox() {
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const { search, setSearch } = useBooks();
   const { isLoading, isError, data } = useSearchedBooks({
     search,
@@ -59,27 +62,55 @@ export default function SearchBox() {
     500
   );
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.value = search;
+    }
+  }, [search]);
+
+  const handleClick = () => {
+    if (inputRef.current) {
+      inputRef.current.value = "";
+    }
+    setSearch("");
+  };
+
   let content = null;
 
   if (!isLoading && !isError && data.books.length > 0)
     content = (data.books as Partial<Books[]>).map((book) => (
-      <Stack key={book?._id} direction="row" gap="10px">
-        <Box sx={{ maxWidth: "45px" }}>
-          <img
-            src={book?.imageLinks.thumbnail}
-            alt="img"
-            style={{ display: "block", maxWidth: "100%" }}
-          />
-        </Box>
-        <Box>
-          <Typography component="p" fontSize="17px" className="single-ellipsis">
-            {book?.title}
-          </Typography>
-          <Typography component="p" fontSize="13px">
-            {book?.authors[0]}
-          </Typography>
-        </Box>
-      </Stack>
+      <Link key={book?._id} to={`/b/${book?._id}`} onClick={handleClick}>
+        <Stack
+          direction="row"
+          gap="10px"
+          sx={{
+            padding: "15px",
+            "&:hover": {
+              bgcolor: "#f6f6f6",
+            },
+          }}
+        >
+          <Box sx={{ maxWidth: "45px" }}>
+            <img
+              src={book?.imageLinks.thumbnail}
+              alt="img"
+              style={{ display: "block", maxWidth: "100%" }}
+            />
+          </Box>
+          <Box>
+            <Typography
+              component="p"
+              fontSize="17px"
+              className="single-ellipsis"
+            >
+              {book?.title}
+            </Typography>
+            <Typography component="p" fontSize="13px">
+              {book?.authors[0]}
+            </Typography>
+          </Box>
+        </Stack>
+      </Link>
     ));
 
   if (!isLoading && !isError && data.books.length === 0)
@@ -92,6 +123,7 @@ export default function SearchBox() {
       </SearchIconWrapper>
       <StyledInputBase
         placeholder="Search…"
+        inputRef={inputRef}
         onChange={(e) => handleSearch(e)}
         inputProps={{ "aria-label": "search" }}
       />
@@ -101,7 +133,6 @@ export default function SearchBox() {
           direction="column"
           sx={{
             position: "absolute",
-            gap: "15px",
             top: "110%",
             width: "100%",
             maxHeight: "400px",
@@ -110,7 +141,6 @@ export default function SearchBox() {
             background: "white",
             boxShadow: 1,
             borderRadius: "5px",
-            padding: "15px",
             zIndex: 100,
           }}
         >

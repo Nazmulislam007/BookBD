@@ -12,7 +12,8 @@ const style = {
   maxWidth: "800px",
   bgcolor: "background.paper",
   boxShadow: 24,
-  p: 5,
+  px: { sm: 5, xs: "26px" },
+  py: { sm: 5, xs: 4 },
   height: { md: "auto", xs: "90vh" },
   overflow: "auto",
 };

@@ -125,7 +125,7 @@ button#submit:disabled {
   color: #ffffff;
   font-size: 22px;
   text-indent: -99999px;
-  margin: 0px auto;
+  margin: 30px auto;
   position: relative;
   width: 20px;
   height: 20px;

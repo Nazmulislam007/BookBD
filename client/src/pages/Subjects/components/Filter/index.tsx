@@ -64,7 +64,7 @@ export default function FilterBooks() {
             FILTER BY CATAGRORY
           </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ height: "300px", overflow: "auto" }}>
           <ShortByCatagory totalCatagory={totalCatagory} />
         </AccordionDetails>
       </Accordion>
@@ -82,7 +82,7 @@ export default function FilterBooks() {
             AUTHORS
           </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ height: "300px", overflow: "auto" }}>
           <SortByAuthors authors={authors} />
         </AccordionDetails>
       </Accordion>
