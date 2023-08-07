@@ -11,7 +11,13 @@ export default function AccountAction() {
   const { user } = useAuth() || {};
 
   return (
-    <List sx={{ display: "flex", alignItems: "center" }}>
+    <List
+      sx={{
+        display: "flex",
+        alignItems: "center",
+        padding: { xs: "0", sm: "8px 0px" },
+      }}
+    >
       {!user.status && (
         <ListItem sx={{ px: 0, pr: 1, display: { xs: "none", md: "block" } }}>
           <Typography

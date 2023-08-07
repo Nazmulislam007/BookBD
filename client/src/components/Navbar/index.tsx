@@ -1,3 +1,4 @@
+import { Box } from "@mui/material";
 import AppBar from "@mui/material/AppBar";
 import Container from "@mui/material/Container";
 import Stack from "@mui/material/Stack";
@@ -29,7 +30,9 @@ function ResponsiveAppBar() {
             <Logo />
           </Stack>
 
-          <SearchBox />
+          <Box sx={{ display: { xs: "none", sm: "block" } }}>
+            <SearchBox />
+          </Box>
 
           <AccountAction />
         </Toolbar>

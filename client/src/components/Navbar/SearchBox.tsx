@@ -117,7 +117,7 @@ export default function SearchBox() {
     content = <Typography component="p">No books founded</Typography>;
 
   return (
-    <Search sx={{ display: { xs: "none", sm: "block", position: "relative" } }}>
+    <Search sx={{ position: "relative" }}>
       <SearchIconWrapper>
         <SearchIcon />
       </SearchIconWrapper>

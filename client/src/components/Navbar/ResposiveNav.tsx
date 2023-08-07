@@ -1,53 +1,33 @@
+import { useAuth } from "@/context/AuthProvider/AuthProvider";
 import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import MenuIcon from "@mui/icons-material/Menu";
-import SearchIcon from "@mui/icons-material/Search";
-import { InputBase, Stack, Typography, styled } from "@mui/material";
+import { Stack, Typography } from "@mui/material";
 import Box from "@mui/material/Box";
 import IconButton from "@mui/material/IconButton";
 import Menu from "@mui/material/Menu";
-import * as React from "react";
-import ResponsiveDropDown from "./SubNavbar/ResponsiveDropDown";
-
-const Search = styled("div")(() => ({
-  position: "relative",
-  backgroundColor: "#f7f7f7",
-  borderTop: "1px solid #dfdfdf",
-  marginRight: 0,
-  marginLeft: 0,
-  width: "100%",
-  paddingBlock: "2px",
-}));
-
-const SearchIconWrapper = styled("div")(({ theme }) => ({
-  padding: theme.spacing(0, 2),
-  marginLeft: "2px",
-  height: "100%",
-  position: "absolute",
-  pointerEvents: "none",
-  display: "flex",
-  alignItems: "center",
-  justifyContent: "center",
-}));
-
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
-  color: "inherit",
-  "& .MuiInputBase-input": {
-    padding: theme.spacing(1, 1, 1, 0),
-    // vertical padding + font size from searchIcon
-    paddingLeft: `calc(1em + ${theme.spacing(4)})`,
-    transition: theme.transitions.create("width"),
-    width: "100%",
-    [theme.breakpoints.up("md")]: {
-      width: "40ch",
-    },
-  },
-}));
+import React, { useEffect, useState } from "react";
+import { useLocation } from "react-router-dom";
+import { subNavItems } from "./SubNavbar";
+import SubMenuList from "./SubNavbar/SubMenuList";
 
 export default function ResposiveNav() {
+  const location = useLocation();
+  const { user } = useAuth() || {};
   const { setOpenRegister } = useBooks();
-  const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
-    null
-  );
+  const [activeSubNav, setActiveSubNav] = useState({
+    name: "all",
+    path: "/",
+  });
+
+  useEffect(() => {
+    setActiveSubNav({
+      name: subNavItems.find((item) => item.path === location.pathname)
+        ?.name as string,
+      path: location.pathname,
+    });
+  }, [location.pathname]);
+
+  const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
     document.body.style.overflow = "hidden";
@@ -95,34 +75,45 @@ export default function ResposiveNav() {
           },
         }}
       >
-        <ResponsiveDropDown />
-        <Search sx={{ display: { xs: "none", sm: "block" } }}>
-          <SearchIconWrapper>
-            <SearchIcon />
-          </SearchIconWrapper>
-          <StyledInputBase
-            placeholder="Search…"
-            inputProps={{ "aria-label": "search" }}
-          />
-        </Search>
         <Stack
           sx={{
-            px: "18px",
-            py: "14px",
+            width: "100%",
           }}
-          onClick={() => setOpenRegister(true)}
         >
-          <Typography
+          {subNavItems.map((item, index) => (
+            <SubMenuList
+              key={index}
+              item={item}
+              lastIndex={index === subNavItems.length - 1}
+              activeSubNav={activeSubNav}
+              setActiveSubNav={setActiveSubNav}
+              handleCloseNavMenu={handleCloseNavMenu}
+            />
+          ))}
+        </Stack>
+        {!user.status && (
+          <Stack
             sx={{
-              textTransform: "uppercase",
-              fontSize: "12px",
-              fontWeight: 700,
-              whiteSpace: "nowrap",
+              px: "18px",
+              py: "14px",
+            }}
+            onClick={() => {
+              setOpenRegister(true);
+              handleCloseNavMenu();
             }}
           >
-            login / register
-          </Typography>
-        </Stack>
+            <Typography
+              sx={{
+                textTransform: "uppercase",
+                fontSize: "12px",
+                fontWeight: 700,
+                whiteSpace: "nowrap",
+              }}
+            >
+              login / register
+            </Typography>
+          </Stack>
+        )}
       </Menu>
     </Box>
   );

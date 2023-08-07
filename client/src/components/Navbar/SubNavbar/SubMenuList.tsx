@@ -2,19 +2,24 @@ import { Box, Typography } from "@mui/material";
 import { Dispatch, SetStateAction } from "react";
 import { Link } from "react-router-dom";
 
-export default function DropdownMenu({
+export default function SubMenuList({
   item,
   lastIndex,
   activeSubNav,
   setActiveSubNav,
+  handleCloseNavMenu,
 }: {
   item: {
     path: string;
     name: string;
   };
   lastIndex: boolean;
-  activeSubNav: string;
-  setActiveSubNav: Dispatch<SetStateAction<string>>;
+  activeSubNav: {
+    path: string;
+    name: string;
+  };
+  setActiveSubNav: Dispatch<SetStateAction<{ name: string; path: string }>>;
+  handleCloseNavMenu?: () => void;
 }) {
   return (
     <Link
@@ -22,6 +27,7 @@ export default function DropdownMenu({
       style={{
         borderRight: lastIndex ? "1px solid #dfdfdf" : "0px solid",
       }}
+      onClick={() => handleCloseNavMenu && handleCloseNavMenu()}
     >
       <Box
         sx={{
@@ -31,15 +37,20 @@ export default function DropdownMenu({
           width: { sm: "fit-content", xs: "100%" },
           borderLeft: "1px solid #dfdfdf",
           borderBottom: { sm: "0px solid", xs: "1px solid #dfdfdf" },
-          bgcolor: activeSubNav === item.name ? "#63422d" : "white",
-          color: activeSubNav === item.name ? "white" : "#000000",
+          bgcolor: activeSubNav.name === item.name ? "#63422d" : "white",
+          color: activeSubNav.name === item.name ? "white" : "#000000",
           py: 1,
           "&:hover > .MuiList-root": {
             transform: "scale(1)",
             opacity: 1,
           },
         }}
-        onClick={() => setActiveSubNav(item.name)}
+        onClick={() =>
+          setActiveSubNav({
+            name: item.name,
+            path: item.path,
+          })
+        }
       >
         <Typography
           component="div"
@@ -52,32 +63,6 @@ export default function DropdownMenu({
         >
           {item.name}
         </Typography>
-        {/* <List
-        sx={{
-          position: "absolute",
-          zIndex: 4,
-          transform: "scale(0)",
-          opacity: 0,
-          minWidth: "300px",
-          bgcolor: "white",
-          boxShadow: "1px 1px 15px rgba(0,0,0,.15)",
-          borderRadius: "5px",
-          "& > *": {
-            cursor: "pointer",
-            textTransform: "uppercase",
-            fontSize: "12px",
-            fontWeight: 600,
-            color: "GrayText",
-            "&:hover": {
-              textDecoration: "underline",
-            },
-          },
-        }}
-      >
-        <ListItem>Profile</ListItem>
-        <ListItem>My account</ListItem>
-        <ListItem>Logout</ListItem>
-      </List> */}
       </Box>
     </Link>
   );
