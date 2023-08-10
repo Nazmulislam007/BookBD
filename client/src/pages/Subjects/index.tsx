@@ -3,12 +3,16 @@ import Loading from "@/components/Loading";
 import { useSubjectBooks } from "@/hooks/useBooks";
 import { HeadingFormat } from "@/lib";
 import { Box, Container, Stack, Typography } from "@mui/material";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import FilterBooks from "./components/Filter";
 import SubjectResult from "./components/SubjectResult";
+import { useBooks } from "@/context/BooksProvider/BooksProvider";
+import { ActionTypeName } from "@/context/BooksProvider/ActionType";
+import { SortedBy } from "@/Types/Books";
 
 export default function Subjects() {
+  const {dispatchSort} = useBooks()
   const limitCount = 8;
   const location = useLocation();
   const heading = location.pathname.slice(3);
@@ -17,10 +21,25 @@ export default function Subjects() {
   const [page, setPage] = useState(1);
 
   const { isLoading, isError, data, error } = useSubjectBooks({
-    type: encodeURIComponent(heading),
+    type: HeadingFormat(encodeURIComponent(heading)),
     page,
     limitCount,
   });
+  
+  useEffect(() => {
+    if(location.pathname === "/s/top-50-books"){
+      dispatchSort({
+        type: ActionTypeName.SORTED_BY,
+        payload: SortedBy.POPULARTIY
+      })
+    }else{
+      dispatchSort({
+        type: ActionTypeName.SORTED_BY,
+        payload: SortedBy.MOST_RELEVANT
+      })
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname])
 
   let content = null;
 

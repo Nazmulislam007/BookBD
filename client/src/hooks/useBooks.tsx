@@ -2,10 +2,10 @@ import { Books } from "@/Types/Books";
 import axios from "axios";
 import { useQuery } from "react-query";
 
-export function useAllBooks() {
-  return useQuery("all-book", async () => {
+export function useFilterInfo() {
+  return useQuery("filter-info", async () => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/books`,
+      `${import.meta.env.VITE_SERVER_URL}/books/filter-info`,
       {
         withCredentials: true,
       }

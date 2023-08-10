@@ -4,7 +4,7 @@ import {
   AccordionDetails,
   AccordionSummary,
 } from "@/assets/theme/Accordion";
-import { useAllBooks } from "@/hooks/useBooks";
+import { useFilterInfo } from "@/hooks/useBooks";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import * as React from "react";
@@ -21,7 +21,7 @@ export default function FilterBooks() {
     panel3: matches,
   });
 
-  const { data, isError, error } = useAllBooks();
+  const { data, isError, error } = useFilterInfo();
 
   if (isError) return <span>Error: {(error as any).message}</span>;
 

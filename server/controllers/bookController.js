@@ -1,6 +1,6 @@
 const Book = require("../models/Books");
 
-const getAllBooks = async (req, res, next) => {
+const getFilterInfo = async (req, res, next) => {
   try {
     const books = await Book.find();
     res.status(200).json(books);
@@ -144,40 +144,81 @@ const subjectiveBooks = async (req, res, next) => {
     // getting 5 page as maximum;
     const _max5Page = Math.min(pageNumber, 5);
     const skip =
-      (_type === "top-50-books" ? _max5Page - 1 : _page - 1) * +_limit;
+      (_type === "Top 50 Books" ? _max5Page - 1 : _page - 1) * +_limit;
 
     let pipeline = [];
     let counterQuery = {};
     let counterLimit = {};
+    let allCategoryAndSub = [];
 
-    switch (_type) {
-      case "top-50-books": {
-        pipeline.push({ $sort: { "saleInfo.totalSales": -1 } });
-        counterLimit.limit = 50;
-        break;
-      }
-      case "science-fiction-&-fantasy": {
-        const query = {
-          $or: [
-            { catagories: "Science Fiction & Fantasy" },
-            { subCatagory: "Science Fiction" },
-          ],
-        };
-        counterQuery = query;
-        counterLimit = {};
-        pipeline.push({
-          $match: query,
-        });
-        break;
-      }
+    if (!["Top 50 Books", "Subject"].includes(_type)) {
+      allCategoryAndSub = await Book.aggregate([
+        {
+          $match: {
+            $or: [{ catagories: _type }],
+          },
+        },
+        {
+          $group: {
+            _id: null,
+            catagories: { $addToSet: "$catagories" },
+            subCatagory: { $addToSet: "$subCatagory" },
+          },
+        },
+        {
+          $project: {
+            catagories: {
+              $reduce: {
+                input: "$catagories",
+                initialValue: [],
+                in: { $concatArrays: ["$$value", "$$this"] },
+              },
+            },
+            subCatagory: {
+              $reduce: {
+                input: "$subCatagory",
+                initialValue: [],
+                in: { $concatArrays: ["$$value", "$$this"] },
+              },
+            },
+          },
+        },
+      ]);
+    }
+
+    if (_type === "Top 50 Books") {
+      pipeline.push({
+        $sort: { "saleInfo.totalSales": -1 },
+      });
+      counterLimit.limit = 50;
+    } else if (_type === "Subject") {
+      pipeline.push({
+        $match: {
+          _id: { $exists: true },
+        },
+      });
+    } else {
+      const query = {
+        $or: [
+          { catagories: allCategoryAndSub[0].catagories },
+          { subCatagory: allCategoryAndSub[0].subCatagory },
+        ],
+      };
+      counterQuery = query;
+      counterLimit = {};
+      pipeline.push({
+        $match: query,
+      });
     }
 
     if (_page && _limit) {
       pipeline.push({ $skip: skip }, { $limit: limit });
     }
 
-    const books = await Book.aggregate(pipeline);
-    const totalCount = await Book.countDocuments(counterQuery, counterLimit);
+    const [books, totalCount] = await Promise.all([
+      await Book.aggregate(pipeline),
+      await Book.countDocuments(counterQuery, counterLimit),
+    ]);
 
     res.status(200).json({ totalCount, books });
   } catch (error) {
@@ -186,7 +227,7 @@ const subjectiveBooks = async (req, res, next) => {
 };
 
 module.exports = {
-  getAllBooks,
+  getFilterInfo,
   getSingleBook,
   searchBooks,
   relatedBooks,
