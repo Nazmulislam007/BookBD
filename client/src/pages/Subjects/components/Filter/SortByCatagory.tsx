@@ -1,45 +1,57 @@
+import { ActionTypeName } from "@/context/BooksProvider/ActionType";
 import { useBooks } from "@/context/BooksProvider/BooksProvider";
+import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
-import Radio from "@mui/material/Radio";
-import RadioGroup from "@mui/material/RadioGroup";
-import * as React from "react";
+import FormGroup from "@mui/material/FormGroup";
+import React from "react";
 
-export default function ShortByCatagory({
+export default function SortByAuthors({
   totalCatagory,
 }: {
   totalCatagory: string[];
 }) {
-  const { filterCata, setFilterCata } = useBooks();
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setFilterCata((event.target as HTMLInputElement).value);
+  return (
+    <FormGroup>
+      {totalCatagory.map((category, i) => (
+        <SortByAuthor key={i} category={category} />
+      ))}
+    </FormGroup>
+  );
+}
+
+const SortByAuthor = ({ category }: { category: string }) => {
+  const { dispatchSort } = useBooks();
+  const [checked, setChecked] = React.useState<boolean>(false);
+
+  const handleChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(e.target.checked);
+    dispatchSort({
+      type: ActionTypeName.FILTER_BY_CATEGORY,
+      payload: { value: e.target.value, isChecked: e.target.checked },
+    });
   };
 
   return (
-    <RadioGroup
-      aria-labelledby="demo-controlled-radio-buttons-group"
-      name="controlled-radio-buttons-group"
-      value={filterCata}
-      onChange={handleChange}
-    >
-      {totalCatagory.map((cata, i) => (
-        <FormControlLabel
-          key={i}
-          value={cata}
-          control={
-            <Radio
-              sx={{
-                "& .MuiSvgIcon-root": {
-                  fontSize: "18px",
-                },
-                "& + .MuiFormControlLabel-label": {
-                  fontSize: "14px",
-                },
-              }}
-            />
-          }
-          label={cata}
+    <FormControlLabel
+      control={
+        <Checkbox
+          sx={{
+            "& .MuiSvgIcon-root": { fontSize: 20 },
+            "& + .MuiFormControlLabel-label": {
+              fontSize: "14px",
+            },
+
+            color: "#63422d",
+            "&.Mui-checked": {
+              color: "#63422d",
+            },
+          }}
+          value={category}
+          onChange={handleChecked}
+          checked={checked}
         />
-      ))}
-    </RadioGroup>
+      }
+      label={category}
+    />
   );
-}
+};

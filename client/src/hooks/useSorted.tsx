@@ -6,7 +6,7 @@ type SortedType = {
 };
 
 export default function useSorted({ newBooks }: SortedType) {
-  const { sortedBooks, sortedPrice, filterCata } = useBooks();
+  const { sortedBooks, sortedPrice } = useBooks();
 
   let updatedBooks: Partial<Books>[];
 
@@ -44,18 +44,20 @@ export default function useSorted({ newBooks }: SortedType) {
     }
   }
 
-  if (filterCata !== "") {
-    return updatedBooks.filter(
-      (book) =>
-        book.catagories?.includes(filterCata) ||
-        book.subCatagory?.includes(filterCata)
-    );
-  }
-
   if (sortedBooks.filterByAuthor.length > 0) {
     return updatedBooks.filter((book) =>
       sortedBooks.filterByAuthor.some((filterAuthor) =>
         book.authors?.some((author) => filterAuthor === author)
+      )
+    );
+  }
+
+  if (sortedBooks.filterByCategory.length > 0) {
+    return updatedBooks.filter((book) =>
+      sortedBooks.filterByCategory.some(
+        (filterCategory) =>
+          book.catagories?.some((category) => filterCategory === category) ||
+          book.subCatagory?.some((sub) => sub === filterCategory)
       )
     );
   }

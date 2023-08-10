@@ -23,7 +23,7 @@ export function useSubjectBooks({
   page: number;
   limitCount: number;
 }) {
-  const query = `/books/subjective-books?_page=${page}&_limit=${limitCount}`;
+  const query = `/books/subjective-books?_type=${type}&_page=${page}&_limit=${limitCount}`;
 
   return useQuery([type, page], async () => {
     const { data } = await axios.get(

@@ -114,7 +114,7 @@ export default function FilterBooks() {
             RATINGS
           </Typography>
         </AccordionSummary>
-        <AccordionDetails>
+        <AccordionDetails sx={{ p: "10px 6px" }}>
           <SortByRatting />
         </AccordionDetails>
       </Accordion>

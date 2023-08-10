@@ -21,8 +21,6 @@ const BooksContext = createContext<ContextType>({
   dispatchSort: () => void {},
   sortedPrice: [0, 100],
   setSortedPrice: () => void {},
-  filterCata: "",
-  setFilterCata: () => void {},
   search: "",
   setSearch: () => void {},
 });
@@ -34,7 +32,6 @@ const useBooks = () => {
 export default function BooksProvider({ children }: BooksProviderType) {
   const [sortedPrice, setSortedPrice] = useState<number[]>([0, 100]);
   const [openRegister, setOpenRegister] = useState(false);
-  const [filterCata, setFilterCata] = useState("");
   const [search, setSearch] = useState("");
   const [sortedBooks, dispatchSort] = useReducer(
     sortedReducer,
@@ -49,12 +46,10 @@ export default function BooksProvider({ children }: BooksProviderType) {
       dispatchSort,
       sortedPrice,
       setSortedPrice,
-      filterCata,
-      setFilterCata,
       search,
       setSearch,
     }),
-    [sortedBooks, openRegister, sortedPrice, filterCata, search]
+    [sortedBooks, openRegister, sortedPrice, search]
   );
 
   return (

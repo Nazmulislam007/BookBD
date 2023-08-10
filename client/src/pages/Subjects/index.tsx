@@ -13,10 +13,11 @@ export default function Subjects() {
   const location = useLocation();
   const heading = location.pathname.slice(3);
   const formatedHeading = HeadingFormat(decodeURIComponent(heading));
+  // active pagination state
   const [page, setPage] = useState(1);
 
   const { isLoading, isError, data, error } = useSubjectBooks({
-    type: heading,
+    type: encodeURIComponent(heading),
     page,
     limitCount,
   });

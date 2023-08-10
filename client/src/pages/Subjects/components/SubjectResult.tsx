@@ -4,7 +4,13 @@ import SelectItem from "@/components/Select";
 import SingleBook from "@/components/SingleBook";
 import useSorted from "@/hooks/useSorted";
 import { Box, Grid, Paper, Stack, Typography, styled } from "@mui/material";
-import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import {
+  ChangeEvent,
+  Dispatch,
+  SetStateAction,
+  useEffect,
+  useState,
+} from "react";
 
 const Item = styled(Paper)(({ theme }) => ({
   backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
@@ -13,6 +19,7 @@ const Item = styled(Paper)(({ theme }) => ({
   textAlign: "center",
   boxShadow: "none",
   width: "fit-content",
+  margin: "0 auto",
 }));
 
 type SubjectResultType = {
@@ -30,6 +37,8 @@ export default function SubjectResult({
   limitCount,
   total,
 }: SubjectResultType) {
+  // Show products in number
+  // at the top of the books.
   const [showNum, setShowNum] = useState({
     start: 1,
     end: 8,
@@ -37,22 +46,27 @@ export default function SubjectResult({
 
   const updatedBooks: Partial<Books>[] = useSorted({ newBooks });
 
-  // count the pagination
+  // total from database;
+  // limitCount = 8 const
   const count = Math.ceil(total / limitCount);
 
   // remaining from total by limitcount
   const remainCount = total % limitCount;
 
-  const changePagination = (_event: ChangeEvent<unknown>, value: number) => {
-    setPage(value);
+  useEffect(() => {
     setShowNum({
       ...showNum,
-      start: value * limitCount - limitCount + 1,
+      start: page * limitCount - limitCount + 1,
       end:
-        value * limitCount > total
-          ? value * limitCount - (limitCount - remainCount)
-          : value * limitCount,
+        page * limitCount > total
+          ? page * limitCount - (limitCount - remainCount)
+          : page * limitCount,
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [page]);
+
+  const changePagination = (_event: ChangeEvent<unknown>, value: number) => {
+    setPage(value);
   };
 
   return (
