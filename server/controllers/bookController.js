@@ -135,7 +135,8 @@ const getBooks = async (req, res, next) => {
 
 const subjectiveBooks = async (req, res, next) => {
   try {
-    const { _page, _limit, _type } = req.query;
+    const { _page, _limit, _type, categories, sub_categories, rating, price } =
+      req.query;
 
     // Converting _page and _limit to numbers
     const pageNumber = +_page;
@@ -151,18 +152,58 @@ const subjectiveBooks = async (req, res, next) => {
     let counterLimit = {};
     let allCategoryAndSub = [];
 
-    if (!["Top 50 Books", "Subject"].includes(_type)) {
+    // get the category subCategory and authors
+    // according to the _type.
+    if (_type === "Top 50 Books") {
+      allCategoryAndSub = await Book.aggregate([
+        { $sort: { "saleInfo.totalSales": -1 } },
+        {
+          $group: {
+            _id: _type,
+            catagories: { $addToSet: "$catagories" },
+            subCatagory: { $addToSet: "$subCatagory" },
+            authors: { $addToSet: "$authors" },
+          },
+        },
+        {
+          $project: {
+            catagories: {
+              $reduce: {
+                input: "$catagories",
+                initialValue: [],
+                in: { $setUnion: ["$$value", "$$this"] },
+              },
+            },
+            subCatagory: {
+              $reduce: {
+                input: "$subCatagory",
+                initialValue: [],
+                in: { $setUnion: ["$$value", "$$this"] },
+              },
+            },
+            authors: {
+              $reduce: {
+                input: "$authors",
+                initialValue: [],
+                in: { $setUnion: ["$$value", "$$this"] },
+              },
+            },
+          },
+        },
+      ]);
+    } else if (_type === "Subject") {
       allCategoryAndSub = await Book.aggregate([
         {
           $match: {
-            $or: [{ catagories: _type }],
+            _id: { $exists: true },
           },
         },
         {
           $group: {
-            _id: null,
+            _id: _type,
             catagories: { $addToSet: "$catagories" },
             subCatagory: { $addToSet: "$subCatagory" },
+            authors: { $addToSet: "$authors" },
           },
         },
         {
@@ -181,11 +222,61 @@ const subjectiveBooks = async (req, res, next) => {
                 in: { $concatArrays: ["$$value", "$$this"] },
               },
             },
+            authors: {
+              $reduce: {
+                input: "$authors",
+                initialValue: [],
+                in: { $concatArrays: ["$$value", "$$this"] },
+              },
+            },
+          },
+        },
+      ]);
+    } else {
+      allCategoryAndSub = await Book.aggregate([
+        {
+          $match: {
+            $or: [{ catagories: _type }],
+          },
+        },
+        {
+          $group: {
+            _id: _type,
+            catagories: { $addToSet: "$catagories" },
+            subCatagory: { $addToSet: "$subCatagory" },
+            authors: { $addToSet: "$authors" },
+          },
+        },
+        {
+          $project: {
+            catagories: {
+              $reduce: {
+                input: "$catagories",
+                initialValue: [],
+                in: { $concatArrays: ["$$value", "$$this"] },
+              },
+            },
+            subCatagory: {
+              $reduce: {
+                input: "$subCatagory",
+                initialValue: [],
+                in: { $concatArrays: ["$$value", "$$this"] },
+              },
+            },
+            authors: {
+              $reduce: {
+                input: "$authors",
+                initialValue: [],
+                in: { $concatArrays: ["$$value", "$$this"] },
+              },
+            },
           },
         },
       ]);
     }
 
+    // get the data
+    // according to the _type.
     if (_type === "Top 50 Books") {
       pipeline.push({
         $sort: { "saleInfo.totalSales": -1 },
@@ -220,7 +311,7 @@ const subjectiveBooks = async (req, res, next) => {
       await Book.countDocuments(counterQuery, counterLimit),
     ]);
 
-    res.status(200).json({ totalCount, books });
+    res.status(200).json({ totalCount, books, allCategoryAndSub });
   } catch (error) {
     next(error);
   }
