@@ -21,8 +21,8 @@ function SortedRating({ count }: { count: number }) {
   const handleChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked);
     dispatchSort({
-      type: ActionTypeName.FILTER_BY_CATEGORY,
-      payload: { value: e.target.value, isChecked: e.target.checked },
+      type: ActionTypeName.FILTER_BY_RATING,
+      payload: { value: +e.target.value, isChecked: e.target.checked },
     });
   };
 

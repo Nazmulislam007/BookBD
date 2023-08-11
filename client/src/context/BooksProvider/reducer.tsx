@@ -6,6 +6,7 @@ export const initialSortedValue: SortedStateType = {
   filterByAuthors: [],
   filterByCategories: [],
   filterBySubCategories: [],
+  filterByRating: []
 };
 
 export const sortedReducer = (
@@ -24,7 +25,7 @@ export const sortedReducer = (
         if (payload.isChecked) {
           return {
             ...state,
-            filterByAuthors: [...state.filterByAuthors, payload.value],
+            filterByAuthors: [...state.filterByAuthors, payload.value as string],
           };
         } else {
           return {
@@ -42,7 +43,7 @@ export const sortedReducer = (
         if (payload.isChecked) {
           return {
             ...state,
-            filterByCategories: [...state.filterByCategories, payload.value],
+            filterByCategories: [...state.filterByCategories, payload.value as string],
           };
         } else {
           return {
@@ -62,13 +63,34 @@ export const sortedReducer = (
             ...state,
             filterBySubCategories: [
               ...state.filterBySubCategories,
-              payload.value,
+              payload.value as string,
             ],
           };
         } else {
           return {
             ...state,
             filterBySubCategories: state.filterBySubCategories.filter(
+              (elem) => elem !== payload.value
+            ),
+          };
+        }
+      }
+      return state;
+    }
+    case ActionTypeName.FILTER_BY_RATING: {
+      if (payload && typeof payload === "object") {
+        if (payload.isChecked) {
+          return {
+            ...state,
+            filterByRating: [
+              ...state.filterByRating,
+              payload.value as number,
+            ],
+          };
+        } else {
+          return {
+            ...state,
+            filterByRating: state.filterByRating.filter(
               (elem) => elem !== payload.value
             ),
           };

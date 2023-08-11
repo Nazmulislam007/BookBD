@@ -7,6 +7,7 @@ export enum ActionTypeName {
   FILTER_BY_CATEGORIES = "book/categories",
   FILTER_BY_SUB_CATEGORIES = "book/sub_categories",
   FILTER_BY_PRICE_RANGE = "book/price_range",
+  FILTER_BY_RATING = 'book/rating'
 }
 
 export type SortedStateType = {
@@ -14,6 +15,7 @@ export type SortedStateType = {
   filterByAuthors: string[];
   filterByCategories: string[];
   filterBySubCategories: string[];
+  filterByRating: number[]
 };
 
 export type ContextType = {
@@ -32,6 +34,7 @@ export type ActionType = {
     | ActionTypeName.SORTED_BY
     | ActionTypeName.FILTER_BY_AUTHORS
     | ActionTypeName.FILTER_BY_CATEGORIES
-    | ActionTypeName.FILTER_BY_SUB_CATEGORIES;
-  payload?: string | { value: string; isChecked: boolean };
+    | ActionTypeName.FILTER_BY_SUB_CATEGORIES
+    | ActionTypeName.FILTER_BY_RATING;
+  payload?: string | { value: string | number; isChecked: boolean } ;
 };
