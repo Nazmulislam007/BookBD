@@ -2,17 +2,17 @@ import { Books, SortedBy } from "@/Types/Books";
 import { useBooks } from "@/context/BooksProvider/BooksProvider";
 
 type SortedType = {
-  newBooks: Partial<Books>[];
+  books: Partial<Books>[];
 };
 
-export default function useSorted({ newBooks }: SortedType) {
+export default function useSorted({ books }: SortedType) {
   const { sortedBooks, sortedPrice } = useBooks();
 
   let updatedBooks: Partial<Books>[];
 
   switch (sortedBooks.sortBy) {
     case SortedBy.MOST_RELEVANT: {
-      updatedBooks = newBooks.sort(
+      updatedBooks = books.sort(
         (a, b) =>
           new Date(a.publishedDate || "").valueOf() -
           new Date(b.publishedDate || "").valueOf()
@@ -20,27 +20,27 @@ export default function useSorted({ newBooks }: SortedType) {
       break;
     }
     case SortedBy.POPULARTIY: {
-      updatedBooks = newBooks.sort(
+      updatedBooks = books.sort(
         (a, b) => (b.saleInfo?.totalSales || 0) - (a.saleInfo?.totalSales || 0)
       );
       break;
     }
     case SortedBy.LOW_TO_HIGH: {
-      updatedBooks = newBooks.sort(
+      updatedBooks = books.sort(
         (a, b) =>
           (a.saleInfo?.discountPrice || 0) - (b.saleInfo?.discountPrice || 0)
       );
       break;
     }
     case SortedBy.HIGH_TO_LOW: {
-      updatedBooks = newBooks.sort(
+      updatedBooks = books.sort(
         (a, b) =>
           (b.saleInfo?.discountPrice || 0) - (a.saleInfo?.discountPrice || 0)
       );
       break;
     }
     default: {
-      updatedBooks = newBooks;
+      updatedBooks = books;
     }
   }
 

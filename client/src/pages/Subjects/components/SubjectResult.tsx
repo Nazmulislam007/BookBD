@@ -23,44 +23,47 @@ const Item = styled(Paper)(({ theme }) => ({
 }));
 
 type SubjectResultType = {
-  newBooks: Partial<Books>[];
+  books: Partial<Books>[];
   setPage: Dispatch<SetStateAction<number>>;
   page: number;
-  limitCount: number;
+  limit: number;
   total: number;
 };
 
 export default function SubjectResult({
-  newBooks,
+  books,
   setPage,
   page,
-  limitCount,
+  limit,
   total,
 }: SubjectResultType) {
-  // Show products in number
-  // at the top of the books.
+  /**
+   * Show products in number
+   * at the top of the books.
+   */
   const [showNum, setShowNum] = useState({
     start: 1,
     end: 8,
   });
 
-  const updatedBooks: Partial<Books>[] = useSorted({ newBooks });
+  const updatedBooks: Partial<Books>[] = useSorted({ books });
+  /**
+   * total from database;
+   * limit = 8 const
+   */
+  const count = Math.ceil(total / limit);
 
-  // total from database;
-  // limitCount = 8 const
-  const count = Math.ceil(total / limitCount);
-
-  // remaining from total by limitcount
-  const remainCount = total % limitCount;
+  // remaining from total by limit
+  const remainCount = total % limit;
 
   useEffect(() => {
     setShowNum({
       ...showNum,
-      start: page * limitCount - limitCount + 1,
+      start: page * limit - limit + 1,
       end:
-        page * limitCount > total
-          ? page * limitCount - (limitCount - remainCount)
-          : page * limitCount,
+        page * limit > total
+          ? page * limit - (limit - remainCount)
+          : page * limit,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);

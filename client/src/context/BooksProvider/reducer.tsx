@@ -3,8 +3,9 @@ import { ActionType, ActionTypeName, SortedStateType } from "./ActionType";
 
 export const initialSortedValue: SortedStateType = {
   sortBy: SortedBy.MOST_RELEVANT,
-  filterByAuthor: [],
-  filterByCategory: [],
+  filterByAuthors: [],
+  filterByCategories: [],
+  filterBySubCategories: [],
 };
 
 export const sortedReducer = (
@@ -18,17 +19,17 @@ export const sortedReducer = (
         sortBy: payload as string,
       };
     }
-    case ActionTypeName.FILTER_BY_AUTHOR: {
+    case ActionTypeName.FILTER_BY_AUTHORS: {
       if (payload && typeof payload === "object") {
         if (payload.isChecked) {
           return {
             ...state,
-            filterByAuthor: [...state.filterByAuthor, payload.value],
+            filterByAuthors: [...state.filterByAuthors, payload.value],
           };
         } else {
           return {
             ...state,
-            filterByAuthor: state.filterByAuthor.filter(
+            filterByAuthors: state.filterByAuthors.filter(
               (elem) => elem !== payload.value
             ),
           };
@@ -36,17 +37,38 @@ export const sortedReducer = (
       }
       return state;
     }
-    case ActionTypeName.FILTER_BY_CATEGORY: {
+    case ActionTypeName.FILTER_BY_CATEGORIES: {
       if (payload && typeof payload === "object") {
         if (payload.isChecked) {
           return {
             ...state,
-            filterByCategory: [...state.filterByCategory, payload.value],
+            filterByCategories: [...state.filterByCategories, payload.value],
           };
         } else {
           return {
             ...state,
-            filterByCategory: state.filterByCategory.filter(
+            filterByCategories: state.filterByCategories.filter(
+              (elem) => elem !== payload.value
+            ),
+          };
+        }
+      }
+      return state;
+    }
+    case ActionTypeName.FILTER_BY_SUB_CATEGORIES: {
+      if (payload && typeof payload === "object") {
+        if (payload.isChecked) {
+          return {
+            ...state,
+            filterBySubCategories: [
+              ...state.filterBySubCategories,
+              payload.value,
+            ],
+          };
+        } else {
+          return {
+            ...state,
+            filterBySubCategories: state.filterBySubCategories.filter(
               (elem) => elem !== payload.value
             ),
           };

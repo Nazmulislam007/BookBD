@@ -5,28 +5,38 @@ import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
 import React from "react";
 
-export default function SortByAuthors({
+export default function SortByCategories({
   totalCatagory,
+  cate,
 }: {
   totalCatagory: string[];
+  cate: boolean;
 }) {
   return (
     <FormGroup>
       {totalCatagory.map((category, i) => (
-        <SortByAuthor key={i} category={category} />
+        <SortByCategory key={i} category={category} cate={cate} />
       ))}
     </FormGroup>
   );
 }
 
-const SortByAuthor = ({ category }: { category: string }) => {
+const SortByCategory = ({
+  category,
+  cate,
+}: {
+  cate: boolean;
+  category: string;
+}) => {
   const { dispatchSort } = useBooks();
   const [checked, setChecked] = React.useState<boolean>(false);
 
   const handleChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked);
     dispatchSort({
-      type: ActionTypeName.FILTER_BY_CATEGORY,
+      type: cate
+        ? ActionTypeName.FILTER_BY_CATEGORIES
+        : ActionTypeName.FILTER_BY_SUB_CATEGORIES,
       payload: { value: e.target.value, isChecked: e.target.checked },
     });
   };

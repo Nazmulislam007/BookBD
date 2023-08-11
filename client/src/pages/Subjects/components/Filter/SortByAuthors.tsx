@@ -22,7 +22,7 @@ const SortByAuthor = ({ author }: { author: string }) => {
   const handleChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked);
     dispatchSort({
-      type: ActionTypeName.FILTER_BY_AUTHOR,
+      type: ActionTypeName.FILTER_BY_AUTHORS,
       payload: { value: e.target.value, isChecked: e.target.checked },
     });
   };

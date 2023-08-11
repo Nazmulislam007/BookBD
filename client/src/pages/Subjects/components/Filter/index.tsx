@@ -13,17 +13,18 @@ import ShortByCatagory from "./SortByCatagory";
 import SortByRatting from "./SortByRating";
 
 type FilterItems = {
-  filterItems: [
-    {
-      _id: string;
-      catagories: string[];
-      subCatagory: string[];
-      authors: string[];
-    }
-  ];
+  categories: string[];
+  sub_categories: string[];
+  authors: string[];
+  price: number[];
 };
 
-export default function FilterBooks({ filterItems }: FilterItems) {
+export default function FilterBooks({
+  authors,
+  categories,
+  price,
+  sub_categories,
+}: FilterItems) {
   const matches = useMediaQuery("(min-width:600px)");
   const { sortedBooks } = useBooks();
   const [expanded, setExpanded] = React.useState({
@@ -41,7 +42,7 @@ export default function FilterBooks({ filterItems }: FilterItems) {
       });
     };
 
-  const isSelectedCategroies = sortedBooks.filterByCategory.length > 0;
+  const isSelectedCategroies = sortedBooks.filterByCategories.length > 0;
 
   return (
     <>
@@ -57,7 +58,7 @@ export default function FilterBooks({ filterItems }: FilterItems) {
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ maxHeight: "300px", overflow: "auto" }}>
-          <ShortByCatagory totalCatagory={filterItems[0].catagories.sort()} />
+          <ShortByCatagory totalCatagory={categories.sort()} cate />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -78,7 +79,7 @@ export default function FilterBooks({ filterItems }: FilterItems) {
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ maxHeight: "300px", overflow: "auto" }}>
-          <ShortByCatagory totalCatagory={filterItems[0].subCatagory.sort()} />
+          <ShortByCatagory totalCatagory={sub_categories.sort()} cate={false} />
         </AccordionDetails>
       </Accordion>
       <Accordion expanded={expanded.panel3} onChange={handleChange("panel2")}>
@@ -93,7 +94,7 @@ export default function FilterBooks({ filterItems }: FilterItems) {
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ maxHeight: "300px", overflow: "auto" }}>
-          <SortByAuthors authors={filterItems[0].authors.sort()} />
+          <SortByAuthors authors={authors.sort()} />
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -107,7 +108,7 @@ export default function FilterBooks({ filterItems }: FilterItems) {
           >
             PRICE RANGE
           </Typography>
-          <PriceRangeSlider />
+          <PriceRangeSlider price={price} />
         </AccordionDetails>
       </Accordion>
       <Accordion expanded={expanded.panel4} onChange={handleChange("panel3")}>

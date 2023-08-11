@@ -1,17 +1,23 @@
 import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import Box from "@mui/material/Box";
 import Slider from "@mui/material/Slider";
+import { useEffect } from "react";
 
 function valuetext(value: number) {
   return `${value}°C`;
 }
 
-export default function PriceRangeSlider() {
-  const { sortedPrice, setSortedPrice } = useBooks();
+export default function PriceRangeSlider({ price }: { price: number[] }) {
+  const { filterPrice, setSetFilterPrice } = useBooks();
 
   const handleChange = (_event: Event, newValue: number | number[]) => {
-    setSortedPrice(newValue as number[]);
+    setSetFilterPrice(newValue as number[]);
   };
+
+  useEffect(() => {
+    setSetFilterPrice(price);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [price]);
 
   const marks = [
     {
@@ -44,7 +50,7 @@ export default function PriceRangeSlider() {
     <Box sx={{ width: 280, margin: "auto" }}>
       <Slider
         getAriaLabel={() => "Price range"}
-        value={sortedPrice}
+        value={filterPrice}
         onChange={handleChange}
         valueLabelDisplay="auto"
         marks={marks}

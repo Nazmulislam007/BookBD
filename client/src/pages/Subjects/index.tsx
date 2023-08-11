@@ -1,4 +1,4 @@
-import { SortedBy } from "@/Types/Books";
+import { Books, SortedBy } from "@/Types/Books";
 import BreadCrumbs from "@/components/BreadCrumbs";
 import Loading from "@/components/Loading";
 import { ActionTypeName } from "@/context/BooksProvider/ActionType";
@@ -11,20 +11,45 @@ import { useLocation } from "react-router-dom";
 import FilterBooks from "./components/Filter";
 import SubjectResult from "./components/SubjectResult";
 
+type SubjectResultType = {
+  books: Books[];
+  totalCount: number;
+  categories: string[];
+  sub_categories: string[];
+  authors: string[];
+  price: number[];
+};
+
 export default function Subjects() {
-  const { dispatchSort } = useBooks();
-  const limitCount = 8;
+  const { dispatchSort, sortedBooks, filterPrice } = useBooks();
+  const limit = 8;
   const location = useLocation();
   const heading = location.pathname.slice(3);
   const formatedHeading = HeadingFormat(decodeURIComponent(heading));
   // active pagination state
   const [page, setPage] = useState(1);
 
+  const { filterByAuthors, filterByCategories, filterBySubCategories } =
+    sortedBooks;
+
   const { isLoading, isError, data, error } = useSubjectBooks({
-    type: HeadingFormat(encodeURIComponent(heading)),
+    type: encodeURIComponent(HeadingFormat(heading)),
+    categories: filterByCategories,
+    sub_catagories: filterBySubCategories,
+    authors: filterByAuthors,
+    price: filterPrice,
     page,
-    limitCount,
+    limit,
   });
+
+  const {
+    authors,
+    books,
+    categories,
+    price,
+    sub_categories,
+    totalCount,
+  }: SubjectResultType = data;
 
   useEffect(() => {
     if (location.pathname === "/s/top-50-books") {
@@ -51,15 +76,20 @@ export default function Subjects() {
     content = (
       <>
         <Box component="div" flex="1 1 270px">
-          <FilterBooks filterItems={data?.allCategoryAndSub} />
+          <FilterBooks
+            authors={authors}
+            sub_categories={sub_categories}
+            categories={categories}
+            price={price}
+          />
         </Box>
         <Box component="div" flex="1 1 60%">
           <SubjectResult
-            newBooks={data?.books}
+            books={books}
             setPage={setPage}
             page={page}
-            limitCount={limitCount}
-            total={data?.totalCount}
+            limit={limit}
+            total={totalCount}
           />
         </Box>
       </>
