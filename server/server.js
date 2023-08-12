@@ -16,6 +16,7 @@ const registerRouter = require("./router/registerRouter");
 const loginRouter = require("./router/loginRouter");
 const authRouter = require("./router/authRotuer");
 const cartSessionRouter = require("./router/cartSessionRouter");
+const filteredContentRouter = require("./router/filteredContentRouter");
 const {
   notFoundHandler,
   errorHandler,
@@ -82,6 +83,7 @@ app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 app.use("/session-cart", cartSessionRouter);
 app.use("/auth", authRouter);
+app.use(filteredContentRouter);
 
 // error handling setup
 app.use(notFoundHandler); // 404 error

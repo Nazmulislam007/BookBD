@@ -23,6 +23,8 @@ const BooksContext = createContext<ContextType>({
   setSetFilterPrice: () => void {},
   search: "",
   setSearch: () => void {},
+  changeCache: "",
+  setChangeCache: () => void {},
 });
 
 const useBooks = () => {
@@ -30,6 +32,7 @@ const useBooks = () => {
 };
 
 export default function BooksProvider({ children }: BooksProviderType) {
+  const [changeCache, setChangeCache] = useState("subjective-books");
   const [filterPrice, setSetFilterPrice] = useState<number[]>([0, 100]);
   const [openRegister, setOpenRegister] = useState(false);
   const [search, setSearch] = useState("");
@@ -48,8 +51,10 @@ export default function BooksProvider({ children }: BooksProviderType) {
       setSetFilterPrice,
       search,
       setSearch,
+      changeCache,
+      setChangeCache,
     }),
-    [sortedBooks, openRegister, filterPrice, search]
+    [sortedBooks, openRegister, filterPrice, search, changeCache]
   );
 
   return (

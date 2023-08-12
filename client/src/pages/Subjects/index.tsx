@@ -18,38 +18,52 @@ type SubjectResultType = {
   sub_categories: string[];
   authors: string[];
   price: number[];
+  filterByRating: number[];
 };
 
 export default function Subjects() {
-  const { dispatchSort, sortedBooks, filterPrice } = useBooks();
+  const { dispatchSort, sortedBooks, filterPrice, changeCache } = useBooks();
   const limit = 8;
   const location = useLocation();
   const heading = location.pathname.slice(3);
   const formatedHeading = HeadingFormat(decodeURIComponent(heading));
   // active pagination state
   const [page, setPage] = useState(1);
-
-  const { filterByAuthors, filterByCategories, filterBySubCategories } =
-    sortedBooks;
-
-  const { isLoading, isError, data, error } = useSubjectBooks({
-    type: encodeURIComponent(HeadingFormat(heading)),
-    categories: filterByCategories,
-    sub_catagories: filterBySubCategories,
-    authors: filterByAuthors,
-    price: filterPrice,
-    page,
-    limit,
-  });
-
+  // console.log(path);
   const {
-    authors,
-    books,
-    categories,
-    price,
-    sub_categories,
-    totalCount,
-  }: SubjectResultType = data;
+    filterByAuthors,
+    filterByCategories,
+    filterBySubCategories,
+    filterByRating,
+  } = sortedBooks;
+
+  // creating query:
+  const type = encodeURIComponent(HeadingFormat(heading));
+
+  let query = `/books/subjective-books?_type=${type}`;
+  if (filterByAuthors.length > 0) {
+    query += filterByAuthors.map((author) => `&_authors=${author}`).join("");
+  }
+  if (filterByCategories.length > 0) {
+    query += filterByCategories
+      .map((cate) => `&_categories[]=${encodeURIComponent(cate)}`)
+      .join("");
+  }
+  if (filterBySubCategories.length > 0) {
+    query += filterBySubCategories
+      .map((cate) => `&_sub_categories[]=${encodeURIComponent(cate)}`)
+      .join("");
+  }
+  if (filterByRating.length > 0) {
+    query += filterByRating.map((r) => `&_rating=${r}`).join("");
+  }
+  query += filterPrice.map((p) => `&_price=${p}`).join("");
+  query += `&_page=${page}&_limit=${limit}`;
+
+  const { isLoading, isError, data, error, refetch } = useSubjectBooks({
+    query,
+    changeCache,
+  });
 
   useEffect(() => {
     if (location.pathname === "/s/top-50-books") {
@@ -72,7 +86,16 @@ export default function Subjects() {
 
   if (isError) content = <span>Error: {(error as any).message}</span>;
 
-  if (!isLoading && !isError)
+  if (!isLoading && !isError) {
+    const {
+      authors,
+      books,
+      categories,
+      price,
+      sub_categories,
+      totalCount,
+    }: SubjectResultType = data;
+
     content = (
       <>
         <Box component="div" flex="1 1 270px">
@@ -81,6 +104,7 @@ export default function Subjects() {
             sub_categories={sub_categories}
             categories={categories}
             price={price}
+            refetch={refetch}
           />
         </Box>
         <Box component="div" flex="1 1 60%">
@@ -94,6 +118,7 @@ export default function Subjects() {
         </Box>
       </>
     );
+  }
 
   return (
     <Container maxWidth="lg" sx={{ pt: 2, pb: 5 }}>

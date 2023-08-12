@@ -7,7 +7,7 @@ export enum ActionTypeName {
   FILTER_BY_CATEGORIES = "book/categories",
   FILTER_BY_SUB_CATEGORIES = "book/sub_categories",
   FILTER_BY_PRICE_RANGE = "book/price_range",
-  FILTER_BY_RATING = 'book/rating'
+  FILTER_BY_RATING = "book/rating",
 }
 
 export type SortedStateType = {
@@ -15,7 +15,7 @@ export type SortedStateType = {
   filterByAuthors: string[];
   filterByCategories: string[];
   filterBySubCategories: string[];
-  filterByRating: number[]
+  filterByRating: number[];
 };
 
 export type ContextType = {
@@ -27,6 +27,8 @@ export type ContextType = {
   setSetFilterPrice: Dispatch<SetStateAction<number[]>>;
   search: string;
   setSearch: Dispatch<SetStateAction<string>>;
+  changeCache: string;
+  setChangeCache: Dispatch<SetStateAction<string>>;
 };
 
 export type ActionType = {
@@ -36,5 +38,7 @@ export type ActionType = {
     | ActionTypeName.FILTER_BY_CATEGORIES
     | ActionTypeName.FILTER_BY_SUB_CATEGORIES
     | ActionTypeName.FILTER_BY_RATING;
-  payload?: string | { value: string | number; isChecked: boolean } ;
+  payload?:
+    | string
+    | { value: string | string[] | number; isChecked: boolean | string };
 };

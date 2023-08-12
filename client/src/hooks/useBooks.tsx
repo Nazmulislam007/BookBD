@@ -3,37 +3,13 @@ import axios from "axios";
 import { useQuery } from "react-query";
 
 export function useSubjectBooks({
-  type,
-  categories,
-  sub_catagories,
-  price,
-  authors,
-  page,
-  limit,
+  query,
+  changeCache,
 }: {
-  type: string;
-  categories: string[];
-  sub_catagories: string[];
-  price: number[];
-  authors: string[];
-  page: number;
-  limit: number;
+  query: string;
+  changeCache: string;
 }) {
-  let query = `/books/subjective-books?_type=${type}`;
-
-  if (authors.length > 0)
-    query += authors.map((cate) => `&_authors=${cate}`).join("");
-
-  if (categories.length > 0)
-    query += categories.map((cate) => `&_categories=${cate}`).join("");
-
-  if (sub_catagories.length > 0)
-    query += sub_catagories.map((cate) => `&_sub_categories=${cate}`).join("");
-
-  query += price.map((p) => `&_price=${p}`).join("");
-  query += `&_page=${page}&_limit=${limit}`;
-
-  return useQuery([type, page], async () => {
+  return useQuery([changeCache], async () => {
     const { data } = await axios.get(
       `${import.meta.env.VITE_SERVER_URL}${query}`
     );

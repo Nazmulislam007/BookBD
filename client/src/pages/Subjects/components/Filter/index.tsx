@@ -7,6 +7,7 @@ import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import * as React from "react";
+import { UseQueryResult } from "react-query";
 import PriceRangeSlider from "./PriceRange";
 import SortByAuthors from "./SortByAuthors";
 import ShortByCatagory from "./SortByCatagory";
@@ -17,6 +18,7 @@ type FilterItems = {
   sub_categories: string[];
   authors: string[];
   price: number[];
+  refetch: () => Promise<UseQueryResult>;
 };
 
 export default function FilterBooks({
@@ -24,6 +26,7 @@ export default function FilterBooks({
   categories,
   price,
   sub_categories,
+  refetch,
 }: FilterItems) {
   const matches = useMediaQuery("(min-width:600px)");
   const { sortedBooks } = useBooks();
@@ -58,7 +61,11 @@ export default function FilterBooks({
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ maxHeight: "300px", overflow: "auto" }}>
-          <ShortByCatagory totalCatagory={categories.sort()} cate />
+          <ShortByCatagory
+            totalCatagory={categories.sort()}
+            cate
+            refetch={refetch}
+          />
         </AccordionDetails>
       </Accordion>
       <Accordion
@@ -79,7 +86,11 @@ export default function FilterBooks({
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ maxHeight: "300px", overflow: "auto" }}>
-          <ShortByCatagory totalCatagory={sub_categories.sort()} cate={false} />
+          <ShortByCatagory
+            totalCatagory={sub_categories.sort()}
+            cate={false}
+            refetch={refetch}
+          />
         </AccordionDetails>
       </Accordion>
       <Accordion expanded={expanded.panel3} onChange={handleChange("panel2")}>
