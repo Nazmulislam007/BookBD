@@ -51,8 +51,23 @@ GET = "https://{{backend.com}}/filter-by-subCategories
 ```
 
 ```js
+// get the filtering content (authors)
+GET = "https://{{backend.com}}/filter-by-authors
+      ?_type={{any type of book}}
+      &_categories[]
+      &_sub_categories[]"
+
+    // These `query` are for filtering: (not always pass through query)
+    query = { _type, _categories, _sub_categories }
+
+    // // get the `res` of `price` are filtered by `query` value
+    res = { authors }
+
+```
+
+```js
 // get the max and min price (price)
-GET = "https://{{backend.com}}/filter-by-categories
+GET = "https://{{backend.com}}/filter-by-price
       ?_type={{any type of book}}
       &_authors=[]
       &_categories[]
