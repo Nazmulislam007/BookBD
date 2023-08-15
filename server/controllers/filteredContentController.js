@@ -463,43 +463,66 @@ const filteredContent = () => {
         next(error);
       }
     },
+    getMinMaxPrice: async (req, res, next) => {
+      try {
+        const { _type, _authors, _categories, _sub_categories } = req.query;
+
+        const pipeline = [];
+
+        const query = {
+          $and: [],
+        };
+
+        if (_type === "Top 50 Books") {
+          pipeline.push({ $sort: { "saleInfo.totalSales": -1 } });
+        } else if (_type === "Subject") {
+          query.$and.push({
+            _id: { $exists: true },
+          });
+        } else {
+          query.$and.push({ catagories: _type });
+        }
+
+        if (_authors) {
+          query.$and.push({ authors: _authors });
+        }
+
+        if (_categories) {
+          query.$and.push({ catagories: _categories });
+        }
+
+        if (_sub_categories) {
+          query.$and.push({ subCatagory: _sub_categories });
+        }
+
+        pipeline.push({
+          $match: query,
+        });
+
+        /**
+         * get the min price after filtering using `req.query`
+         * get the max price after filtering using `req.query`
+         */
+
+        pipeline.push({
+          $group: {
+            _id: "price",
+            minPrice: { $min: "$saleInfo.discountPrice" },
+            maxPrice: { $max: "$saleInfo.discountPrice" },
+          },
+        });
+
+        const price = await Book.aggregate(pipeline);
+
+        res.status(200).json({
+          minPrice: price[0].minPrice,
+          maxPrice: price[0].maxPrice,
+        });
+      } catch (error) {
+        next(error);
+      }
+    },
   };
 };
 
 module.exports = filteredContent;
-
-// const avgRating = await Book.aggregate([
-//   { $match: query },
-//   {
-//     $group: {
-//       _id: "avgRating",
-//       avgRating: {
-//         $accumulator: {
-//           init: function () {
-//             return { rating: 0, count: 0 };
-//           },
-//           accumulate: function (state, newRating) {
-//             return {
-//               count: state.count + 1,
-//               rating: state.rating + Number(newRating),
-//             };
-//           },
-//           merge: function (state1, state2) {
-//             return {
-//               count: state1.count + state2.count,
-//               rating: state1.rating + state2.rating,
-//             };
-//           },
-//           accumulateArgs: ["$reviews.rating"],
-//           finalize: function (state) {
-//             return {
-//               rating: +(state.rating / state.count).toFixed(2),
-//               count: state.count,
-//             };
-//           },
-//           lang: "js",
-//         },
-//       },
-//     },
-//   },
-// ]);
