@@ -3,8 +3,32 @@ const Book = require("../models/Books");
 const getSingleBook = async (req, res, next) => {
   try {
     const _id = req.params._id;
-    const singleBook = await Book.findById({ _id });
-    res.status(200).json(singleBook);
+
+    const book = await Book.findById({ _id });
+
+    /**
+     * For single book, did average for all review's rating.
+     */
+    const avg = await Book.aggregate([
+      { $unwind: "$reviews" },
+      {
+        $match: {
+          $expr: {
+            $eq: ["$_id", { $toObjectId: _id }],
+          },
+        },
+      },
+      {
+        $group: {
+          _id: "$_id",
+          avgRating: { $avg: "$reviews.rating" },
+        },
+      },
+    ]);
+
+    const avgRating = avg[0]?.avgRating;
+
+    res.status(200).json({ book, avgRating });
   } catch (error) {
     next(error);
   }
@@ -35,28 +59,40 @@ const searchBooks = async (req, res, next) => {
 
 const relatedBooks = async (req, res, next) => {
   try {
-    const { _ne, catagory, sub_catagory, _limit } = req.query;
+    const { _ne, _categories, _sub_categories, _limit } = req.query;
 
     const filter = { _id: { $ne: _ne } };
 
-    if (catagory || sub_catagory) {
+    if (_categories?.length > 0 || _sub_categories?.length > 0) {
       filter.$or = [
-        { categories: { $all: catagory } },
-        { subCategories: { $all: sub_catagory } },
+        { categories: { $in: _categories } },
+        { subCategories: { $in: _sub_categories } },
       ];
     }
 
-    const related = await Book.find(filter)
+    let related = await Book.find(filter)
       .sort({ publishedDate: 1 })
       .limit(_limit);
 
     const relatedBooksId = [_ne, ...related.map((elem) => elem._id.toString())];
 
-    const youMayAlsoLike = await Book.find({
+    let youMayAlsoLike = await Book.find({
       _id: {
         $nin: relatedBooksId,
       },
+      $or: [
+        { categories: { $in: _categories } },
+        { subCategories: { $in: _sub_categories } },
+      ],
     });
+
+    if (related.length <= 0) {
+      youMayAlsoLike = await Book.find({
+        _id: {
+          $nin: relatedBooksId,
+        },
+      });
+    }
 
     res.status(200).json({ related, youMayAlsoLike });
   } catch (error) {
@@ -128,7 +164,6 @@ const getBooks = async (req, res, next) => {
     next(error);
   }
 };
-
 
 module.exports = {
   getSingleBook,

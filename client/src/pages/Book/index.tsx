@@ -13,13 +13,13 @@ export default function Book() {
   const location = useLocation();
   const id = location.pathname.slice(3);
 
-  const { data, isError, isLoading } = useBookById({ id });
+  const { data, isError, isLoading, error } = useBookById({ id });
 
   if (isLoading) return <Loading />;
 
   if (isError) return <span>Error: </span>;
 
-  const book: Partial<Books> = data?.data;
+  const book: Partial<Books> = data?.book;
 
   return (
     <Container maxWidth="lg" sx={{ pt: 2, pb: 10 }}>

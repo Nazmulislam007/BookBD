@@ -197,11 +197,11 @@ export function useBookById({ id }: { id: string }) {
     );
 
     // making valid URL...
-    const validCatagoriesURL = (data as Partial<Books>).catagories
-      ?.map((cata) => `&catagories[]=${cata}`)
+    const validCatagoriesURL = (data.book as Partial<Books>).categories
+      ?.map((cata) => `&_categories[]=${cata}`)
       .join("");
-    const validSubCatagoriesURL = (data as Partial<Books>).subCatagory
-      ?.map((cata) => `&sub_catagories[]=${cata}`)
+    const validSubCatagoriesURL = (data.book as Partial<Books>).subCategories
+      ?.map((cata) => `&_sub_categories[]=${cata}`)
       .join("");
 
     const { data: relatedData } = await axios.get(
@@ -210,6 +210,6 @@ export function useBookById({ id }: { id: string }) {
       }/books/related-books?_ne=${id}${validCatagoriesURL}${validSubCatagoriesURL}&_limit=3`
     );
 
-    return { data, relatedData };
+    return { book: data.book, relatedData };
   });
 }
