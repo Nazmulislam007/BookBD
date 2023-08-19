@@ -15,40 +15,45 @@ export default function PriceRangeSlider({ price }: { price: number[] }) {
   };
 
   useEffect(() => {
-    setSetFilterPrice(price);
+    if (price?.length > 0) setSetFilterPrice(price);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [price]);
 
+  const minPrice = Math.floor(price && price[0]);
+  const maxPrice = Math.floor(price && price[1]);
+
+  const _2lv = Math.floor(maxPrice * (2 / 5));
+  const _3lv = Math.floor(maxPrice / 2);
+  const _4lv = Math.floor(maxPrice * (4 / 5));
+
   const marks = [
     {
-      value: 0,
-      label: "$0",
+      value: minPrice,
+      label: `$${minPrice}`,
     },
     {
-      value: 20,
-      label: "20",
+      value: _2lv,
+      label: `$${_2lv}`,
     },
     {
-      value: 40,
-      label: "40",
+      value: _3lv,
+      label: `$${_3lv}`,
     },
     {
-      value: 60,
-      label: "60",
+      value: _4lv,
+      label: `$${_4lv}`,
     },
     {
-      value: 80,
-      label: "80",
-    },
-    {
-      value: 100,
-      label: "100",
+      value: maxPrice,
+      label: `$${maxPrice}`,
     },
   ];
 
   return (
-    <Box sx={{ width: 280, margin: "auto" }}>
+    <Box sx={{ width: 280 }}>
       <Slider
+        min={price && price[0]}
+        max={price && price[1]}
         getAriaLabel={() => "Price range"}
         value={filterPrice}
         onChange={handleChange}

@@ -41,8 +41,8 @@ const relatedBooks = async (req, res, next) => {
 
     if (catagory || sub_catagory) {
       filter.$or = [
-        { catagories: { $all: catagory } },
-        { subCatagory: { $all: sub_catagory } },
+        { categories: { $all: catagory } },
+        { subCategories: { $all: sub_catagory } },
       ];
     }
 
@@ -110,11 +110,11 @@ const getBooks = async (req, res, next) => {
       { $sort: { "saleInfo.totalSales": -1 } },
     ]);
     const scienceFiction = await Book.find({
-      catagories: "Science Fiction & Fantasy",
+      categories: "Science Fiction & Fantasy",
     });
 
     const businessMoney = await Book.find({
-      catagories: "Business & Money",
+      categories: "Business & Money",
     });
 
     res.status(200).json({
@@ -129,189 +129,6 @@ const getBooks = async (req, res, next) => {
   }
 };
 
-// const subjectiveBooks = async (req, res, next) => {
-//   try {
-//     const { _page, _limit, _type, categories, sub_categories, rating, price } =
-//       req.query;
-
-//     // Converting _page and _limit to numbers
-//     const pageNumber = +_page;
-//     const limit = +_limit;
-
-//     // getting 5 page as maximum;
-//     const _max5Page = Math.min(pageNumber, 5);
-//     const skip =
-//       (_type === "Top 50 Books" ? _max5Page - 1 : _page - 1) * +_limit;
-
-//     let pipeline = [];
-//     let counterQuery = {};
-//     let counterLimit = {};
-//     let filteredContent = [];
-
-//     // get the category subCategory and authors
-//     // according to the _type.
-//     if (_type === "Top 50 Books") {
-//       filteredContent = await Book.aggregate([
-//         { $sort: { "saleInfo.totalSales": -1 } },
-//         {
-//           $group: {
-//             _id: _type,
-//             catagories: { $addToSet: "$catagories" },
-//             subCatagory: { $addToSet: "$subCatagory" },
-//             authors: { $addToSet: "$authors" },
-//           },
-//         },
-//         {
-//           $project: {
-//             catagories: {
-//               $reduce: {
-//                 input: "$catagories",
-//                 initialValue: [],
-//                 in: { $setUnion: ["$$value", "$$this"] },
-//               },
-//             },
-//             subCatagory: {
-//               $reduce: {
-//                 input: "$subCatagory",
-//                 initialValue: [],
-//                 in: { $setUnion: ["$$value", "$$this"] },
-//               },
-//             },
-//             authors: {
-//               $reduce: {
-//                 input: "$authors",
-//                 initialValue: [],
-//                 in: { $setUnion: ["$$value", "$$this"] },
-//               },
-//             },
-//           },
-//         },
-//       ]);
-//     } else if (_type === "Subject") {
-//       filteredContent = await Book.aggregate([
-//         {
-//           $match: {
-//             _id: { $exists: true },
-//           },
-//         },
-//         {
-//           $group: {
-//             _id: _type,
-//             catagories: { $addToSet: "$catagories" },
-//             subCatagory: { $addToSet: "$subCatagory" },
-//             authors: { $addToSet: "$authors" },
-//           },
-//         },
-//         {
-//           $project: {
-//             catagories: {
-//               $reduce: {
-//                 input: "$catagories",
-//                 initialValue: [],
-//                 in: { $concatArrays: ["$$value", "$$this"] },
-//               },
-//             },
-//             subCatagory: {
-//               $reduce: {
-//                 input: "$subCatagory",
-//                 initialValue: [],
-//                 in: { $concatArrays: ["$$value", "$$this"] },
-//               },
-//             },
-//             authors: {
-//               $reduce: {
-//                 input: "$authors",
-//                 initialValue: [],
-//                 in: { $concatArrays: ["$$value", "$$this"] },
-//               },
-//             },
-//           },
-//         },
-//       ]);
-//     } else {
-//       filteredContent = await Book.aggregate([
-//         {
-//           $match: {
-//             $or: [{ catagories: _type }],
-//           },
-//         },
-//         {
-//           $group: {
-//             _id: _type,
-//             catagories: { $addToSet: "$catagories" },
-//             subCatagory: { $addToSet: "$subCatagory" },
-//             authors: { $addToSet: "$authors" },
-//           },
-//         },
-//         {
-//           $project: {
-//             catagories: {
-//               $reduce: {
-//                 input: "$catagories",
-//                 initialValue: [],
-//                 in: { $concatArrays: ["$$value", "$$this"] },
-//               },
-//             },
-//             subCatagory: {
-//               $reduce: {
-//                 input: "$subCatagory",
-//                 initialValue: [],
-//                 in: { $concatArrays: ["$$value", "$$this"] },
-//               },
-//             },
-//             authors: {
-//               $reduce: {
-//                 input: "$authors",
-//                 initialValue: [],
-//                 in: { $concatArrays: ["$$value", "$$this"] },
-//               },
-//             },
-//           },
-//         },
-//       ]);
-//     }
-
-//     // get the data
-//     // according to the _type.
-//     if (_type === "Top 50 Books") {
-//       pipeline.push({
-//         $sort: { "saleInfo.totalSales": -1 },
-//       });
-//       counterLimit.limit = 50;
-//     } else if (_type === "Subject") {
-//       pipeline.push({
-//         $match: {
-//           _id: { $exists: true },
-//         },
-//       });
-//     } else {
-//       const query = {
-//         $or: [
-//           { catagories: filteredContent[0].catagories },
-//           { subCatagory: filteredContent[0].subCatagory },
-//         ],
-//       };
-//       counterQuery = query;
-//       counterLimit = {};
-//       pipeline.push({
-//         $match: query,
-//       });
-//     }
-
-//     if (_page && _limit) {
-//       pipeline.push({ $skip: skip }, { $limit: limit });
-//     }
-
-//     const [books, totalCount] = await Promise.all([
-//       await Book.aggregate(pipeline),
-//       await Book.countDocuments(counterQuery, counterLimit),
-//     ]);
-
-//     res.status(200).json({ totalCount, books, filteredContent });
-//   } catch (error) {
-//     next(error);
-//   }
-// };
 
 module.exports = {
   getSingleBook,

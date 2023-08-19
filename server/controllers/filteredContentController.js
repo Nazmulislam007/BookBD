@@ -1,6 +1,6 @@
 const Book = require("../models/Books");
 
-function getFormattedQuery({
+async function getFormattedQuery({
   _authors,
   _categories,
   _sub_categories,
@@ -9,22 +9,25 @@ function getFormattedQuery({
   pipeline,
   getExistingCate,
 }) {
+  const existingCate = await getExistingCate;
+
   const query = {
     $and: [],
   };
 
   if (_categories) {
-    query.$and.push({ catagories: _categories });
+    query.$and.push({ categories: { $in: _categories } });
     if (_sub_categories) {
-      query.$and.push({ subCatagory: _sub_categories });
+      query.$and.push({ subCategories: { $in: _sub_categories } });
     }
   }
+
   if (_authors) {
-    query.$and.push({ authors: _authors });
+    query.$and.push({ authors: { $in: _authors } });
   }
 
-  if (!_authors && !_categories) {
-    query.$and.push({ catagories: getExistingCate[0].catagories });
+  if (_authors?.length <= 0 && _categories?.length <= 0) {
+    query.$and.push({ categories: { $in: existingCate[0]?.categories } });
   }
 
   if (_price) {
@@ -54,16 +57,17 @@ function getFormattedQuery({
   return query;
 }
 
-function filteredByContent({
+async function filteredByContent({
   limit,
   skip,
+  _limit,
+  _page,
   _type,
   _categories,
   _sub_categories,
   _rating,
   _authors,
   _price,
-  _page,
   getExistingCate,
 }) {
   let pipeline = [];
@@ -74,7 +78,7 @@ function filteredByContent({
    * get the data according to the _type.
    */
   if (_type === "Top 50 Books") {
-    const query = getFormattedQuery({
+    const query = await getFormattedQuery({
       pipeline,
       _categories,
       _sub_categories,
@@ -95,7 +99,7 @@ function filteredByContent({
       }
     );
   } else if (_type === "Subject") {
-    const formattedQuery = getFormattedQuery({
+    const formattedQuery = await getFormattedQuery({
       pipeline,
       _categories,
       _sub_categories,
@@ -115,7 +119,7 @@ function filteredByContent({
       $match: query,
     });
   } else {
-    const query = getFormattedQuery({
+    const query = await getFormattedQuery({
       pipeline,
       _categories,
       _sub_categories,
@@ -154,7 +158,7 @@ async function getCategoriesByType({ _type }) {
   } else {
     pipeline.push({
       $match: {
-        $or: [{ catagories: _type }],
+        $or: [{ categories: _type }],
       },
     });
   }
@@ -163,30 +167,14 @@ async function getCategoriesByType({ _type }) {
     {
       $group: {
         _id: _type,
-        catagories: { $addToSet: "$catagories" },
-        subCatagory: { $addToSet: "$subCatagory" },
-        authors: { $addToSet: "$authors" },
+        categories: { $addToSet: "$categories" },
       },
     },
     {
       $project: {
-        catagories: {
+        categories: {
           $reduce: {
-            input: "$catagories",
-            initialValue: [],
-            in: { $setUnion: ["$$value", "$$this"] },
-          },
-        },
-        subCatagory: {
-          $reduce: {
-            input: "$subCatagory",
-            initialValue: [],
-            in: { $setUnion: ["$$value", "$$this"] },
-          },
-        },
-        authors: {
-          $reduce: {
-            input: "$authors",
+            input: "$categories",
             initialValue: [],
             in: { $setUnion: ["$$value", "$$this"] },
           },
@@ -224,24 +212,29 @@ const filteredContent = () => {
         const skip =
           (_type === "Top 50 Books" ? _max5Page - 1 : _page - 1) * +_limit;
 
-        const getExistingCate = getCategoriesByType({ _type });
+        const getExistingCate = await getCategoriesByType({ _type });
 
-        const { pipeline, counterQuery, counterLimit } = filteredByContent({
-          limit,
-          skip,
-          _type,
-          _categories,
-          _sub_categories,
-          _authors,
-          _price,
-          _rating,
-          getExistingCate,
-        });
+        const { pipeline, counterQuery, counterLimit } =
+          await filteredByContent({
+            limit,
+            skip,
+            _page,
+            _limit,
+            _type,
+            _categories,
+            _sub_categories,
+            _authors,
+            _price,
+            _rating,
+            getExistingCate,
+          });
 
         const [books, totalCount] = await Promise.all([
           await Book.aggregate(pipeline),
           await Book.countDocuments(counterQuery, counterLimit),
         ]);
+
+        // console.log(books)
 
         res.status(200).json({
           books,
@@ -263,7 +256,7 @@ const filteredContent = () => {
           if (_authors) {
             pipeline.push({
               $match: {
-                authors: _authors,
+                authors: { $in: _authors },
               },
             });
           }
@@ -276,7 +269,7 @@ const filteredContent = () => {
 
           if (_authors) {
             query.$match.$and.push({
-              authors: _authors,
+              authors: { $in: _authors },
             });
           }
 
@@ -284,13 +277,13 @@ const filteredContent = () => {
         } else {
           const query = {
             $match: {
-              $and: [{ catagories: _type }],
+              $and: [{ categories: _type }],
             },
           };
 
           if (_authors) {
             query.$match.$and.push({
-              authors: _authors,
+              authors: { $in: _authors },
             });
           }
 
@@ -301,7 +294,7 @@ const filteredContent = () => {
           {
             $group: {
               _id: _type,
-              categories: { $addToSet: "$catagories" },
+              categories: { $addToSet: "$categories" },
             },
           },
           {
@@ -319,7 +312,9 @@ const filteredContent = () => {
 
         const getExistingCate = await Book.aggregate(pipeline);
 
-        res.status(200).json({ categories: getExistingCate });
+        const categories = getExistingCate[0].categories;
+
+        res.status(200).json({ categories });
       } catch (error) {
         next(error);
       }
@@ -332,7 +327,7 @@ const filteredContent = () => {
 
         const query = {
           $match: {
-            $and: [{ catagories: _categories }],
+            $and: [{ categories: { $in: _categories } }],
           },
         };
 
@@ -342,7 +337,7 @@ const filteredContent = () => {
           {
             $group: {
               _id: _categories,
-              subCategories: { $addToSet: "$subCatagory" },
+              subCategories: { $addToSet: "$subCategories" },
             },
           },
           {
@@ -360,7 +355,9 @@ const filteredContent = () => {
 
         const getExistingSubCate = await Book.aggregate(pipeline);
 
-        res.status(200).json({ subCategories: getExistingSubCate });
+        const subCategories = getExistingSubCate[0].subCategories;
+
+        res.status(200).json({ subCategories });
       } catch (error) {
         next(error);
       }
@@ -376,18 +373,18 @@ const filteredContent = () => {
           pipeline.push({ $sort: { "saleInfo.totalSales": -1 } });
 
           const query = {
-            $and: [],
+            $and: [{ _id: { $exists: true } }],
           };
 
           if (_categories) {
             query.$and.push({
-              catagories: _categories,
+              categories: { $in: _categories },
             });
           }
 
           if (_sub_categories) {
             query.$and.push({
-              subCatagory: _sub_categories,
+              subCategories: { $in: _sub_categories },
             });
           }
 
@@ -401,13 +398,13 @@ const filteredContent = () => {
 
           if (_categories) {
             query.$and.push({
-              catagories: _categories,
+              categories: { $in: _categories },
             });
           }
 
           if (_sub_categories) {
             query.$and.push({
-              subCatagory: _sub_categories,
+              subCategories: { $in: _sub_categories },
             });
           }
 
@@ -416,18 +413,18 @@ const filteredContent = () => {
           });
         } else {
           const query = {
-            $and: [{ catagories: _type }],
+            $and: [{ categories: _type }],
           };
 
           if (_categories) {
             query.$and.push({
-              catagories: _categories,
+              categories: { $in: _categories },
             });
           }
 
           if (_sub_categories) {
             query.$and.push({
-              subCatagory: _sub_categories,
+              subCategories: { $in: _sub_categories },
             });
           }
 
@@ -458,7 +455,9 @@ const filteredContent = () => {
 
         const getExistingAuthors = await Book.aggregate(pipeline);
 
-        res.status(200).json({ authors: getExistingAuthors });
+        const authors = getExistingAuthors[0].authors;
+
+        res.status(200).json({ authors });
       } catch (error) {
         next(error);
       }
@@ -475,24 +474,27 @@ const filteredContent = () => {
 
         if (_type === "Top 50 Books") {
           pipeline.push({ $sort: { "saleInfo.totalSales": -1 } });
+          query.$and.push({
+            _id: { $exists: true },
+          });
         } else if (_type === "Subject") {
           query.$and.push({
             _id: { $exists: true },
           });
         } else {
-          query.$and.push({ catagories: _type });
+          query.$and.push({ categories: _type });
         }
 
         if (_authors) {
-          query.$and.push({ authors: _authors });
+          query.$and.push({ authors: { $in: _authors } });
         }
 
         if (_categories) {
-          query.$and.push({ catagories: _categories });
+          query.$and.push({ categories: { $in: _categories } });
         }
 
         if (_sub_categories) {
-          query.$and.push({ subCatagory: _sub_categories });
+          query.$and.push({ subCategories: { $in: _sub_categories } });
         }
 
         pipeline.push({
@@ -514,10 +516,7 @@ const filteredContent = () => {
 
         const price = await Book.aggregate(pipeline);
 
-        res.status(200).json({
-          minPrice: price[0].minPrice,
-          maxPrice: price[0].maxPrice,
-        });
+        res.status(200).json([price[0].minPrice, price[0].maxPrice]);
       } catch (error) {
         next(error);
       }

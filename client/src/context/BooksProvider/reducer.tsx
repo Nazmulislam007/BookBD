@@ -22,6 +22,15 @@ export const sortedReducer = (
     }
     case ActionTypeName.FILTER_BY_AUTHORS: {
       if (payload && typeof payload === "object") {
+        if (payload.isChecked === "initialUpdate")
+          return {
+            ...state,
+            filterByAuthors: [
+              ...state.filterByAuthors,
+              ...(payload.value as string[]),
+            ],
+          };
+
         if (payload.isChecked) {
           return {
             ...state,

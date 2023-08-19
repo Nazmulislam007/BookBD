@@ -3,27 +3,19 @@ import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import Checkbox from "@mui/material/Checkbox";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import FormGroup from "@mui/material/FormGroup";
-import React, { useEffect } from "react";
-import { UseQueryResult } from "react-query";
+import React, { useEffect, useRef } from "react";
 
 export default function SortByCategories({
   totalCatagory,
   cate,
-  refetch,
 }: {
   totalCatagory: string[];
   cate: boolean;
-  refetch: () => Promise<UseQueryResult>;
 }) {
   return (
     <FormGroup>
-      {totalCatagory.map((category, i) => (
-        <SortByCategory
-          key={i}
-          category={category}
-          cate={cate}
-          refetch={refetch}
-        />
+      {totalCatagory?.map((category, i) => (
+        <SortByCategory key={i} category={category} cate={cate} />
       ))}
     </FormGroup>
   );
@@ -32,36 +24,43 @@ export default function SortByCategories({
 const SortByCategory = ({
   category,
   cate,
-  refetch,
 }: {
   cate: boolean;
   category: string;
-  refetch: () => Promise<UseQueryResult>;
 }) => {
-  const { dispatchSort, sortedBooks, setChangeCache, changeCache } = useBooks();
+  const checkRef = useRef<HTMLInputElement>(null);
+  const { dispatchSort, sortedBooks } = useBooks();
   const [checked, setChecked] = React.useState<boolean>(false);
 
+  const isCateChecked = sortedBooks.filterByCategories.find(
+    (cate) => category === cate
+  );
+
+  const isSubCateChecked = sortedBooks.filterBySubCategories.find(
+    (cate) => category === cate
+  );
+
   useEffect(() => {
-    if (sortedBooks.filterByCategories.length > 0 && cate)
-      dispatchSort({
-        type: cate
-          ? ActionTypeName.FILTER_BY_CATEGORIES
-          : ActionTypeName.FILTER_BY_SUB_CATEGORIES,
-        payload: {
-          value: sortedBooks.filterByCategories,
-          isChecked: "initialUpdate",
-        },
-      });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [cate, changeCache]);
+    if (sortedBooks.filterByCategories.length > 0) {
+      if (isCateChecked) {
+        setChecked(true);
+      }
+    }
+    if (sortedBooks.filterBySubCategories.length > 0 && cate) {
+      if (isSubCateChecked) {
+        setChecked(true);
+      }
+    }
+  }, [
+    cate,
+    isCateChecked,
+    isSubCateChecked,
+    sortedBooks.filterByCategories,
+    sortedBooks.filterBySubCategories,
+  ]);
 
   const handleChecked = (e: React.ChangeEvent<HTMLInputElement>) => {
     setChecked(e.target.checked);
-
-    if (e.target.checked && cate) {
-      refetch();
-      setChangeCache(e.target.value);
-    }
 
     dispatchSort({
       type: cate
@@ -89,6 +88,7 @@ const SortByCategory = ({
           value={category}
           onChange={handleChecked}
           checked={checked}
+          inputRef={checkRef}
         />
       }
       label={category}

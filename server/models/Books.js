@@ -6,8 +6,8 @@ const booksSchema = new mongoose.Schema({
   publishedDate: { type: String, required: true },
   description: { type: String, required: true },
   pageCount: { type: Number, required: true },
-  catagories: { type: [String], required: true },
-  subCatagory: { type: [String], required: true },
+  categories: { type: [String], required: true },
+  subCategories: { type: [String], required: true },
   imageLinks: {
     type: Object,
     required: true,

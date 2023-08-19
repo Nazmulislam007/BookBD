@@ -4,38 +4,40 @@ import {
   AccordionSummary,
 } from "@/assets/theme/Accordion";
 import { useBooks } from "@/context/BooksProvider/BooksProvider";
+import { useGetCategories } from "@/hooks/useBooks";
 import Typography from "@mui/material/Typography";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import * as React from "react";
-import { UseQueryResult } from "react-query";
 import PriceRangeSlider from "./PriceRange";
 import SortByAuthors from "./SortByAuthors";
-import ShortByCatagory from "./SortByCatagory";
+import SortByCategories from "./SortByCatagory";
 import SortByRatting from "./SortByRating";
 
-type FilterItems = {
-  categories: string[];
-  sub_categories: string[];
-  authors: string[];
-  price: number[];
-  refetch: () => Promise<UseQueryResult>;
-};
-
-export default function FilterBooks({
-  authors,
-  categories,
-  price,
-  sub_categories,
-  refetch,
-}: FilterItems) {
+export default function FilterBooks({ type }: { type: string }) {
   const matches = useMediaQuery("(min-width:600px)");
-  const { sortedBooks } = useBooks();
+  const { sortedBooks, filterPrice } = useBooks();
   const [expanded, setExpanded] = React.useState({
     panel1: matches,
     panel2: matches,
     panel3: matches,
     panel4: matches,
   });
+
+  const { filterByAuthors, filterByCategories, filterBySubCategories } =
+    sortedBooks;
+
+  const { categories, authors, minMaxPrice, subCategories } = useGetCategories({
+    type,
+    filterByAuthors,
+    filterByCategories,
+    filterBySubCategories,
+    filterPrice,
+  });
+
+  const cate = categories.data?.categories.sort();
+  const subCate = subCategories?.data?.subCategories.sort();
+  const author = authors.data?.authors.sort();
+  const minMax = minMaxPrice.data;
 
   const handleChange =
     (panel: string) => (_event: React.SyntheticEvent, newExpanded: boolean) => {
@@ -61,18 +63,14 @@ export default function FilterBooks({
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ maxHeight: "300px", overflow: "auto" }}>
-          <ShortByCatagory
-            totalCatagory={categories.sort()}
-            cate
-            refetch={refetch}
-          />
+          <SortByCategories totalCatagory={cate} cate />
         </AccordionDetails>
       </Accordion>
       <Accordion
         expanded={expanded.panel2}
         onChange={handleChange("panel1")}
         sx={{
-          display: isSelectedCategroies ? "block" : "none",
+          display: isSelectedCategroies && subCate ? "block" : "none",
         }}
       >
         <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
@@ -86,11 +84,7 @@ export default function FilterBooks({
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ maxHeight: "300px", overflow: "auto" }}>
-          <ShortByCatagory
-            totalCatagory={sub_categories.sort()}
-            cate={false}
-            refetch={refetch}
-          />
+          <SortByCategories totalCatagory={subCate} cate={false} />
         </AccordionDetails>
       </Accordion>
       <Accordion expanded={expanded.panel3} onChange={handleChange("panel2")}>
@@ -105,7 +99,7 @@ export default function FilterBooks({
           </Typography>
         </AccordionSummary>
         <AccordionDetails sx={{ maxHeight: "300px", overflow: "auto" }}>
-          <SortByAuthors authors={authors.sort()} />
+          <SortByAuthors authors={author} />
         </AccordionDetails>
       </Accordion>
       <Accordion>
@@ -119,7 +113,7 @@ export default function FilterBooks({
           >
             PRICE RANGE
           </Typography>
-          <PriceRangeSlider price={price} />
+          <PriceRangeSlider price={minMax} />
         </AccordionDetails>
       </Accordion>
       <Accordion expanded={expanded.panel4} onChange={handleChange("panel3")}>
