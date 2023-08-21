@@ -86,12 +86,12 @@ const relatedBooks = async (req, res, next) => {
       ],
     });
 
-    if (related.length <= 0) {
+    if (youMayAlsoLike.length <= 0) {
       youMayAlsoLike = await Book.find({
         _id: {
           $nin: relatedBooksId,
         },
-      });
+      }).limit(14);
     }
 
     res.status(200).json({ related, youMayAlsoLike });
@@ -145,6 +145,7 @@ const getBooks = async (req, res, next) => {
     const top50Books = await Book.aggregate([
       { $sort: { "saleInfo.totalSales": -1 } },
     ]);
+
     const scienceFiction = await Book.find({
       categories: "Science Fiction & Fantasy",
     });
@@ -165,9 +166,134 @@ const getBooks = async (req, res, next) => {
   }
 };
 
+const createReview = async (req, res, next) => {
+  try {
+    const { _id, userId, username, rating, review: comment } = req.body;
+
+    const review = {
+      _id,
+      userId,
+      username,
+      rating,
+      review: comment,
+    };
+
+    /**
+     * find the document using `_id`
+     * now if the `userId` in the `reviews` field does exist
+     * then update the review of the that particular document.
+     *
+     * if not then insert new document in the `reviews` array
+     */
+
+    const isExisted = await Book.findOne({
+      _id,
+      "reviews.userId": userId,
+    });
+
+    let result = null;
+    const setQuery = {};
+
+    if (review) {
+      setQuery["reviews.$.review"] = comment;
+    }
+    if (rating) {
+      setQuery["reviews.$.rating"] = rating;
+    }
+
+    if (isExisted !== null) {
+      result = await Book.findOneAndUpdate(
+        {
+          _id,
+          "reviews.userId": userId,
+        },
+        {
+          $set: setQuery,
+        },
+        {
+          new: true,
+        }
+      );
+    } else {
+      result = await Book.findByIdAndUpdate(
+        { _id },
+        { $push: { reviews: review } },
+        { new: true }
+      );
+    }
+
+    res.status(201).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const isUseFull = async (req, res, next) => {
+  try {
+    const { _id, isUseFull, userId, participant } = req.body;
+
+    let result = null;
+    const setQuery = {};
+
+    if (isUseFull === "YES") {
+      setQuery["reviews.$.yesVotes"] = participant;
+    }
+    if (isUseFull === "NO") {
+      setQuery["reviews.$.noVotes"] = participant;
+    }
+
+    result = await Book.findOneAndUpdate(
+      {
+        _id,
+        "reviews.userId": userId,
+      },
+      {
+        $addToSet: setQuery,
+      },
+      {
+        new: true,
+      }
+    );
+
+    res.status(201).json(result);
+  } catch (error) {
+    next(error);
+  }
+};
+
+const removeReview = async (req, res, next) => {
+  try {
+    const { _id, userId } = req.body;
+
+    await Book.findOneAndUpdate(
+      {
+        _id,
+        "reviews.userId": userId,
+      },
+      {
+        $pull: {
+          reviews: {
+            userId: userId,
+          },
+        },
+      },
+      {
+        new: true,
+      }
+    );
+
+    res.status(201).json({ msg: "Review is deleted successfully!" });
+  } catch (error) {
+    next(error);
+  }
+};
+
 module.exports = {
   getSingleBook,
   searchBooks,
   relatedBooks,
   getBooks,
+  isUseFull,
+  createReview,
+  removeReview,
 };

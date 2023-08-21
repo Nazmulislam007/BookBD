@@ -108,14 +108,22 @@ res = { relatedBooks, youMayAlsoLike };
 
 ```js
 // create a review
-POST = "https://{{backend.com}}/books/create-review";
+PATCH = "https://{{backend.com}}/books/create-review";
 
 // body
-body = { userId, rating, review };
+body = { _id, userId, username, rating, review };
 ```
 
 ```js
 // create a review
+DETELE = "https://{{backend.com}}/books/delete-review";
+
+// body
+body = { _id, userId };
+```
+
+```js
+// add votes (YES or NO)
 POST =
   "https://{{backend.com}}/books/create-review
   ?_id={{bookId}}

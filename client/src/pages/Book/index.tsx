@@ -13,7 +13,7 @@ export default function Book() {
   const location = useLocation();
   const id = location.pathname.slice(3);
 
-  const { data, isError, isLoading, error } = useBookById({ id });
+  const { data, isError, isLoading } = useBookById({ id });
 
   if (isLoading) return <Loading />;
 

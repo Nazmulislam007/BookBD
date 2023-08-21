@@ -1,4 +1,5 @@
 const { default: mongoose } = require("mongoose");
+const ReviewsScheme = require("./Review");
 
 const booksSchema = new mongoose.Schema({
   title: { type: String, required: true },
@@ -24,6 +25,7 @@ const booksSchema = new mongoose.Schema({
     totalSales: { type: Number, required: true },
     upto75off: { type: Boolean, required: true },
   },
+  reviews: [ReviewsScheme],
 });
 
 const Book = mongoose.model("Book", booksSchema);
