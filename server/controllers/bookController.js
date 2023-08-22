@@ -232,24 +232,61 @@ const isUseFull = async (req, res, next) => {
   try {
     const { _id, isUseFull, userId, participant } = req.body;
 
-    let result = null;
     const setQuery = {};
+    const voteQuery = {};
+    const query = {};
 
     if (isUseFull === "YES") {
-      setQuery["reviews.$.yesVotes"] = participant;
-    }
-    if (isUseFull === "NO") {
-      setQuery["reviews.$.noVotes"] = participant;
+      voteQuery["reviews.yesVotes"] = { $in: participant };
     }
 
-    result = await Book.findOneAndUpdate(
+    if (isUseFull === "NO") {
+      voteQuery["reviews.noVotes"] = { $in: participant };
+    }
+
+    const isVoteExisted = await Book.findOne({
+      _id,
+      "reviews.userId": userId,
+      ...voteQuery,
+    });
+
+    /**
+     * find vote already exists or not.
+     * if exists then remove it.
+     * if not exits then add the vote.
+     */
+
+    const update = isVoteExisted
+      ? {
+          $pull: query,
+        }
+      : {
+          $addToSet: setQuery,
+        };
+
+    if (isVoteExisted === null) {
+      if (isUseFull === "YES") {
+        setQuery["reviews.$.yesVotes"] = participant;
+      }
+      if (isUseFull === "NO") {
+        setQuery["reviews.$.noVotes"] = participant;
+      }
+    } else {
+      if (isUseFull === "YES") {
+        query["reviews.$[].yesVotes"] = participant;
+      }
+
+      if (isUseFull === "NO") {
+        query["reviews.$[].noVotes"] = participant;
+      }
+    }
+
+    const result = await Book.findOneAndUpdate(
       {
         _id,
         "reviews.userId": userId,
       },
-      {
-        $addToSet: setQuery,
-      },
+      update,
       {
         new: true,
       }

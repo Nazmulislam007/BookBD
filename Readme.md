@@ -115,7 +115,7 @@ body = { _id, userId, username, rating, review };
 ```
 
 ```js
-// create a review
+// remove a review
 DETELE = "https://{{backend.com}}/books/delete-review";
 
 // body
@@ -124,17 +124,13 @@ body = { _id, userId };
 
 ```js
 // add votes (YES or NO)
-POST =
-  "https://{{backend.com}}/books/create-review
-  ?_id={{bookId}}
-  &_isUseFul={{yes or no}}
-  &_participant={{participant id}}";
+POST = "https://{{backend.com}}/books/is-use-full";
 
-  // `_id` that gets the review.
-  // `_isUseFul` is that comment useful or not.
-  // `_participant` who gives the review.
-  query = {_id, _isUseFul, _participant}
+// `_id` that gets the review.
+// `isUseFul` is that comment useful or not.
+// `userId` is the comment of the user that will be gotten a usefull vote.
+// `participant` who gives the review.
 
 // body
-body = { userId, rating, review };
+body = { _id, isUseFull, userId, participant };
 ```
