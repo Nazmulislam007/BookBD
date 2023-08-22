@@ -1,6 +1,6 @@
-import ActionButton from "@/components/ActionButton";
+import { Books } from "@/Types/Books";
 import StarIcon from "@mui/icons-material/Star";
-import { Box, Button, Rating, Stack, Typography, styled } from "@mui/material";
+import { Box, Rating, Stack, Typography, styled } from "@mui/material";
 import LinearProgress, {
   linearProgressClasses,
 } from "@mui/material/LinearProgress";
@@ -18,25 +18,20 @@ const BorderLinearProgress = styled(LinearProgress)(({ theme }) => ({
   },
 }));
 
-export default function Reviews() {
+import Review from "./Review";
+import WriteAReview from "./WriteAReview";
+
+export default function Reviews({
+  book,
+  avgRating,
+}: {
+  book: Partial<Books>;
+  avgRating: number;
+}) {
   return (
     <>
       <Box pb={4}>
-        <Stack
-          direction="row"
-          alignItems="center"
-          justifyContent="space-between"
-          gap="15px"
-          pb={2}
-        >
-          <Typography
-            component="p"
-            sx={{ fontSize: "17px", textTransform: "uppercase" }}
-          >
-            Reviews
-          </Typography>
-          <ActionButton title="Write a review" />
-        </Stack>
+        <WriteAReview id={book._id} />
         <Stack direction="row" display="flex" gap="30px" flexWrap="wrap">
           <Box component="div" flex="1 1 220px">
             <Box component="header" pb={1}>
@@ -86,159 +81,17 @@ export default function Reviews() {
               gap="10px"
             >
               <Typography component="p">Overall</Typography>
-              <Rating defaultValue={4.8} size="small" />
-              <Typography component="span">4.8</Typography>
+              <Rating readOnly defaultValue={avgRating || 0} size="small" />
+              <Typography component="span">{avgRating}</Typography>
             </Stack>
           </Box>
         </Stack>
       </Box>
       <Stack direction="column" gap="30px" component="div">
-        {/* review 1 */}
-        <Stack
-          component="div"
-          direction="row"
-          display="flex"
-          gap={{ xs: "10px", lg: "30px" }}
-          flexWrap="wrap"
-        >
-          <Box component="div" flex="1 1 200px">
-            <Typography component="p">Jaime_of_grayffindor</Typography>
-            <Typography component="p" fontSize="14px">
-              Votes{" "}
-              <Typography component="span" fontSize="14px" fontWeight="600">
-                6
-              </Typography>
-            </Typography>
-          </Box>
-          <Box component="div" flex="1 1 75%">
-            <Stack direction="row" alignItems="center" gap="10px" pb={1}>
-              <Rating defaultValue={4.8} size="small" />
-              <Typography component="span" fontSize="14px">
-                · a month ago
-              </Typography>
-            </Stack>
-            <Typography
-              component="p"
-              fontSize="18px"
-              fontWeight="600"
-              sx={{ textDecoration: "underline" }}
-              pb={1}
-            >
-              I Love It!
-            </Typography>
-            <Typography component="p" pb={2}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Asperiores exercitationem, quod blanditiis eum ratione sunt.
-            </Typography>
-            <Stack
-              direction="row"
-              component="div"
-              alignItems="center"
-              gap="10px"
-            >
-              <Typography component="span" fontSize="14px">
-                Helpful?
-              </Typography>
-              <Button
-                variant="contained"
-                sx={{
-                  bgcolor: "#63422d",
-                  fontSize: "12px",
-                  "&:hover": {
-                    bgcolor: "#63422d",
-                  },
-                }}
-              >
-                Yes · 5
-              </Button>
-              <Button
-                variant="contained"
-                sx={{
-                  bgcolor: "#63422d",
-                  fontSize: "12px",
-                  "&:hover": {
-                    bgcolor: "#63422d",
-                  },
-                }}
-              >
-                No · 1
-              </Button>
-            </Stack>
-          </Box>
-        </Stack>
-        {/* review 2 */}
-        <Stack
-          component="div"
-          direction="row"
-          display="flex"
-          gap={{ xs: "10px", lg: "30px" }}
-          flexWrap="wrap"
-        >
-          <Box component="div" flex="1 1 200px">
-            <Typography component="p">Jaime_of_grayffindor</Typography>
-            <Typography component="p" fontSize="14px">
-              Votes{" "}
-              <Typography component="span" fontSize="14px" fontWeight="600">
-                6
-              </Typography>
-            </Typography>
-          </Box>
-          <Box component="div" flex="1 1 75%">
-            <Stack direction="row" alignItems="center" gap="10px" pb={1}>
-              <Rating defaultValue={4.8} size="small" />
-              <Typography component="span" fontSize="14px">
-                · a month ago
-              </Typography>
-            </Stack>
-            <Typography
-              component="p"
-              fontSize="18px"
-              fontWeight="600"
-              sx={{ textDecoration: "underline" }}
-              pb={1}
-            >
-              I Love It!
-            </Typography>
-            <Typography component="p" pb={2}>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit.
-              Asperiores exercitationem, quod blanditiis eum ratione sunt.
-            </Typography>
-            <Stack
-              direction="row"
-              component="div"
-              alignItems="center"
-              gap="10px"
-            >
-              <Typography component="span" fontSize="14px">
-                Helpful?
-              </Typography>
-              <Button
-                variant="contained"
-                sx={{
-                  bgcolor: "#63422d",
-                  fontSize: "12px",
-                  "&:hover": {
-                    bgcolor: "#63422d",
-                  },
-                }}
-              >
-                Yes · 5
-              </Button>
-              <Button
-                variant="contained"
-                sx={{
-                  bgcolor: "#63422d",
-                  fontSize: "12px",
-                  "&:hover": {
-                    bgcolor: "#63422d",
-                  },
-                }}
-              >
-                No · 1
-              </Button>
-            </Stack>
-          </Box>
-        </Stack>
+        {book.reviews?.map((review, i) => {
+          const totalVotes = review.noVotes.length + review.yesVotes.length;
+          return <Review review={review} totalVotes={totalVotes} key={i} />;
+        })}
       </Stack>
     </>
   );

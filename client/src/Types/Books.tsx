@@ -19,6 +19,18 @@ export type Books = {
     totalSales: number;
     upto75off: boolean;
   };
+  reviews: [
+    {
+      _id: string;
+      userId: string;
+      review: string;
+      yesVotes: string[];
+      noVotes: string[];
+      rating: number;
+      username: string;
+      createdAt: Date;
+    }
+  ];
 };
 
 export type CartBookType = {

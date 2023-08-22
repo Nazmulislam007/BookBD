@@ -9,7 +9,7 @@ const ReviewsScheme = new mongoose.Schema({
     type: String,
     required: true,
   },
-  userName: {
+  username: {
     type: String,
     required: true,
   },
@@ -29,10 +29,8 @@ const ReviewsScheme = new mongoose.Schema({
     type: String,
     required: true,
   },
-  createdAt: {
-    type: Date,
-    required: true,
-  },
+}, {
+  timestamps: true
 });
 
 module.exports = ReviewsScheme;

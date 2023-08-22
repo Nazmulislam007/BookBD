@@ -19,7 +19,17 @@ export default function Book() {
 
   if (isError) return <span>Error: </span>;
 
-  const book: Partial<Books> = data?.book;
+  const book: Books = data?.book;
+
+  let reviews = null;
+
+  if (book.reviews.length > 0) {
+    reviews = <Reviews book={book} avgRating={data?.avgRating} />;
+  }
+
+  if (book.reviews.length <= 0) {
+    reviews = <div>No reviews found</div>;
+  }
 
   return (
     <Container maxWidth="lg" sx={{ pt: 2, pb: 10 }}>
@@ -37,7 +47,7 @@ export default function Book() {
       </Box>
       <YouMayAlsoLike youMayAlsoLike={data?.relatedData.youMayAlsoLike} />
       <DescriptionTabs book={book} />
-      <Reviews />
+      {reviews}
     </Container>
   );
 }

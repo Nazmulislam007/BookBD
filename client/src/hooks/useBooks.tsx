@@ -1,6 +1,6 @@
 import { Books } from "@/Types/Books";
 import axios from "axios";
-import { useQueries, useQuery } from "react-query";
+import { useMutation, useQueries, useQuery } from "react-query";
 
 export function useSubjectBooks({
   filterByAuthors,
@@ -210,6 +210,19 @@ export function useBookById({ id }: { id: string }) {
       }/books/related-books?_ne=${id}${validCatagoriesURL}${validSubCatagoriesURL}&_limit=3`
     );
 
-    return { book: data.book, relatedData };
+    return { book: data.book, relatedData, avgRating: data.avgRating };
   });
+}
+
+export function useCreateReview() {
+  const { mutate, isLoading, isSuccess } = useMutation((review) =>
+    axios.patch(
+      `${import.meta.env.VITE_SERVER_URL}/books/create-review`,
+      review,
+      {
+        withCredentials: true,
+      }
+    )
+  );
+  return { mutate, isLoading, isSuccess };
 }

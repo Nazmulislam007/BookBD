@@ -22,16 +22,7 @@
       "totalSales": 10,
       "upto75off": true
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -55,16 +46,7 @@
       "availableCopy": 10,
       "totalSales": 12
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -88,16 +70,7 @@
       "availableCopy": 40,
       "totalSales": 30
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -122,16 +95,7 @@
       "totalSales": 1000,
       "upto75off": true
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -155,16 +119,7 @@
       "availableCopy": 23,
       "totalSales": 45
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -188,16 +143,7 @@
       "availableCopy": 314,
       "totalSales": 55
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -221,16 +167,7 @@
       "availableCopy": 14,
       "totalSales": 56
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -253,16 +190,7 @@
       "discountPrice": 15.56,
       "availableCopy": 3
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -286,16 +214,7 @@
       "availableCopy": 34,
       "totalSales": 65
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -320,16 +239,7 @@
       "totalSales": 77,
       "upto75off": true
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -353,16 +263,7 @@
       "availableCopy": 10,
       "totalSales": 86
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -387,16 +288,7 @@
       "totalSales": 80,
       "upto75off": true
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -420,16 +312,7 @@
       "availableCopy": 15,
       "totalSales": 23
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -454,16 +337,7 @@
       "availableCopy": 30,
       "totalSales": 34
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -488,16 +362,7 @@
       "totalSales": 10,
       "upto75off": true
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -521,16 +386,7 @@
       "availableCopy": 20,
       "totalSales": 10
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -555,16 +411,7 @@
       "totalSales": 10,
       "upto75off": true
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -589,16 +436,7 @@
       "totalSales": 10,
       "upto75off": true
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -622,16 +460,7 @@
       "availableCopy": 20,
       "totalSales": 10
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -655,16 +484,7 @@
       "availableCopy": 20,
       "totalSales": 10
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -688,16 +508,7 @@
       "availableCopy": 20,
       "totalSales": 10
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -721,16 +532,7 @@
       "availableCopy": 20,
       "totalSales": 10
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -754,16 +556,7 @@
       "availableCopy": 20,
       "totalSales": 10
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -787,16 +580,7 @@
       "availableCopy": 20,
       "totalSales": 10
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -820,16 +604,7 @@
       "availableCopy": 20,
       "totalSales": 10
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -853,16 +628,7 @@
       "availableCopy": 20,
       "totalSales": 10
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -886,16 +652,7 @@
       "availableCopy": 20,
       "totalSales": 10
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -919,16 +676,7 @@
       "availableCopy": 20,
       "totalSales": 10
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -952,16 +700,7 @@
       "availableCopy": 20,
       "totalSales": 10
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -985,16 +724,7 @@
       "availableCopy": 20,
       "totalSales": 10
     },
-    "reviews": [
-      {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      }
-    ]
+    "reviews": []
   },
   {
     "_id": {
@@ -1119,13 +849,6 @@
     },
     "reviews": [
       {
-        "userId": 1,
-        "rating": 4,
-        "yesVotes": [1, 2, 3, 4],
-        "noVotes": [1],
-        "review": "Lorem ipsum dolor sit amet consectetur adipisicing elit. Asperiores exercitationem, quod blanditiis eum ratione sunt.",
-        "createdAt": 1324234234
-      },{
         "userId": 3,
         "rating": 2,
         "yesVotes": [1, 2, 3, 4],
