@@ -26,7 +26,7 @@ async function getFormattedQuery({
     query.$and.push({ authors: { $in: _authors } });
   }
 
-  if (_authors?.length <= 0 && _categories?.length <= 0) {
+  if (!_authors && !_categories) {
     query.$and.push({ categories: { $in: existingCate[0]?.categories } });
   }
 
@@ -129,6 +129,8 @@ async function filteredByContent({
       getExistingCate,
     });
 
+    // console.log(JSON.stringify(query));
+
     counterQuery = query;
     counterLimit = {};
     pipeline.push({
@@ -228,6 +230,8 @@ const filteredContent = () => {
             _rating,
             getExistingCate,
           });
+
+        // console.log(JSON.stringify(getExistingCate));
 
         const [books, totalCount] = await Promise.all([
           await Book.aggregate(pipeline),
