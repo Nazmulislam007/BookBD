@@ -124,7 +124,7 @@ body = { _id, userId };
 
 ```js
 // add votes (YES or NO)
-POST = "https://{{backend.com}}/books/is-use-full";
+PATCH = "https://{{backend.com}}/books/is-use-full";
 
 // `_id` that gets the review.
 // `isUseFul` is that comment useful or not.
