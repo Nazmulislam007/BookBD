@@ -1,9 +1,11 @@
+const express = require("express");
+const app = express();
+
 const sessionCart = () => {
   return {
     get: async (req, res, next) => {
       const cart = req.session.cart;
       const cartArr = (cart && Object.values(cart)) || [];
-
       res.status(200).json(cartArr);
     },
     update: async (req, res, next) => {

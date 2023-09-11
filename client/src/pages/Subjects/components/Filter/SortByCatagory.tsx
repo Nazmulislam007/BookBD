@@ -37,7 +37,7 @@ const SortByCategory = ({
   );
 
   const isSubCateChecked = sortedBooks.filterBySubCategories.find(
-    (cate) => category === cate
+    (cat) => category === cat
   );
 
   useEffect(() => {

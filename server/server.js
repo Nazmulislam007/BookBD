@@ -78,7 +78,7 @@ app.use(
 // router setup
 app.use("/books", bookRouter);
 app.use("/shopping-cart", shoppingCartRouter);
-app.use("/create-payment-intent", checkoutRouter);
+app.use(checkoutRouter);
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
 app.use("/session-cart", cartSessionRouter);

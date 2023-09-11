@@ -1,3 +1,5 @@
+const express = require("express");
+const app = express();
 const Book = require("../models/Books");
 
 const getSingleBook = async (req, res, next) => {
@@ -160,6 +162,21 @@ const getBooks = async (req, res, next) => {
       top50Books,
       scienceFiction,
       businessMoney,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
+const getLikedBooks = async (req, res, next) => {
+  try {
+    const books = await Book.aggregate([
+      { $sort: { "saleInfo.totalSales": -1 } },
+      { $limit: 15 },
+    ]);
+
+    res.status(200).json({
+      books,
     });
   } catch (error) {
     next(error);
@@ -333,4 +350,5 @@ module.exports = {
   isUseFull,
   createReview,
   removeReview,
+  getLikedBooks,
 };

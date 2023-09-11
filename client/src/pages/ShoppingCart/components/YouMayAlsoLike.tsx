@@ -1,12 +1,12 @@
 import { Books } from "@/Types/Books";
 import SingleBook from "@/components/SingleBook";
-import useTop50Books from "@/hooks/useBooks";
+import useYouMayAlsoLike from "@/hooks/useBooks";
 import { Box, Typography } from "@mui/material";
 import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 export default function YouMayAlsoLike() {
-  const { data, isError, isLoading } = useTop50Books();
+  const { data, isError, isLoading } = useYouMayAlsoLike();
 
   if (isLoading) return <span>Loading...</span>;
 

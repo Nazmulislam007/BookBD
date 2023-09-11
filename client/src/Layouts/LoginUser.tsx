@@ -1,5 +1,6 @@
 import ActionButton from "@/components/ActionButton";
 import { useAuth } from "@/context/AuthProvider/AuthProvider";
+import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import useLogin from "@/hooks/useAuth";
 import {
   Box,
@@ -34,6 +35,7 @@ type LoginType = {
 
 export default function LoginUser() {
   const { setUser } = useAuth();
+  const { setOpenRegister } = useBooks();
   const { mutate, error, isError, isLoading, isSuccess, data } = useLogin();
   const [login, setLogin] = useState<LoginType>({
     email: "",
@@ -48,6 +50,7 @@ export default function LoginUser() {
         email: "",
         password: "",
       });
+      setOpenRegister(false);
       setUser({
         user: (data as any)?.data?.user,
         status: (data as any)?.data?.status

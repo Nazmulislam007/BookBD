@@ -20,12 +20,14 @@ const SortByAuthor = ({ author }: { author: string }) => {
   const { dispatchSort, sortedBooks } = useBooks();
   const [checked, setChecked] = React.useState<boolean>(false);
 
-  const isChecked = sortedBooks.filterByAuthors.find((auth) => author === auth);
+  const isChecked = sortedBooks.filterByAuthors.find((a) => author === a);
 
   useEffect(() => {
     if (sortedBooks.filterByAuthors.length > 0) {
       if (isChecked) {
         setChecked(true);
+      } else {
+        setChecked(false);
       }
     }
   }, [author, isChecked, sortedBooks.filterByAuthors]);

@@ -90,7 +90,14 @@ export default function Reviews({
       <Stack direction="column" gap="30px" component="div">
         {book.reviews?.map((review, i) => {
           const totalVotes = review.noVotes.length + review.yesVotes.length;
-          return <Review review={review} totalVotes={totalVotes} key={i} />;
+          return (
+            <Review
+              review={review}
+              totalVotes={totalVotes}
+              key={i}
+              _id={book._id}
+            />
+          );
         })}
       </Stack>
     </>

@@ -1,13 +1,23 @@
-import Loading from "@/components/Loading";
+import { UserType } from "@/Types/Books";
+import { useAuth } from "@/context/AuthProvider/AuthProvider";
 import {
   LinkAuthenticationElement,
   PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
-import React, { useEffect } from "react";
+import React from "react";
+import { useNavigate } from "react-router-dom";
 
-export default function CheckoutFrom() {
+export default function CheckoutFrom({
+  clientSecret,
+  cartBooks,
+}: {
+  clientSecret: string;
+  cartBooks: any[];
+}) {
+  const navigate = useNavigate();
+  const { user } = useAuth();
   const stripe = useStripe();
   const elements = useElements();
 
@@ -15,50 +25,61 @@ export default function CheckoutFrom() {
   const [isLoading, setIsLoading] = React.useState(false);
   const [message, setMessage] = React.useState("");
 
-  useEffect(() => {
-    if (!stripe) return;
+  async function placeOrder() {
+    if (user.user) {
+      await fetch(`${import.meta.env.VITE_SERVER_URL}/order-confirmed`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          items: cartBooks.map(({ _id, quantity }) => ({
+            id: _id,
+            quantity,
+          })),
+          userId: (user.user as UserType).userId,
+        }),
+      });
 
-    const clientSecret = new URLSearchParams(window.location.search).get(
-      "payment_intent_client_secret"
-    );
-    if (!clientSecret) return;
-
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent?.status) {
-        case "succeeded":
-          setMessage("Payment successed!");
-          break;
-        case "processing":
-          setMessage("You payment is processing.");
-          break;
-        case "requires_payment_method":
-          setMessage("Your payment was not successful, please try again.");
-          break;
-        default:
-          setMessage("Something went wrong.");
-      }
-    });
-  }, [stripe]);
+      navigate("/order-completed");
+    }
+  }
 
   const handleSubmit = async (e: any) => {
     e.preventDefault();
+    setIsLoading(true);
 
     if (!stripe || !elements) return;
 
     const { error } = await stripe.confirmPayment({
       elements,
-      confirmParams: {
-        return_url: `${import.meta.env.VITE_CLENT_URL}/order-completed`,
-      },
+      redirect: "if_required",
     });
 
-    if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(`ERROR:: ${error.message}`);
-    } else {
-      setMessage("An unexpected error occurred.");
+    if (clientSecret) {
+      await stripe
+        .retrievePaymentIntent(clientSecret)
+        .then(({ paymentIntent }) => {
+          switch (paymentIntent?.status) {
+            case "succeeded":
+              setMessage("Payment successed!");
+              placeOrder();
+              break;
+            case "processing":
+              setMessage("You payment is processing.");
+              break;
+            case "requires_payment_method":
+              break;
+            default:
+              setMessage("Something went wrong.");
+          }
+        });
     }
 
-    setIsLoading(true);
+    if (error?.type === "card_error" || error?.type === "validation_error") {
+      setMessage(`ERROR:: ${error.message}`);
+    }
+
     setIsLoading(false);
   };
 
@@ -70,7 +91,7 @@ export default function CheckoutFrom() {
       />
       <PaymentElement id="payment-element" options={{ layout: "tabs" }} />
       <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">{isLoading ? <Loading /> : "Pay now"}</span>
+        <span id="button-text">{isLoading ? "Paying" : "Pay now"}</span>
       </button>
       {/* Show any error or success messages */}
       {message && <div id="payment-message">{message}</div>}

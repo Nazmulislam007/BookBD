@@ -51,7 +51,7 @@ export default function WriteAReview({ id }: { id: string | undefined }) {
   const { user } = useAuth();
   const queryClient = useQueryClient();
 
-  const { mutate, isLoading, isSuccess } = useCreateReview();
+  const { mutate, isSuccess } = useCreateReview();
 
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
@@ -81,7 +81,7 @@ export default function WriteAReview({ id }: { id: string | undefined }) {
                 review.userId === reviewData.userId &&
                 review._id === reviewData._id
             );
-            const isExisted = prev.book.reviews.map((review: any) => {
+            const modifiedReview = prev.book.reviews.map((review: any) => {
               if (
                 review.userId === reviewData.userId &&
                 review._id === reviewData._id
@@ -100,7 +100,7 @@ export default function WriteAReview({ id }: { id: string | undefined }) {
               book: {
                 ...prev.book,
                 reviews: isExistedReview
-                  ? isExisted
+                  ? modifiedReview
                   : [...prev.book.reviews, reviewData],
               },
             };
@@ -132,6 +132,9 @@ export default function WriteAReview({ id }: { id: string | undefined }) {
         aria-describedby="modal-modal-description"
       >
         <Stack sx={style} gap="5px" component="form" onSubmit={handleSubmit}>
+          <Typography sx={{ fontStyle: "italic", fontSize: "12px" }}>
+            *if you already write a comment it will be replaced*
+          </Typography>
           <FormControl sx={{ maxWidth: "min-content" }}>
             <FormLabel>Give a review</FormLabel>
             <Rating

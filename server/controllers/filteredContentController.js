@@ -98,6 +98,52 @@ async function filteredByContent({
         $match: query,
       }
     );
+  } else if (_type === "Upto 75%25 Off") {
+    const formattedQuery = await getFormattedQuery({
+      pipeline,
+      _categories,
+      _sub_categories,
+      _authors,
+      _rating,
+      _price,
+      getExistingCate,
+    });
+
+    let query = {
+      $and: [
+        {
+          $expr: {
+            $gte: [
+              {
+                $subtract: [
+                  {
+                    $toDouble: "$saleInfo.price",
+                  },
+                  {
+                    $toDouble: "$saleInfo.discountPrice",
+                  },
+                ],
+              },
+              {
+                $multiply: [
+                  {
+                    $toDouble: "$saleInfo.price",
+                  },
+                  0.75,
+                ],
+              },
+            ],
+          },
+        },
+        ...formattedQuery.$and,
+      ],
+    };
+
+    counterQuery = query;
+    counterLimit = {};
+    pipeline.push({
+      $match: query,
+    });
   } else if (_type === "Subject") {
     const formattedQuery = await getFormattedQuery({
       pipeline,
@@ -151,6 +197,33 @@ async function getCategoriesByType({ _type }) {
   // get the `categories` according to the `_type`.
   if (_type === "Top 50 Books") {
     pipeline.push({ $sort: { "saleInfo.totalSales": -1 } });
+  } else if (_type === "Upto 75%25 Off") {
+    pipeline.push({
+      $match: {
+        $expr: {
+          $gte: [
+            {
+              $subtract: [
+                {
+                  $toDouble: "$saleInfo.price",
+                },
+                {
+                  $toDouble: "$saleInfo.discountPrice",
+                },
+              ],
+            },
+            {
+              $multiply: [
+                {
+                  $toDouble: "$saleInfo.price",
+                },
+                0.75,
+              ],
+            },
+          ],
+        },
+      },
+    });
   } else if (_type === "Subject") {
     pipeline.push({
       $match: {
@@ -264,6 +337,45 @@ const filteredContent = () => {
               },
             });
           }
+        } else if (_type === "Upto 75%25 Off") {
+          const query = {
+            $match: {
+              $and: [
+                {
+                  $expr: {
+                    $gte: [
+                      {
+                        $subtract: [
+                          {
+                            $toDouble: "$saleInfo.price",
+                          },
+                          {
+                            $toDouble: "$saleInfo.discountPrice",
+                          },
+                        ],
+                      },
+                      {
+                        $multiply: [
+                          {
+                            $toDouble: "$saleInfo.price",
+                          },
+                          0.75,
+                        ],
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          };
+
+          if (_authors) {
+            query.$match.$and.push({
+              authors: { $in: _authors },
+            });
+          }
+
+          pipeline.push(query);
         } else if (_type === "Subject") {
           const query = {
             $match: {
@@ -395,6 +507,51 @@ const filteredContent = () => {
           pipeline.push({
             $match: query,
           });
+        } else if (_type === "Upto 75%25 Off") {
+          const query = {
+            $and: [
+              {
+                $expr: {
+                  $gte: [
+                    {
+                      $subtract: [
+                        {
+                          $toDouble: "$saleInfo.price",
+                        },
+                        {
+                          $toDouble: "$saleInfo.discountPrice",
+                        },
+                      ],
+                    },
+                    {
+                      $multiply: [
+                        {
+                          $toDouble: "$saleInfo.price",
+                        },
+                        0.75,
+                      ],
+                    },
+                  ],
+                },
+              },
+            ],
+          };
+
+          if (_categories) {
+            query.$and.push({
+              categories: { $in: _categories },
+            });
+          }
+
+          if (_sub_categories) {
+            query.$and.push({
+              subCategories: { $in: _sub_categories },
+            });
+          }
+
+          pipeline.push({
+            $match: query,
+          });
         } else if (_type === "Subject") {
           const query = {
             $and: [{ _id: { $exists: true } }],
@@ -480,6 +637,31 @@ const filteredContent = () => {
           pipeline.push({ $sort: { "saleInfo.totalSales": -1 } });
           query.$and.push({
             _id: { $exists: true },
+          });
+        } else if (_type === "Upto 75%25 Off") {
+          query.$and.push({
+            $expr: {
+              $gte: [
+                {
+                  $subtract: [
+                    {
+                      $toDouble: "$saleInfo.price",
+                    },
+                    {
+                      $toDouble: "$saleInfo.discountPrice",
+                    },
+                  ],
+                },
+                {
+                  $multiply: [
+                    {
+                      $toDouble: "$saleInfo.price",
+                    },
+                    0.75,
+                  ],
+                },
+              ],
+            },
           });
         } else if (_type === "Subject") {
           query.$and.push({

@@ -1,5 +1,7 @@
-import { CartBookType } from "@/Types/Books";
+import { CartBookType, UserType } from "@/Types/Books";
 import ActionButton from "@/components/ActionButton";
+import { useAuth } from "@/context/AuthProvider/AuthProvider";
+import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import PaymentBox from "@/stripe/PaymentBox";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import axios from "axios";
@@ -10,6 +12,8 @@ export default function OrderSummery({
 }: {
   cartBooks: CartBookType[];
 }) {
+  const { user } = useAuth();
+  const { setOpenRegister } = useBooks();
   const [clientSecret, setClientSecret] = React.useState("");
 
   const totalPrice: number = cartBooks?.reduce(
@@ -23,14 +27,20 @@ export default function OrderSummery({
   );
 
   const handlePayment = async () => {
-    axios
-      .post(`${import.meta.env.VITE_SERVER_URL}/create-payment-intent`, {
-        items: cartBooks.map(({ _id, quantity }) => ({
-          id: _id,
-          quantity,
-        })),
-      })
-      .then(({ data }) => setClientSecret(data.clientSecret));
+    if ((user.user as UserType).userId) {
+      axios
+        .post(`${import.meta.env.VITE_SERVER_URL}/create-payment-intent`, {
+          items: cartBooks.map(({ _id, quantity }) => ({
+            id: _id,
+            quantity,
+          })),
+        })
+        .then(({ data }) => {
+          setClientSecret(data.clientSecret);
+        });
+    } else {
+      setOpenRegister(true);
+    }
   };
 
   return (
@@ -80,6 +90,7 @@ export default function OrderSummery({
       <PaymentBox
         clientSecret={clientSecret}
         setClientSecret={setClientSecret}
+        cartBooks={cartBooks}
       />
     </Box>
   );

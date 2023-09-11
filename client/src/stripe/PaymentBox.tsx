@@ -10,9 +10,11 @@ const stripePromise = loadStripe(import.meta.env.VITE_PUBLIC_KEY);
 export default function PaymentBox({
   clientSecret,
   setClientSecret,
+  cartBooks,
 }: {
   clientSecret: string;
   setClientSecret: Dispatch<SetStateAction<string>>;
+  cartBooks: any[];
 }) {
   return (
     <>
@@ -48,7 +50,7 @@ export default function PaymentBox({
               options={{ clientSecret, appearance: { theme: "stripe" } }}
               stripe={stripePromise}
             >
-              <CheckoutFrom />
+              <CheckoutFrom clientSecret={clientSecret} cartBooks={cartBooks} />
             </Elements>
           </Box>
         </Box>

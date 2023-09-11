@@ -172,10 +172,10 @@ export function useSearchedBooks({ search }: { search?: string }) {
   });
 }
 
-export default function useTop50Books() {
-  return useQuery("subjective-books", async () => {
+export default function useYouMayAlsoLike() {
+  return useQuery("you-may-also-like", async () => {
     const { data } = await axios.get(
-      `${import.meta.env.VITE_SERVER_URL}/books/subjective-books`
+      `${import.meta.env.VITE_SERVER_URL}/books/you-may-also-like`
     );
     return data;
   });
@@ -219,6 +219,19 @@ export function useCreateReview() {
     axios.patch(
       `${import.meta.env.VITE_SERVER_URL}/books/create-review`,
       review,
+      {
+        withCredentials: true,
+      }
+    )
+  );
+  return { mutate, isLoading, isSuccess };
+}
+
+export function useIsUsefullReview() {
+  const { mutate, isLoading, isSuccess } = useMutation((isUseFull) =>
+    axios.patch(
+      `${import.meta.env.VITE_SERVER_URL}/books/is-use-full`,
+      isUseFull,
       {
         withCredentials: true,
       }

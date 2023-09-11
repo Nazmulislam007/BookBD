@@ -1,13 +1,7 @@
 import { Box, Stack, Typography } from "@mui/material";
 import CustomizedTimeline from "./Timeline";
 
-export default function SingleOrder() {
-  const book = {
-    img: "//ws-na.amazon-adsystem.com/widgets/q?_encoding=UTF8&ASIN=1546004009&Format=_SL250_&ID=AsinImage&MarketPlace=US&ServiceVersion=20070822&WS=1&tag=techweb04-20&language=en_US",
-    title: "The 7 habit of highly effective people.",
-    author: "Steven R. covey",
-    quantity: 4,
-  };
+export default function SingleOrder({ orders }: { orders: any }) {
   return (
     <Box sx={{ border: "1px solid #dfdfdf", py: 3, px: 4 }}>
       <Stack component="header" pb={1}>
@@ -62,54 +56,32 @@ export default function SingleOrder() {
               </Typography>
             </Box>
             <Stack gap="10px" mt={3}>
-              <Stack direction="row" gap="15px">
-                <Box component="div" sx={{ minWidth: "80px", width: "80px" }}>
-                  <img
-                    src={book.img}
-                    style={{
-                      display: "block",
-                      maxWidth: "100%",
-                    }}
-                  />
-                </Box>
-                <Box component="div">
-                  <Typography
-                    component="p"
-                    fontWeight="600"
-                    fontSize="18px"
-                    lineHeight="1.4"
-                  >
-                    {book.title}
-                  </Typography>
-                  <Typography component="p" fontSize="13px" mt="5px">
-                    {book.author}
-                  </Typography>
-                </Box>
-              </Stack>
-              <Stack direction="row" gap="15px">
-                <Box component="div" sx={{ minWidth: "80px", width: "80px" }}>
-                  <img
-                    src={book.img}
-                    style={{
-                      display: "block",
-                      maxWidth: "100%",
-                    }}
-                  />
-                </Box>
-                <Box component="div">
-                  <Typography
-                    component="p"
-                    fontWeight="600"
-                    fontSize="18px"
-                    lineHeight="1.4"
-                  >
-                    {book.title}
-                  </Typography>
-                  <Typography component="p" fontSize="13px" mt="5px">
-                    {book.author}
-                  </Typography>
-                </Box>
-              </Stack>
+              {orders.map((order: any) => (
+                <Stack direction="row" gap="15px" key={order._id}>
+                  <Box component="div" sx={{ minWidth: "80px", width: "80px" }}>
+                    <img
+                      src={order.img}
+                      style={{
+                        display: "block",
+                        maxWidth: "100%",
+                      }}
+                    />
+                  </Box>
+                  <Box component="div">
+                    <Typography
+                      component="p"
+                      fontWeight="600"
+                      fontSize="18px"
+                      lineHeight="1.4"
+                    >
+                      {order.title}
+                    </Typography>
+                    <Typography component="p" fontSize="13px" mt="5px">
+                      {order.author}
+                    </Typography>
+                  </Box>
+                </Stack>
+              ))}
             </Stack>
           </Box>
           <Box
