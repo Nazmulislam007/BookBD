@@ -14,10 +14,15 @@ export function useGetCartBooks() {
 }
 
 export function useDeleteCartBook() {
-  const { mutate } = useMutation(({ _id }: { _id: string }) =>
-    axios.delete(`${import.meta.env.VITE_SERVER_URL}/session-cart?q=${_id}`, {
-      withCredentials: true,
-    })
+  const { mutate } = useMutation((data: { _id?: string; ordered?: string }) =>
+    axios.delete(
+      `${import.meta.env.VITE_SERVER_URL}/session-cart?q=${data._id}&ordered=${
+        data.ordered
+      }`,
+      {
+        withCredentials: true,
+      }
+    )
   );
   return mutate;
 }

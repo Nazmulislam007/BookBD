@@ -1,4 +1,5 @@
 import { Box, Stack, Typography } from "@mui/material";
+import { Order } from "..";
 import CustomizedTimeline from "./Timeline";
 
 export default function SingleOrder({ orders }: { orders: any }) {
@@ -56,8 +57,8 @@ export default function SingleOrder({ orders }: { orders: any }) {
               </Typography>
             </Box>
             <Stack gap="10px" mt={3}>
-              {orders.map((order: any) => (
-                <Stack direction="row" gap="15px" key={order._id}>
+              {orders.map((order: Order, i: any) => (
+                <Stack direction="row" gap="15px" key={i}>
                   <Box component="div" sx={{ minWidth: "80px", width: "80px" }}>
                     <img
                       src={order.img}

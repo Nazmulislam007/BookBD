@@ -6,8 +6,25 @@ import { Box, Container, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import SingleOrder from "./Components/SingleOrder";
 
-type OrderType = {
-  orders: any[];
+export type Order = {
+  author: string;
+  title: string;
+  price: number;
+  img: string;
+  quantity: number;
+};
+
+type Orders = {
+  [key: string]: Order;
+};
+
+type OrderDetails = {
+  createdAt: Date;
+  orders: Orders;
+  totalPrice: number;
+  updatedAt: Date;
+  userId: string;
+  _id: string;
 };
 
 export default function Order() {
@@ -17,16 +34,20 @@ export default function Order() {
     userId: (user.user as UserType).userId,
   });
 
+  const orderDetails: OrderDetails = data;
+
   let content = null;
 
   if (!isError && !isLoading) {
     content = (
       <>
         <Stack gap={4}>
-          <SingleOrder orders={(data as OrderType).orders} />
+          {Object.values(orderDetails.orders).map((orders, i) => (
+            <SingleOrder orders={orders} key={i} />
+          ))}
         </Stack>
         <Typography component="p" mt="25px" fontSize="18px" fontWeight="500">
-          Total Price : ${(data as OrderType).orders[0].totalPrice}
+          Total Price : ${orderDetails.totalPrice}
         </Typography>
       </>
     );

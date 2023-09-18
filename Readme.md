@@ -1,5 +1,33 @@
 ## E-commerce website...
 
+## Place order details
+
+1.  User add books to the cart session.
+2.  Then complete the payment through stripe.
+3.  After completing order, order will place into the database.
+4.  Remove the cart session while update the database.
+5.  Get the order list and show to the client and dashboard.
+
+```js
+// order format.
+{
+ userId: '64bbc4e404a910ac67778589',
+ orders: {
+  order1: [{
+    _id: ,
+    title: ,
+    price: ,
+    author: ,
+    img: ,
+    quantity: ,
+  }],
+  order2: []
+ }
+ totalPrice: 200,
+ createdAt: '2023-09-11T09:40:06.549+00:00'
+}
+```
+
 ## Path: "/s/subject"
 
 ```js

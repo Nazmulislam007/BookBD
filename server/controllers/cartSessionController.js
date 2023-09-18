@@ -49,8 +49,15 @@ const sessionCart = () => {
     },
     remove: async (req, res, next) => {
       try {
-        const { q: _id } = req.query;
-        delete req.session.cart[_id];
+        const { q: _id, ordered } = req.query;
+
+        if (_id) {
+          delete req.session.cart[_id];
+        }
+
+        if (ordered === "true") {
+          delete req.session.cart;
+        }
 
         res.json({ msg: "Product delete successfully" });
       } catch (error) {

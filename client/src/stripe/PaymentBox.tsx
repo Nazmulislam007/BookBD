@@ -4,6 +4,7 @@ import { Elements } from "@stripe/react-stripe-js";
 import { loadStripe } from "@stripe/stripe-js";
 import { Dispatch, SetStateAction } from "react";
 import CheckoutFrom from "./CheckoutFrom";
+import { CartBookType } from "@/Types/Books";
 
 const stripePromise = loadStripe(import.meta.env.VITE_PUBLIC_KEY);
 
@@ -14,7 +15,7 @@ export default function PaymentBox({
 }: {
   clientSecret: string;
   setClientSecret: Dispatch<SetStateAction<string>>;
-  cartBooks: any[];
+  cartBooks: CartBookType[];
 }) {
   return (
     <>

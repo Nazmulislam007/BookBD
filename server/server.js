@@ -77,11 +77,11 @@ app.use(
 
 // router setup
 app.use("/books", bookRouter);
-app.use("/shopping-cart", shoppingCartRouter);
+// app.use("/shopping-cart", shoppingCartRouter);
 app.use(checkoutRouter);
 app.use("/register", registerRouter);
 app.use("/login", loginRouter);
-app.use("/session-cart", cartSessionRouter);
+app.use(cartSessionRouter);
 app.use("/auth", authRouter);
 app.use(filteredContentRouter);
 

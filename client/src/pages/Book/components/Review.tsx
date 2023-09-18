@@ -23,7 +23,7 @@ export default function Review({
   totalVotes: number;
 }) {
   const queryClient = useQueryClient();
-  const { mutate, isLoading, isSuccess } = useIsUsefullReview();
+  const { mutate } = useIsUsefullReview();
   const { user } = useAuth();
 
   const handleClick = (vote: string) => {

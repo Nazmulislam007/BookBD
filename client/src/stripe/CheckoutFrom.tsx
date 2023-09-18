@@ -1,5 +1,6 @@
-import { UserType } from "@/Types/Books";
+import { CartBookType, UserType } from "@/Types/Books";
 import { useAuth } from "@/context/AuthProvider/AuthProvider";
+import { useDeleteCartBook } from "@/hooks/useAddtoCart";
 import {
   LinkAuthenticationElement,
   PaymentElement,
@@ -7,6 +8,7 @@ import {
   useStripe,
 } from "@stripe/react-stripe-js";
 import React from "react";
+import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
 
 export default function CheckoutFrom({
@@ -14,8 +16,10 @@ export default function CheckoutFrom({
   cartBooks,
 }: {
   clientSecret: string;
-  cartBooks: any[];
+  cartBooks: CartBookType[];
 }) {
+  const queryClient = useQueryClient();
+  const deleteCart = useDeleteCartBook();
   const navigate = useNavigate();
   const { user } = useAuth();
   const stripe = useStripe();
@@ -39,6 +43,14 @@ export default function CheckoutFrom({
           })),
           userId: (user.user as UserType).userId,
         }),
+      });
+
+      deleteCart({ ordered: "true" } as any, {
+        onSuccess: () => {
+          queryClient.setQueryData(["cart-books"], (prev: any) =>
+            prev.filter(() => null)
+          );
+        },
       });
 
       navigate("/order-completed");

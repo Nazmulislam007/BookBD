@@ -49,37 +49,66 @@ const orderConfirmed = async (req, res, next) => {
 
     const books = products?.map((book) => ({
       author: book.authors[0],
-      userId: userId,
       title: book.title,
       price: book.saleInfo.discountPrice,
       img: book.imageLinks.thumbnail,
       quantity: book.quantity,
-      totalPrice: book.saleInfo.discountPrice * book.quantity,
     }));
 
-    const result = await ShoppingCart.insertMany(books);
+    const totalPrice = products?.reduce(
+      (prev, curr) => prev + curr.saleInfo.discountPrice * curr.quantity,
+      0
+    )
 
-    res.status(201).json(result);
+    // is there any order already existed
+    const isExisted = await ShoppingCart.find({ userId });
+
+    let result;
+
+    if (isExisted.length > 0) {
+      result = await ShoppingCart.findOneAndUpdate(
+        { userId },
+        {
+          $set: { [`orders.order${Date.now()}`]: books },
+          $inc: { totalPrice }
+        }
+      );
+    } else {
+      const order = {
+        userId,
+        orders: {
+          order1: books,
+        },
+        totalPrice
+      };
+
+      result = await ShoppingCart(order);
+    }
+
+    await result.save();
+
+    res.status(201).json({
+      msg: "Order has placed!",
+    });
   } catch (error) {
     next(error);
   }
 };
 
-const getOrderedBooks = async (req, res, next) =>{
+const getOrderedBooks = async (req, res, next) => {
   try {
     const { userId } = req.query;
-    
-    const orders = await ShoppingCart.find({userId})
 
-    res.status(200).json({orders})
+    const orders = await ShoppingCart.find({ userId });
 
+    res.status(200).json(orders[0]);
   } catch (error) {
-    next(error)
+    next(error);
   }
-}
+};
 
 module.exports = {
   checkout,
   orderConfirmed,
-  getOrderedBooks
+  getOrderedBooks,
 };
