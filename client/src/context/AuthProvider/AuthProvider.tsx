@@ -1,4 +1,5 @@
 /* eslint-disable react-refresh/only-export-components */
+import { User } from "@/Types/UserType";
 import axios from "axios";
 import {
   Dispatch,
@@ -16,27 +17,29 @@ type AuthProviderType = {
 };
 
 type ContextType = {
-  setUser: Dispatch<
-    SetStateAction<{
-      user: object;
-      status: boolean;
-    }>
-  >;
-  user: {
-    user: object;
-    status: boolean;
-  };
+  setUser: Dispatch<SetStateAction<User>>;
+  user: User;
 };
 
 const AuthContext = createContext<ContextType>({
   setUser: () =>
     void {
-      user: Object,
+      email: String,
+      exp: Number,
+      iat: Number,
+      role: String,
       status: Boolean,
+      userId: String,
+      username: String,
     },
   user: {
-    user: {},
+    email: "",
+    exp: 1695103089,
+    iat: 0,
+    role: "user",
     status: false,
+    userId: "",
+    username: "",
   },
 });
 
@@ -45,7 +48,15 @@ const useAuth = () => {
 };
 
 export default function AuthProvider({ children }: AuthProviderType) {
-  const [user, setUser] = useState({ user: {}, status: false });
+  const [user, setUser] = useState({
+    email: "",
+    exp: 0,
+    iat: 0,
+    role: "user",
+    status: false,
+    userId: "",
+    username: "",
+  });
 
   useEffect(() => {
     async function isLoggedIn() {

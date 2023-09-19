@@ -1,8 +1,8 @@
+import { Order } from "@/Types/OrdersType";
 import { Box, Stack, Typography } from "@mui/material";
-import { Order } from "..";
 import CustomizedTimeline from "./Timeline";
 
-export default function SingleOrder({ orders }: { orders: any }) {
+export default function SingleOrder({ orders }: { orders: Order[] }) {
   return (
     <Box sx={{ border: "1px solid #dfdfdf", py: 3, px: 4 }}>
       <Stack component="header" pb={1}>

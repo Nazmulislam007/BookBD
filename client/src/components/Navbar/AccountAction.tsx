@@ -1,4 +1,3 @@
-import { UserType } from "@/Types/Books";
 import { useAuth } from "@/context/AuthProvider/AuthProvider";
 import { useBooks } from "@/context/BooksProvider/BooksProvider";
 import { List, ListItem } from "@mui/material";
@@ -41,7 +40,7 @@ export default function AccountAction() {
       </ListItem>
       {user.status && (
         <ListItem sx={{ px: 0 }}>
-          <AccountAvatar user={user.user as UserType} />
+          <AccountAvatar user={user} />
         </ListItem>
       )}
     </List>

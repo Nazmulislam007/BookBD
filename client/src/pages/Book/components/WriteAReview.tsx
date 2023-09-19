@@ -9,7 +9,6 @@ import {
 } from "@mui/material";
 import React, { useEffect } from "react";
 
-import { UserType } from "@/Types/Books";
 import { useAuth } from "@/context/AuthProvider/AuthProvider";
 import { useCreateReview } from "@/hooks/useBooks";
 import Modal from "@mui/material/Modal";
@@ -65,11 +64,11 @@ export default function WriteAReview({ id }: { id: string | undefined }) {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
 
-    if ((user.user as UserType)?.userId && id) {
+    if (user?.userId && id) {
       const reviewData = {
         _id: id,
-        userId: (user.user as UserType).userId,
-        username: (user.user as UserType).username,
+        userId: user.userId,
+        username: user.username,
         rating: value,
         review,
       };

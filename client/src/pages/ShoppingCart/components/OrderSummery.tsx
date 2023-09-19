@@ -1,4 +1,4 @@
-import { CartBookType, UserType } from "@/Types/Books";
+import { CartBookType } from "@/Types/Books";
 import ActionButton from "@/components/ActionButton";
 import { useAuth } from "@/context/AuthProvider/AuthProvider";
 import { useBooks } from "@/context/BooksProvider/BooksProvider";
@@ -27,7 +27,7 @@ export default function OrderSummery({
   );
 
   const handlePayment = async () => {
-    if ((user.user as UserType).userId) {
+    if (user.userId) {
       axios
         .post(`${import.meta.env.VITE_SERVER_URL}/create-payment-intent`, {
           items: cartBooks.map(({ _id, quantity }) => ({

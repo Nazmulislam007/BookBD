@@ -1,4 +1,4 @@
-import { CartBookType, UserType } from "@/Types/Books";
+import { CartBookType } from "@/Types/Books";
 import { useAuth } from "@/context/AuthProvider/AuthProvider";
 import { useDeleteCartBook } from "@/hooks/useAddtoCart";
 import {
@@ -30,7 +30,7 @@ export default function CheckoutFrom({
   const [message, setMessage] = React.useState("");
 
   async function placeOrder() {
-    if (user.user) {
+    if (user) {
       await fetch(`${import.meta.env.VITE_SERVER_URL}/order-confirmed`, {
         method: "POST",
         headers: {
@@ -41,7 +41,7 @@ export default function CheckoutFrom({
             id: _id,
             quantity,
           })),
-          userId: (user.user as UserType).userId,
+          userId: user.userId,
         }),
       });
 

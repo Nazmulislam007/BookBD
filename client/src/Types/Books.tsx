@@ -1,4 +1,4 @@
-export type Books = {
+type B = {
   _id: string;
   title: string;
   authors: string[];
@@ -33,6 +33,8 @@ export type Books = {
   ];
 };
 
+export type Books = Prettify<B>;
+
 export type CartBookType = {
   _id: string;
   title: string;
@@ -58,15 +60,6 @@ export enum SortedBy {
   HIGH_TO_LOW = "Sort by price: high to low",
 }
 
-export type UserType = {
-  userId: string;
-  email: string;
-  username: string;
-  role: string;
-  iat: number;
-  exp: number;
-};
-
-// export type Prettify<T> = {
-//   [K in keyof T]: T[K];
-// } & object;
+export type Prettify<T> = {
+  [K in keyof T]: T[K];
+} & {};

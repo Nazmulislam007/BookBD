@@ -20,11 +20,14 @@ export default function Book() {
   if (isError) return <span>Error: </span>;
 
   const book: Books = data?.book;
+  const avgRating: number = data?.avgRating;
+  const related: Partial<Books>[] = data?.relatedData.related;
+  const youMayAlsoLike: Partial<Books>[] = data?.relatedData.youMayAlsoLike;
 
   let reviews = null;
 
   if (book.reviews.length > 0) {
-    reviews = <Reviews book={book} avgRating={data?.avgRating} />;
+    reviews = <Reviews book={book} avgRating={avgRating} />;
   }
 
   if (book.reviews.length <= 0) {
@@ -43,9 +46,9 @@ export default function Book() {
         }}
       >
         <BookCart {...book} />
-        <RelatedBooks relatedBooks={data?.relatedData.related} />
+        <RelatedBooks relatedBooks={related} />
       </Box>
-      <YouMayAlsoLike youMayAlsoLike={data?.relatedData.youMayAlsoLike} />
+      <YouMayAlsoLike youMayAlsoLike={youMayAlsoLike} />
       <DescriptionTabs book={book} />
       {reviews}
     </Container>

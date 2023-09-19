@@ -1,4 +1,4 @@
-import { UserType } from "@/Types/Books";
+import { User } from "@/Types/UserType";
 import { useAuth } from "@/context/AuthProvider/AuthProvider";
 import { ListItem, Stack, Typography } from "@mui/material";
 import Avatar from "@mui/material/Avatar";
@@ -7,7 +7,7 @@ import Menu from "@mui/material/Menu";
 import axios from "axios";
 import * as React from "react";
 
-export default function AccountAvatar({ user }: { user: UserType }) {
+export default function AccountAvatar({ user }: { user: User }) {
   const { setUser } = useAuth();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
@@ -25,8 +25,13 @@ export default function AccountAvatar({ user }: { user: UserType }) {
       withCredentials: true,
     });
     setUser({
-      user: {},
+      email: "",
+      exp: 0,
+      iat: 0,
+      role: "",
       status: false,
+      userId: "",
+      username: "",
     });
   };
 

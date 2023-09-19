@@ -1,19 +1,11 @@
 import BodyContainer from "@/Layouts/BodyContainer";
 import { Books } from "@/Types/Books";
+import { Item } from "@/assets/theme/Grid";
 import Image from "@/components/Image";
 import SingleBook from "@/components/SingleBook";
-import { Box, Grid, Paper, Stack, Typography, styled } from "@mui/material";
+import { Box, Grid, Stack, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import ResposiveBookSlider from "./ResposiveBookSlider";
-
-const Item = styled(Paper)(({ theme }) => ({
-  backgroundColor: theme.palette.mode === "dark" ? "#1A2027" : "#fff",
-  ...theme.typography.body2,
-  padding: theme.spacing(1),
-  textAlign: "center",
-  boxShadow: "none",
-  width: "fit-content",
-}));
 
 export default function BooksWeLove({ books }: { books: Partial<Books>[] }) {
   const navigate = useNavigate();

@@ -1,4 +1,3 @@
-import { UserType } from "@/Types/Books";
 import { useAuth } from "@/context/AuthProvider/AuthProvider";
 import { useIsUsefullReview } from "@/hooks/useBooks";
 import { Box, Button, Rating, Stack, Typography } from "@mui/material";
@@ -31,7 +30,7 @@ export default function Review({
       _id,
       isUseFull: vote,
       userId: review.userId,
-      participant: (user.user as UserType).userId,
+      participant: user.userId,
     };
 
     mutate(data as any, {
