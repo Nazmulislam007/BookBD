@@ -4,8 +4,11 @@ const router = require("express").Router();
 
 router.get("/", isSignedIn, (req, res) => {
   try {
+
+    const user = req.user.userId && req.user
+
     res.status(200).json({
-      user: req.user.userId && req.user,
+      ...user,
       status: req.user.userId ? true : false,
     });
   } catch (error) {
