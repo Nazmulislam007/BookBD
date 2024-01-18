@@ -27,3 +27,10 @@ export function debounce<T extends any[]>(cb: CallbackFn<T>, delay: number) {
     }, delay);
   };
 }
+
+export const colorGenerator = () => {
+  const hue = Math.floor(Math.random() * 360);
+  const color = `hsla(${hue}, 100%, 100%, 1)`;
+  const bgColor = `hsla(${hue}, 80%, 65%, 1)`;
+  return { color, bgColor };
+};

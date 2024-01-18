@@ -50,8 +50,11 @@ const searchBooks = async (req, res, next) => {
       $text: {
         $search: q,
         $caseSensitive: false,
+        $diacriticSensitive: true
       },
     });
+
+    console.log(q, searchedBooks)
 
     res.status(200).json({ totalCount: 50, books: searchedBooks });
   } catch (error) {

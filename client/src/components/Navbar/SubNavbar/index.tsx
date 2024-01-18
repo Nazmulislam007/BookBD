@@ -17,8 +17,8 @@ export const subNavItems = [
     name: "subject",
   },
   {
-    path: "/catagory",
-    name: "catagory",
+    path: "/categories",
+    name: "categories",
   },
   {
     path: "/writer",

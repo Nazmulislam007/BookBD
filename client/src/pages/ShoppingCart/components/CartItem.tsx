@@ -1,6 +1,6 @@
 import { CartBookType } from "@/Types/Books";
 import useAddtoCart, { useDeleteCartBook } from "@/hooks/useAddtoCart";
-import { debounce, fixed } from "@/lib";
+import { colorGenerator, debounce, fixed } from "@/lib";
 import { Box, Button, Stack, Typography } from "@mui/material";
 import { useQueryClient } from "react-query";
 
@@ -86,7 +86,16 @@ export default function CartItem({ book }: { book: CartBookType }) {
     >
       <Stack direction="row" gap="15px">
         <Box component="div" sx={{ minWidth: "80px", width: "80px" }}>
-          <img src={book.img} style={{ display: "block", width: "100%" }} />
+          {/* <img src={book.img} style={{ display: "block", width: "100%" }} /> */}
+          <div
+            style={{
+              display: "block",
+              width: "100%",
+              height: "100%",
+              backgroundColor: colorGenerator().bgColor,
+              color: colorGenerator().color,
+            }}
+          ></div>
         </Box>
         <Box component="div">
           <Typography

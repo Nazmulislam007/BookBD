@@ -2,6 +2,7 @@ import { Books } from "@/Types/Books";
 import ActionButton from "@/components/ActionButton";
 import HoverRating from "@/components/Ratting";
 import useAddtoCart, { useGetCartBooks } from "@/hooks/useAddtoCart";
+import { colorGenerator } from "@/lib";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import { Box, Stack, Typography } from "@mui/material";
 import { MouseEvent } from "react";
@@ -71,7 +72,19 @@ export default function BookCart({
             margin: "auto",
           }}
         >
-          <img src={imageLinks?.thumbnail} style={{ display: "block" }} />
+          {/* <img src={imageLinks?.thumbnail} style={{ display: "block" }} /> */}
+          <div
+            style={{
+              display: "block",
+              width: "clamp(155px, 155px, 155px)",
+              height: "200px",
+              padding: 10,
+              backgroundColor: colorGenerator().bgColor,
+              color: colorGenerator().color,
+            }}
+          >
+            {title}
+          </div>
         </Box>
       </Box>
 

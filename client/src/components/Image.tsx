@@ -4,6 +4,7 @@ import { Box, Button } from "@mui/material";
 import { MouseEvent } from "react";
 import { useQueryClient } from "react-query";
 import { useNavigate } from "react-router-dom";
+import DummyImg from "./DummyImg";
 
 export default function Image({
   src,
@@ -74,7 +75,7 @@ export default function Image({
         },
       }}
     >
-      <img
+      {/* <img
         src={src}
         {...rest}
         style={{
@@ -83,7 +84,8 @@ export default function Image({
           height: "-webkit-fill-available",
           padding: "10px",
         }}
-      />
+      /> */}
+      <DummyImg title={title} />
       <Button
         variant="outlined"
         sx={{

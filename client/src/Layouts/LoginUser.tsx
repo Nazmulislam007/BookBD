@@ -52,7 +52,7 @@ export default function LoginUser() {
       });
       setOpenRegister(false);
       setUser({
-        user: (data as any)?.data?.user,
+        ...(data as any)?.data?.user,
         status: (data as any)?.data?.status
           ? (data as any)?.data?.status
           : false,

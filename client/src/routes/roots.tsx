@@ -1,5 +1,6 @@
 import BodyWrapper from "@/Layouts/BodyWrapper";
 import Book from "@/pages/Book";
+import Categories from "@/pages/Categories";
 import Home from "@/pages/Home";
 import Order from "@/pages/Order";
 import ShoppingCart from "@/pages/ShoppingCart";
@@ -18,6 +19,7 @@ export const router = createBrowserRouter([
         path: "/s/:subject",
         element: <Subjects />,
       },
+      { path: "/categories", element: <Categories /> },
       {
         path: "/b/:id",
         element: <Book />,

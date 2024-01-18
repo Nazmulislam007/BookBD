@@ -1,4 +1,5 @@
 import { Books } from "@/Types/Books";
+import { colorGenerator } from "@/lib";
 import { Box, Divider, Stack, Typography } from "@mui/material";
 import { Link } from "react-router-dom";
 
@@ -16,10 +17,19 @@ export default function RelatedBooks({
         <Link to={`/b/${book._id}`} key={book._id}>
           <Stack direction="row" gap="10px" py={2}>
             <Box component="div" sx={{ width: "60px" }}>
-              <img
+              {/* <img
                 src={book.imageLinks?.thumbnail}
                 style={{ display: "block", width: "100%" }}
-              />
+              /> */}
+              <div
+                style={{
+                  display: "block",
+                  width: "100%",
+                  height: "100%",
+                  backgroundColor: colorGenerator().bgColor,
+                  color: colorGenerator().color,
+                }}
+              ></div>
             </Box>
             <Box component="div">
               <Typography

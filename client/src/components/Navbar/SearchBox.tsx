@@ -114,7 +114,11 @@ export default function SearchBox() {
     ));
 
   if (!isLoading && !isError && data.books.length === 0)
-    content = <Typography component="p">No books founded</Typography>;
+    content = (
+      <Typography component="p" sx={{ p: 1.5 }}>
+        No books founded
+      </Typography>
+    );
 
   return (
     <Search sx={{ position: "relative" }}>
