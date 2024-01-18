@@ -13,7 +13,7 @@ function App() {
 
   window.onload = () => {
     setTimeout(() => {
-      // setPreLoader(false);
+      setPreLoader(false);
     }, 300);
   };
 
