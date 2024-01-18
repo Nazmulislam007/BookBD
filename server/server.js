@@ -31,6 +31,7 @@ const url =
     : process.env.MONGDB_URL;
 
 // database setup
+mongoose.set("strictQuery", false);
 async function main() {
   await mongoose.connect(url);
 }
