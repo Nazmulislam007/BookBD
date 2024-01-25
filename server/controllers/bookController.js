@@ -54,8 +54,6 @@ const searchBooks = async (req, res, next) => {
       },
     });
 
-    console.log(q, searchedBooks)
-
     res.status(200).json({ totalCount: 50, books: searchedBooks });
   } catch (error) {
     next(error);
