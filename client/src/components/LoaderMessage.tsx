@@ -1,14 +1,13 @@
 import { Box, Typography } from "@mui/material";
-import { useState } from "react";
 
 export default function LoaderMessage() {
-  const [countDown, setCountDown] = useState(10);
+  // const [countDown, setCountDown] = useState(10);
 
-  if (countDown > 0) {
-    setTimeout(() => {
-      setCountDown(countDown - 1);
-    }, 1000);
-  }
+  // if (countDown > 0) {
+  //   setTimeout(() => {
+  //     setCountDown(countDown - 1);
+  //   }, 1000);
+  // }
 
   return (
     <Box
@@ -31,7 +30,7 @@ export default function LoaderMessage() {
         We are currently using a free server; therefore, it takes a little bit
         of time to start the server for the backend.
       </Typography>
-      <Typography
+      {/* <Typography
         component="h2"
         fontSize="18px"
         textAlign="center"
@@ -39,7 +38,7 @@ export default function LoaderMessage() {
         my={2}
       >
         {countDown}
-      </Typography>
+      </Typography> */}
       <Typography component="h2" fontSize="18px" textAlign="center">
         Instead of using a dummy book image, we are using colored blocks.
       </Typography>

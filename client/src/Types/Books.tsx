@@ -7,9 +7,7 @@ type B = {
   pageCount: number;
   categories: string[];
   subCategories: string[];
-  imageLinks: {
-    thumbnail: string;
-  };
+  image: string;
   language: string;
   saleInfo: {
     country: string;

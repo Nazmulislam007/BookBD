@@ -92,7 +92,7 @@ export default function SearchBox() {
         >
           <Box sx={{ maxWidth: "45px" }}>
             <img
-              src={book?.imageLinks.thumbnail}
+              src={book?.image}
               alt="img"
               style={{ display: "block", maxWidth: "100%" }}
             />

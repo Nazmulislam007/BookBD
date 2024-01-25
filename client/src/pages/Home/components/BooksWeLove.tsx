@@ -31,7 +31,7 @@ export default function BooksWeLove({ books }: { books: Partial<Books>[] }) {
                 author={(books[0]?.authors && books[0]?.authors[0]) || ""}
                 price={books[0]?.saleInfo?.discountPrice || 0}
                 title={books[0]?.title || ""}
-                src={books[0].imageLinks?.thumbnail || ""}
+                src={books[0].image || ""}
               />
             </div>
           </Box>
@@ -70,7 +70,7 @@ export default function BooksWeLove({ books }: { books: Partial<Books>[] }) {
             const { authors, _id, title, saleInfo } = book;
             return (
               <Grid item md={4} lg={3} key={_id}>
-                <Item>
+                <Item sx={{ width: "100%" }}>
                   <SingleBook book={book} />
                   <Box px={1} mt={1}>
                     <Typography

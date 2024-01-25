@@ -1,5 +1,4 @@
 import { Order } from "@/Types/OrdersType";
-import { colorGenerator } from "@/lib";
 import { Box, Stack, Typography } from "@mui/material";
 import CustomizedTimeline from "./Timeline";
 
@@ -61,21 +60,13 @@ export default function SingleOrder({ orders }: { orders: Order[] }) {
               {orders.map((order: Order, i: any) => (
                 <Stack direction="row" gap="15px" key={i}>
                   <Box component="div" sx={{ minWidth: "80px", width: "80px" }}>
-                    {/* <img
+                    <img
                       src={order.img}
                       style={{
                         display: "block",
                         maxWidth: "100%",
                       }}
-                    /> */}
-                    <div
-                      style={{
-                        display: "block",
-                        maxWidth: "100%",
-                        backgroundColor: colorGenerator().bgColor,
-                        color: colorGenerator().color,
-                      }}
-                    ></div>
+                    />
                   </Box>
                   <Box component="div">
                     <Typography

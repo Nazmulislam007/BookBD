@@ -19,7 +19,7 @@ export default function SingleBook({
         author={(book.authors && book.authors[0]) || ""}
         price={book.saleInfo?.discountPrice || 0}
         title={book.title || ""}
-        src={book.imageLinks?.thumbnail || ""}
+        src={book.image || ""}
         rM={rM}
         alt="book"
       />
